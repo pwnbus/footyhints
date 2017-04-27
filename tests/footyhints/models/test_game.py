@@ -25,4 +25,3 @@ class TestGameInit(object):
         with pytest.raises(ValueError) as exception_obj:
             Game(home_team=team1, away_team=team2)
         assert str(exception_obj.value) == 'away_team must be of type "Team"'
-
