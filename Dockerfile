@@ -19,4 +19,5 @@ RUN cd /home/footyhints/footyhints/src;git pull origin master
 RUN /bin/bash -c "source /home/footyhints/footyhints/env/bin/activate;pip install -e /home/footyhints/footyhints/src/"
 RUN sed -i -e 's/DEBUG = False/DEBUG = True/g' /home/footyhints/footyhints/src/footyhints/web/settings.cfg
 
+EXPOSE 5000
 CMD /bin/bash -c "source /home/footyhints/footyhints/env/bin/activate;cd /home/footyhints/footyhints/src/;python run.py"
