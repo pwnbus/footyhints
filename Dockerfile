@@ -8,9 +8,9 @@ RUN python3.5 /root/get-pip.py
 RUN rm /root/get-pip.py
 RUN pip install virtualenv
 USER footyhints
-RUN mkdir /home/footyhints/scoring_engine
-RUN virtualenv -p /usr/bin/python3.5 /home/footyhints/scoring_engine/env
-RUN git clone https://github.com/pwnbus/scoring_engine /home/engine/scoring_engine/src
-RUN source /home/engine/scoring_engine/env/bin/activate
-RUN pip install -e /home/engine/scoring_engine/src/
-RUN id
+RUN mkdir /home/footyhints/footyhints
+RUN virtualenv -p /usr/bin/python3.5 /home/footyhints/footyhints/env
+RUN git clone https://github.com/pwnbus/footyhints /home/footyhints/footyhints/src
+RUN source /home/footyhints/footyhints/env/bin/activate
+RUN pip install -e /home/footyhints/footyhints/src/
+CMD id
