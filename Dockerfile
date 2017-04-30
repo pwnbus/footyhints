@@ -15,8 +15,8 @@ RUN mkdir ~/.ssh
 RUN chmod 700 ~/.ssh
 RUN ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 RUN git clone https://github.com/pwnbus/footyhints /home/footyhints/footyhints/src
-RUN /bin/bash -c "source /home/footyhints/footyhints/env/bin/activate;pip install -e /home/footyhints/footyhints/src/
+RUN cd /home/footyhints/footyhints/src;git pull origin master
+RUN /bin/bash -c "source /home/footyhints/footyhints/env/bin/activate;pip install -e /home/footyhints/footyhints/src/"
+RUN sed -i -e 's/DEBUG = False/DEBUG = True/g' /home/footyhints/footyhints/src/footyhints/web/settings.cfg
 
-RUN sed -i -e 's/DEBUG = False/DEBUG = True/g' /home/footyhints/footyhints/src/footyhints/footyhints/web/settings.cfg
-CMD /bin/bash -c "source /home/footyhints/footyhints/env/bin/activate;pip install -e /home/footyhints/footyhints/src/python /home/footyhints/footyhints/src/run.py"
-CMD id
+CMD /bin/bash -c "source /home/footyhints/footyhints/env/bin/activate;cd /home/footyhints/footyhints/src/;python run.py"
