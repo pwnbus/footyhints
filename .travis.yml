@@ -4,6 +4,7 @@ python:
   - 'nightly'
 install: "pip install -e ."
 script:
+  - cp config.txt.inc config.txt
   - py.test --cov=footyhints tests
   - codeclimate-test-reporter
   - pycodestyle --show-source --ignore=E501,E402  ./
