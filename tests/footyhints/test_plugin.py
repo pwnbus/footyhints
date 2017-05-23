@@ -2,15 +2,12 @@ from pytest import raises
 
 from footyhints.plugin import Plugin
 
-from footyhints.models.game import Game
-from footyhints.models.team import Team
+from tests.footyhints.unit_test import UnitTest
 
 
-class TestPlugin(object):
+class TestPlugin(UnitTest):
     def setup(self):
-        team1 = Team(name='Chelsea')
-        team2 = Team(name='Manchester United')
-        self.game = Game(home_team=team1, away_team=team2)
+        super(TestPlugin, self).setup()
         self.plugin = Plugin(self.game)
 
     def test_init(self):
