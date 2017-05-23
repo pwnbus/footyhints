@@ -9,18 +9,18 @@ import pytest
 
 class TestDB(object):
 
-    def setup(self):
-        self.db = DB()
+    def delete_db(self):
         try:
             self.db.destroy()
         except IOError:
             pass
 
+    def setup(self):
+        self.db = DB()
+        self.delete_db()
+
     def teardown(self):
-        try:
-            self.db.destroy()
-        except IOError:
-            pass
+        self.delete_db()
 
     def test_init(self):
         assert self.db.connected is False
