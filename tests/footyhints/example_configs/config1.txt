@@ -1,2 +1,5 @@
+[WEB]
+debug = True
+
 [DB]
 uri = sqlite:///:memory:

@@ -13,6 +13,7 @@ class Config(object):
         self.parser.read(config_location)
 
         self.db_uri = self.parser['DB']['uri']
+        self.web_debug = self.parser['WEB']['debug'] == 'True'
 
 
 config = Config()

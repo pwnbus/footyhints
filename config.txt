@@ -1,3 +1,6 @@
+[WEB]
+debug = True
+
 [DB]
 # SQLite
 uri = sqlite:////tmp/footyhints.db
