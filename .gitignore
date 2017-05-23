@@ -1,3 +1,4 @@
 .cache
 footyhints.egg-info/
 .coverage
+config.txt
