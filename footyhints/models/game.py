@@ -13,16 +13,28 @@ class Game(object):
         self.home_score = None
         self.away_score = None
 
-    def worth_watching(self):
+    def set_score(self, home_team_score, away_team_score):
+        if type(home_team_score) is not int and type(away_team_score) is not int:
+            raise ValueError('Home and away scores must be integers')
+        elif type(home_team_score) is not int:
+            raise ValueError('Home team score must be an integer')
+        elif type(away_team_score) is not int:
+            raise ValueError('Away team score must be an integer')
+
+        self.home_score = home_team_score
+        self.away_score = away_team_score
+
+    def __validate_score(self):
+        # Check if team scores have been set in the game
         if self.home_score is None and self.away_score is None:
             raise ValueError('Score must be defined for both the home and away team')
-        elif self.home_score is None:
-            raise ValueError('Score must be defined for the home team')
-        elif self.away_score is None:
-            raise ValueError('Score must be defined for the away team')
 
-        # Check if home team score exists
-        # Check if away team score exists
+    def worth_watching(self):
+        self.__validate_score()
+        # Main decision logic
 
-        # Main decision consists of:
-        #   If score is nil nil, not worth watching
+        #   If score is 0 0, not worth watching
+        if self.home_score == 0 and self.away_score == 0:
+            return False
+
+        return True
