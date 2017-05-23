@@ -1,4 +1,5 @@
 from sqlalchemy.ext.declarative.api import DeclarativeMeta
+
 from footyhints.models.base import Base
 
 

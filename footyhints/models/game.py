@@ -1,16 +1,22 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy.orm import relationship
+
+from pynsive import rlist_classes
 
 from footyhints.models.base import Base
 from footyhints.models.team import Team
+from footyhints.plugin import Plugin
 
 
 class Game(Base):
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
-    home_team = Column(String(50), nullable=False)
-    away_team = Column(String(50), nullable=False)
-    home_score = Column(Integer, nullable=False)
-    away_score = Column(Integer, nullable=False)
+    home_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
+    home_team = relationship("Team", foreign_keys=[home_team_id], backref='home_games')
+    away_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
+    away_team = relationship("Team", foreign_keys=[away_team_id], backref='away_games')
+    home_score = Column(Integer, nullable=True)
+    away_score = Column(Integer, nullable=True)
 
     def __init__(self, home_team, away_team):
         if not type(home_team) is Team:
@@ -22,6 +28,16 @@ class Game(Base):
         self.away_team = away_team
         self.home_score = None
         self.away_score = None
+        self.decision_plugins = []
+        self.load_decision_plugins()
+
+    def load_decision_plugins(self):
+        decision_classes = rlist_classes('footyhints.plugins')
+        for decision_class in decision_classes:
+            # Exclude root Plugin class
+            if decision_class == Plugin:
+                continue
+            self.decision_plugins.append(decision_class(self))
 
     def set_score(self, home_team_score, away_team_score):
         if type(home_team_score) is not int and type(away_team_score) is not int:
@@ -39,9 +55,7 @@ class Game(Base):
             raise TypeError('Home and away scores must be set')
 
         # Main decision logic
-
-        #   If score is 0 0, not worth watching
-        if self.home_score == 0 and self.away_score == 0:
-            return False
-
-        return True
+        for decision_plugin in self.decision_plugins:
+            decision = decision_plugin.decision()
+            if decision is not None:
+                return decision

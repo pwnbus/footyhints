@@ -1,2 +1,3 @@
 .cache
 footyhints.egg-info/
+.coverage

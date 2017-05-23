@@ -1,2 +1,2 @@
 [DB]
-uri = sqlite:////tmp/test_footyhints.db
+uri = sqlite:///:memory:

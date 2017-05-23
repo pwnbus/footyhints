@@ -15,6 +15,7 @@ config = {
     'install_requires': [
         'sqlalchemy',
         'Flask',
+        'pynsive',
         # Dev
         'pycodestyle',
         'coverage==4.3.4',
