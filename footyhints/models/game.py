@@ -63,4 +63,4 @@ class Game(Base):
     def __eq__(self, other):
         if isinstance(other, Game):
             return self.id == other.id
-        return NotImplemented
+        return False

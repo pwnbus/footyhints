@@ -84,3 +84,7 @@ class TestGameEquals(UnitTest):
         self.db.save(self.tmp_game)
         self.tmp_game.id = self.game.id + 1
         assert self.game != self.tmp_game
+
+    def test_nonequal_objects(self):
+        self.db.save(self.game)
+        assert self.game != 'abcd'
