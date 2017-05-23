@@ -6,21 +6,21 @@ from footyhints.models.team import Team
 
 class TestGameInit(object):
     def test_init(self):
-        team1 = Team()
-        team2 = Team()
+        team1 = Team(name='Chelsea')
+        team2 = Team(name='Manchester United')
         game = Game(home_team=team1, away_team=team2)
         assert game.home_team is team1
         assert game.away_team is team2
 
     def test_init_bad_home(self):
         team1 = "garbageteam"
-        team2 = Team()
+        team2 = Team(name='Chelsea')
         with pytest.raises(ValueError) as exception_obj:
             Game(home_team=team1, away_team=team2)
         assert str(exception_obj.value) == 'home_team must be of type "Team"'
 
     def test_init_bad_away(self):
-        team1 = Team()
+        team1 = Team(name='Chelsea')
         team2 = "garbageteam"
         with pytest.raises(ValueError) as exception_obj:
             Game(home_team=team1, away_team=team2)
@@ -29,8 +29,8 @@ class TestGameInit(object):
 
 class TestGameWorthWatching(object):
     def setup(self):
-        self.home_team = Team()
-        self.away_team = Team()
+        self.home_team = Team(name='Chelsea')
+        self.away_team = Team(name='Manchester United')
         self.game = Game(home_team=self.home_team, away_team=self.away_team)
 
     def test_no_scores(self):
