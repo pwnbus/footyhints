@@ -14,7 +14,6 @@ config = {
     'version': version,
     'install_requires': [
         'sqlalchemy',
-        'bcrypt',
         'Flask',
         # Dev
         'pycodestyle',

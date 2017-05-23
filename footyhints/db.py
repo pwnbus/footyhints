@@ -1,11 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-import bcrypt
-
 from footyhints.config import config
-
-db_salt = bcrypt.gensalt()
 
 
 class DB(object):
