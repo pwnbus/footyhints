@@ -12,3 +12,7 @@ class Team(Base):
         if type(name) is not str:
             raise TypeError('Team name must be a string')
         self.name = name
+
+    @property
+    def games(self):
+        return self.home_games + self.away_games

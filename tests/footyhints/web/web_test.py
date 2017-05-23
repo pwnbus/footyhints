@@ -5,10 +5,13 @@ from mock import MagicMock, call
 
 from footyhints.web import app
 
+from tests.footyhints.unit_test import UnitTest
 
-class WebTest(object):
+
+class WebTest(UnitTest):
 
     def setup(self):
+        super(WebTest, self).setup()
         self.app = app
         self.app.test_client_class = BaseFlaskClient
         self.client = self.app.test_client()
