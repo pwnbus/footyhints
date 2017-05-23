@@ -36,6 +36,7 @@ class DB(object):
     def disconnect(self):
         self.engine.dispose()
         self.session.close()
+        self.connected = False
 
 
 db = DB()

@@ -30,6 +30,13 @@ class TestDB(object):
         assert self.db.connected is True
         assert isinstance(self.db.session, scoped_session) is True
 
+    def test_connect_disconnect(self):
+        assert self.db.connected is False
+        self.db.connect()
+        assert self.db.connected is True
+        self.db.disconnect()
+        assert self.db.connected is False
+
     def test_setup_without_connecting(self):
         with pytest.raises(IOError):
             self.db.setup()
