@@ -19,6 +19,7 @@ config = {
         'pytest-cov',
         'pytest',
         'codeclimate-test-reporter',
+        'mock',
     ],
     'packages': ['footyhints', 'tests'],
     'scripts': [],
