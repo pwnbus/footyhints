@@ -14,6 +14,11 @@ class DB(object):
         self.engine = create_engine(self.db_uri, convert_unicode=True)
         self.session = scoped_session(sessionmaker(bind=self.engine))
 
+    def disconnect(self):
+        self.engine.dispose()
+        self.session.close()
+        self.connected = False
+
     def check_connection(self):
         if not self.connected:
             raise IOError()
@@ -32,11 +37,6 @@ class DB(object):
         self.check_connection()
         self.session.add(obj)
         self.session.commit()
-
-    def disconnect(self):
-        self.engine.dispose()
-        self.session.close()
-        self.connected = False
 
 
 db = DB()
