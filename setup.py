@@ -15,6 +15,7 @@ config = {
     'install_requires': [
         "Flask",
         'pycodestyle',
+        'coverage==4.4',
         'pytest-cov',
         'pytest',
         'codeclimate-test-reporter',
