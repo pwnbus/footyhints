@@ -20,22 +20,18 @@ class TestTeamInit(UnitTest):
 
 class TestTeamSave(UnitTest):
     def test_normal_save(self):
-        team = Team(name='Chelsea')
-        assert team.id is None
-        self.db.save(team)
-        assert team.id is 1
+        assert self.home_team.id is None
+        self.db.save(self.home_team)
+        assert self.home_team.id is 1
 
     def test_normal_save_with_one_game(self):
-        team1 = Team(name='Chelsea')
-        team2 = Team(name='Manchester United')
-        game = Game(home_team=team1, away_team=team2)
-        self.db.save(game)
-        assert team1.games == [game]
-        assert team1.home_games == [game]
-        assert team1.away_games == []
-        assert team2.games == [game]
-        assert team2.home_games == []
-        assert team2.away_games == [game]
+        self.db.save(self.game)
+        assert self.home_team.games == [self.game]
+        assert self.home_team.home_games == [self.game]
+        assert self.home_team.away_games == []
+        assert self.away_team.games == [self.game]
+        assert self.away_team.home_games == []
+        assert self.away_team.away_games == [self.game]
 
 
 class TestTeamGames(UnitTest):

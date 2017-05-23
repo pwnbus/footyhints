@@ -8,11 +8,8 @@ from tests.footyhints.unit_test import UnitTest
 
 class TestGameInit(UnitTest):
     def test_init(self):
-        team1 = Team(name='Chelsea')
-        team2 = Team(name='Manchester United')
-        game = Game(home_team=team1, away_team=team2)
-        assert game.home_team is team1
-        assert game.away_team is team2
+        assert self.game.home_team is self.home_team
+        assert self.game.away_team is self.away_team
 
     def test_init_bad_home(self):
         team1 = "garbageteam"
@@ -31,33 +28,21 @@ class TestGameInit(UnitTest):
 
 class TestGameLoadDecisionPlugins(UnitTest):
     def test_plugins(self):
-        self.home_team = Team(name='Chelsea')
-        self.away_team = Team(name='Manchester United')
-        self.game = Game(home_team=self.home_team, away_team=self.away_team)
         assert len(self.game.decision_plugins) == 1
 
 
 class TestGameSave(UnitTest):
     def test_basic_save(self):
-        team1 = Team(name='Chelsea')
-        team2 = Team(name='Manchester United')
-        game = Game(home_team=team1, away_team=team2)
-        assert game.id is None
-        assert team1.id is None
-        assert team2.id is None
-        self.db.save(game)
-        assert game.id == 1
-        assert team1.id == 1
-        assert team2.id == 2
+        assert self.game.id is None
+        assert self.home_team.id is None
+        assert self.away_team.id is None
+        self.db.save(self.game)
+        assert self.game.id == 1
+        assert self.home_team.id == 1
+        assert self.away_team.id == 2
 
 
 class TestGameSetScore(UnitTest):
-    def setup(self):
-        super(TestGameSetScore, self).setup()
-        self.home_team = Team(name='Chelsea')
-        self.away_team = Team(name='Manchester United')
-        self.game = Game(home_team=self.home_team, away_team=self.away_team)
-
     def test_bad_scores(self):
         with raises(TypeError) as exception_obj:
             self.game.set_score('abcd', 'someother')
@@ -76,9 +61,26 @@ class TestGameSetScore(UnitTest):
 
 class TestGameWorthWatching(UnitTest):
     def test_no_scores(self):
-        home_team = Team(name='Chelsea')
-        away_team = Team(name='Manchester United')
-        game = Game(home_team=home_team, away_team=away_team)
         with raises(TypeError) as exception_obj:
-            game.worth_watching()
+            self.game.worth_watching()
         assert str(exception_obj.value) == 'Home and away scores must be set'
+
+
+class TestGameEquals(UnitTest):
+    def setup(self):
+        super(TestGameEquals, self).setup()
+        self.tmp_team1 = Team(name='team1')
+        self.tmp_team2 = Team(name='team2')
+        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2)
+
+    def test_equal_games(self):
+        self.db.save(self.game)
+        self.db.save(self.tmp_game)
+        self.tmp_game.id = self.game.id
+        assert self.game == self.tmp_game
+
+    def test_nonequal_games(self):
+        self.db.save(self.game)
+        self.db.save(self.tmp_game)
+        self.tmp_game.id = self.game.id + 1
+        assert self.game != self.tmp_game

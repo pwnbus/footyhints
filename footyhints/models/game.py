@@ -59,3 +59,8 @@ class Game(Base):
             decision = decision_plugin.decision()
             if decision is not None:
                 return decision
+
+    def __eq__(self, other):
+        if isinstance(other, Game):
+            return self.id == other.id
+        return NotImplemented
