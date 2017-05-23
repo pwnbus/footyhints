@@ -14,22 +14,22 @@ class DB(object):
         self.engine = create_engine(self.db_uri, convert_unicode=True)
         self.session = scoped_session(sessionmaker(bind=self.engine))
 
-    def setup(self):
+    def check_connection(self):
         if not self.connected:
             raise IOError()
+
+    def setup(self):
+        self.check_connection()
         from footyhints.models.base import Base
         Base.metadata.create_all(self.engine)
 
     def destroy(self):
-        if not self.connected:
-            raise IOError()
+        self.check_connection()
         from footyhints.models.base import Base
         Base.metadata.drop_all(self.engine)
 
     def save(self, obj):
-        if not self.connected:
-            raise IOError()
-
+        self.check_connection()
         self.session.add(obj)
         self.session.commit()
 
