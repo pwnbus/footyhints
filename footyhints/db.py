@@ -17,17 +17,12 @@ class DB(object):
     def setup(self):
         if not self.connected:
             raise IOError()
-
-        from footyhints.models.team import Team
-        from footyhints.models.game import Game
         from footyhints.models.base import Base
         Base.metadata.create_all(self.engine)
 
     def destroy(self):
         if not self.connected:
             raise IOError()
-        from footyhints.models.team import Team
-        from footyhints.models.game import Game
         from footyhints.models.base import Base
         Base.metadata.drop_all(self.engine)
 
