@@ -9,6 +9,6 @@ class TestTeamInit(object):
         assert team.name == 'Chelsea'
 
     def test_bad_name(self):
-        with pytest.raises(ValueError) as exception_obj:
+        with pytest.raises(TypeError) as exception_obj:
             Team(name=123)
         assert str(exception_obj.value) == 'Team name must be a string'
