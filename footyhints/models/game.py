@@ -24,13 +24,10 @@ class Game(object):
         self.home_score = home_team_score
         self.away_score = away_team_score
 
-    def __validate_score(self):
-        # Check if team scores have been set in the game
-        if self.home_score is None and self.away_score is None:
-            raise ValueError('Score must be defined for both the home and away team')
-
     def worth_watching(self):
-        self.__validate_score()
+        if self.home_score is None and self.away_score is None:
+            raise ValueError('Home and away scores must be set')
+
         # Main decision logic
 
         #   If score is 0 0, not worth watching

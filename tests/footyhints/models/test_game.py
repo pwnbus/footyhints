@@ -36,7 +36,7 @@ class TestGameWorthWatching(object):
     def test_no_scores(self):
         with pytest.raises(ValueError) as exception_obj:
             self.game.worth_watching()
-        assert str(exception_obj.value) == 'Score must be defined for both the home and away team'
+        assert str(exception_obj.value) == 'Home and away scores must be set'
 
     def test_bad_scores(self):
         with pytest.raises(ValueError) as exception_obj:
