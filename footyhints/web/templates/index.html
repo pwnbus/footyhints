@@ -5,5 +5,11 @@
 {% endblock %}
 {% block content %}
 Welcome!
+
+{% for game in games %}
+  <br>{{game.home_team.name}} | {{game.home_score}}
+  <br>{{game.away_team.name}} | {{game.away_score}}
+  <br>{{game.worth_watching()}}
+{% endfor %}
 {% endblock %}
 

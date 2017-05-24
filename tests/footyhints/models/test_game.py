@@ -28,6 +28,8 @@ class TestGameInit(UnitTest):
 
 class TestGameLoadDecisionPlugins(UnitTest):
     def test_plugins(self):
+        assert len(self.game.decision_plugins) == 0
+        self.game.load_decision_plugins()
         assert len(self.game.decision_plugins) == 1
 
 

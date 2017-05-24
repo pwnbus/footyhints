@@ -29,9 +29,10 @@ class Game(Base):
         self.home_score = None
         self.away_score = None
         self.decision_plugins = []
-        self.load_decision_plugins()
 
     def load_decision_plugins(self):
+        # wipe plugin list so we can 'refresh'
+        self.decision_plugins = []
         decision_classes = rlist_classes('footyhints.plugins')
         for decision_class in decision_classes:
             # Exclude root Plugin class
@@ -55,6 +56,7 @@ class Game(Base):
             raise TypeError('Home and away scores must be set')
 
         # Main decision logic
+        self.load_decision_plugins()
         for decision_plugin in self.decision_plugins:
             decision = decision_plugin.decision()
             if decision is not None:
