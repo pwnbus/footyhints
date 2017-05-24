@@ -60,20 +60,25 @@ class Game(Base):
 
         # Main decision logic
         self.load_decision_plugins()
-        total_score = 0
+        total_score = 50
         for decision_plugin in self.decision_plugins:
             score = decision_plugin.score()
             if score is not None:
                 total_score += score
 
-        if total_score > 5:
+        if total_score > 66:
             return HIGH
-        elif total_score > -5:
+        elif total_score > 33:
             return MEDIUM
         else:
             return LOW
 
     def __eq__(self, other):
         if isinstance(other, Game):
-            return self.id == other.id
+            return (
+                self.id == other.id and
+                self.round_num == other.round_num and
+                self.home_team.name == other.home_team.name and
+                self.away_team.name == other.away_team.name
+            )
         return False

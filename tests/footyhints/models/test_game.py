@@ -75,8 +75,8 @@ class TestGameWorthWatching(UnitTest):
 class TestGameEquals(UnitTest):
     def setup(self):
         super(TestGameEquals, self).setup()
-        self.tmp_team1 = Team(name='team1')
-        self.tmp_team2 = Team(name='team2')
+        self.tmp_team1 = Team(name='Chelsea')
+        self.tmp_team2 = Team(name='Manchester United')
         self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, round_num=1)
 
     def test_equal_games(self):
