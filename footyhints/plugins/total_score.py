@@ -11,4 +11,3 @@ class HighScore(Plugin):
             return 0
         else:
             return -8
-
