@@ -12,8 +12,8 @@ class HighScore(Plugin):
         elif total_goals > 3:
             return 3
         elif total_goals > 2:
-            return 2
-        elif total_goals > 1:
             return 0
+        elif total_goals > 1:
+            return -4
         else:
             return -8
