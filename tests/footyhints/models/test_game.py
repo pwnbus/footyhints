@@ -1,4 +1,6 @@
-from os import listdir
+from glob import glob
+
+
 from os.path import join, dirname, abspath
 
 from pytest import raises
@@ -30,11 +32,8 @@ class TestGameLoadDecisionPlugins(UnitTest):
         plugins_path = join(dirname(abspath(__file__)), '../../../footyhints/plugins')
         assert len(self.game.decision_plugins) == 0
         self.game.load_decision_plugins()
-        # expected_plugin_num = (len(listdir(plugins_path)) - 1)
-        # print(expected_plugin_num)
-        # print("\n\n")
-        # print(self.game.decision_plugins)
-        assert len(self.game.decision_plugins) == (len(listdir(plugins_path)) - 1)
+        expected_plugin_num = len(glob(plugins_path + "/*.py")) - 1
+        assert len(self.game.decision_plugins) == expected_plugin_num
 
 
 class TestGameSave(UnitTest):
