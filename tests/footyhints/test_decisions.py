@@ -14,7 +14,7 @@ class TestDecisionsFromScore(UnitTest):
 
     def test_1_1(self):
         self.game.set_score(1, 1)
-        assert self.game.worth_watching() is MEDIUM
+        assert self.game.worth_watching() is LOW
 
     def test_2_1(self):
         self.game.set_score(2, 1)
