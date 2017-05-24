@@ -15,5 +15,5 @@ class TestPlugin(UnitTest):
 
     def test_decision(self):
         with raises(NotImplementedError) as exception_obj:
-            self.plugin.decision()
-        assert str(exception_obj.value) == 'Must specify a decision function in plugin'
+            self.plugin.score()
+        assert str(exception_obj.value) == 'Must specify a score function in plugin'
