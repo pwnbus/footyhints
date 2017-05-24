@@ -6,6 +6,7 @@ from pynsive import rlist_classes
 from footyhints.models.base import Base
 from footyhints.models.team import Team
 from footyhints.plugin import Plugin
+from footyhints.levels import LOW, MEDIUM, HIGH
 
 
 class Game(Base):
@@ -57,10 +58,18 @@ class Game(Base):
 
         # Main decision logic
         self.load_decision_plugins()
+        total_score = 0
         for decision_plugin in self.decision_plugins:
-            decision = decision_plugin.decision()
-            if decision is not None:
-                return decision
+            score = decision_plugin.score()
+            if score is not None:
+                total_score += score
+
+        if total_score > 5:
+            return HIGH
+        elif total_score > -5:
+            return MEDIUM
+        else:
+            return LOW
 
     def __eq__(self, other):
         if isinstance(other, Game):
