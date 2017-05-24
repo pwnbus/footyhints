@@ -5,6 +5,7 @@ class TestIndex(WebTest):
 
     def setup(self):
         super(TestIndex, self).setup()
+        self.game.set_score(3, 3)
         self.db.save(self.game)
 
     def test_index_slash(self):
