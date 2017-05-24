@@ -12,14 +12,15 @@ from footyhints.levels import LOW, MEDIUM, HIGH
 class Game(Base):
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
+    round_num = Column(Integer, nullable=False)
     home_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
     home_team = relationship("Team", foreign_keys=[home_team_id], backref='home_games')
     away_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
     away_team = relationship("Team", foreign_keys=[away_team_id], backref='away_games')
-    home_score = Column(Integer, nullable=True)
-    away_score = Column(Integer, nullable=True)
+    home_team_score = Column(Integer, nullable=True)
+    away_team_score = Column(Integer, nullable=True)
 
-    def __init__(self, home_team, away_team):
+    def __init__(self, home_team, away_team, round_num):
         if not type(home_team) is Team:
             raise TypeError('home_team must be of type "Team"')
         if not type(away_team) is Team:
@@ -27,6 +28,7 @@ class Game(Base):
 
         self.home_team = home_team
         self.away_team = away_team
+        self.round_num = round_num
         self.home_score = None
         self.away_score = None
         self.decision_plugins = []
@@ -49,11 +51,11 @@ class Game(Base):
         elif type(away_team_score) is not int:
             raise TypeError('Away team score must be an integer')
 
-        self.home_score = home_team_score
-        self.away_score = away_team_score
+        self.home_team_score = home_team_score
+        self.away_team_score = away_team_score
 
     def worth_watching(self):
-        if self.home_score is None and self.away_score is None:
+        if self.home_team_score is None and self.away_team_score is None:
             raise TypeError('Home and away scores must be set')
 
         # Main decision logic

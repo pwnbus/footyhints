@@ -1,7 +1,5 @@
 ---
 engines:
-  csslint:
-    enabled: true
   fixme:
     enabled: true
   duplication:
@@ -17,7 +15,8 @@ engines:
 ratings:
   paths:
     - "**.py"
-    - "**.js"
-    - "**.css"
 exclude_paths:
   - tests/
+  - "**.js"
+  - "**.css"
+  - "**.map"

@@ -11,7 +11,7 @@ class UnitTest(object):
 
         self.home_team = Team(name='Chelsea')
         self.away_team = Team(name='Manchester United')
-        self.game = Game(home_team=self.home_team, away_team=self.away_team)
+        self.game = Game(home_team=self.home_team, away_team=self.away_team, round_num=1)
 
     def teardown(self):
         self.db.destroy()
