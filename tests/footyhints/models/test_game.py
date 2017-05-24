@@ -15,17 +15,13 @@ class TestGameInit(UnitTest):
         assert self.game.away_team is self.away_team
 
     def test_init_bad_home(self):
-        team1 = "garbageteam"
-        team2 = Team(name='Chelsea')
         with raises(TypeError) as exception_obj:
-            Game(home_team=team1, away_team=team2)
+            Game(home_team="garbageteam", away_team=self.away_team)
         assert str(exception_obj.value) == 'home_team must be of type "Team"'
 
     def test_init_bad_away(self):
-        team1 = Team(name='Chelsea')
-        team2 = "garbageteam"
         with raises(TypeError) as exception_obj:
-            Game(home_team=team1, away_team=team2)
+            Game(home_team=self.home_team, away_team="garbageteam")
         assert str(exception_obj.value) == 'away_team must be of type "Team"'
 
 
@@ -35,6 +31,9 @@ class TestGameLoadDecisionPlugins(UnitTest):
         assert len(self.game.decision_plugins) == 0
         self.game.load_decision_plugins()
         expected_plugin_num = len(listdir(plugins_path)) - 1
+        print(expected_plugin_num)
+        print("\n\n")
+        print(self.game.decision_plugins)
         assert len(self.game.decision_plugins) == expected_plugin_num
 
 
