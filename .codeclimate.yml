@@ -17,3 +17,5 @@ ratings:
     - "**.py"
 exclude_paths:
   - tests/
+  - "**.js"
+  - "**.css"
