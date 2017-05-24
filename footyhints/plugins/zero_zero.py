@@ -6,4 +6,4 @@ class ZeroZero(Plugin):
     def decision(self):
         if self.game.home_score == 0 and self.game.away_score == 0:
             return False
-        return True
+        return None

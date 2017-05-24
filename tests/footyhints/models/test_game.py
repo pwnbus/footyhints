@@ -1,3 +1,6 @@
+from os import listdir
+from os.path import join, dirname, abspath
+
 from pytest import raises
 
 from footyhints.models.game import Game
@@ -28,9 +31,11 @@ class TestGameInit(UnitTest):
 
 class TestGameLoadDecisionPlugins(UnitTest):
     def test_plugins(self):
+        plugins_path = join(dirname(abspath(__file__)), '../../../footyhints/plugins')
         assert len(self.game.decision_plugins) == 0
         self.game.load_decision_plugins()
-        assert len(self.game.decision_plugins) == 1
+        expected_plugin_num = len(listdir(plugins_path)) - 1
+        assert len(self.game.decision_plugins) == expected_plugin_num
 
 
 class TestGameSave(UnitTest):
