@@ -9,23 +9,21 @@
   <thead>
     <th>Home Team</th>
     <th>Away Team</th>
-    <th>Decision</th>
+    <th>Interest Level</th>
   </thead>
   <tbody>
     {% for game in games %}
       <tr>
-        <td>{{game['Home Team']}}</td>
-        <td>{{game['Away Team']}}</td>
+        <td>{{game['home_team']}}</td>
+        <td>{{game['away_team']}}</td>
         <td>
-          <div class="progress">
-            {% if game['Decision'] == 'High' %}
-              <div class="progress-bar progress-bar-success" aria-valuemin="0" aria-valuemax="100" style="width: 100%;" />
-            {% elif game['Decision'] == 'Medium' %}
-              <div class="progress-bar progress-bar-warning" aria-valuemin="0" aria-valuemax="100" style="width: 50%;" />
-            {% else %}
-              <div class="progress-bar progress-bar-danger" aria-valuemin="0" aria-valuemax="100" style="width: 10%;" />
-            {% endif %}
-          </div>
+          {% if game['interest_level'] == 'High' %}
+            <span class="label label-success">High</span>
+          {% elif game['interest_level'] == 'Medium' %}
+            <span class="label label-warning">Medium</span>
+          {% elif game['interest_level'] == 'Low' %}
+            <span class="label label-danger">Low</span>
+          {% endif %}
         </td>
       </tr>
     {% endfor %}

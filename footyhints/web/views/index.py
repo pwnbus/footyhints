@@ -9,10 +9,11 @@ mod = Blueprint('index', __name__)
 def home():
     games = []
     for game in Game.query.all():
+        game.worth_watching()
         game_dict = {
-            "Home Team": game.home_team.name,
-            "Away Team": game.away_team.name,
-            "Decision": game.worth_watching(),
+            "home_team": game.home_team.name,
+            "away_team": game.away_team.name,
+            "interest_level": game.interest_level,
         }
         games.append(game_dict)
 

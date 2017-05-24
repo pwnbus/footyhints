@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from random import randint, choice, shuffle
+from random import randint, shuffle
 
 from footyhints.models.team import Team
 from footyhints.models.game import Game
@@ -39,14 +39,13 @@ teams = [
 num_rounds = randint(10, 38)
 num_rounds = 1
 shuffle(teams)
-# leftover_home_teams =
 for num in range(1, num_rounds + 1):
     while len(teams) != 0:
-      home_team_name = teams.pop()
-      away_team_name = teams.pop()
-      home_team = Team(name=home_team_name)
-      away_team = Team(name=away_team_name)
-      game = Game(home_team=home_team, away_team=away_team, round_num=num)
-      game.set_score(randint(0, randint(0, 7)), randint(0, randint(0, 7)))
-      print("Creating game\t{0} | {1}\t{2}-{3}".format(home_team_name, away_team_name, game.home_team_score, game.away_team_score))
-      db.save(game)
+        home_team_name = teams.pop()
+        away_team_name = teams.pop()
+        home_team = Team(name=home_team_name)
+        away_team = Team(name=away_team_name)
+        game = Game(home_team=home_team, away_team=away_team, round_num=num)
+        game.set_score(randint(0, randint(0, 7)), randint(0, randint(0, 7)))
+        print("Creating game\t{0} | {1}\t{2}-{3}".format(home_team_name, away_team_name, game.home_team_score, game.away_team_score))
+        db.save(game)
