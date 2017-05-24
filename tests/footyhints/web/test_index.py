@@ -7,13 +7,18 @@ class TestIndex(WebTest):
         super(TestIndex, self).setup()
         self.game.set_score(3, 3)
         self.db.save(self.game)
+        self.expected_game = {
+            "Home Team": "Chelsea",
+            "Away Team": "Manchester United",
+            "Decision": "High",
+        }
 
     def test_index_slash(self):
         resp = self.client.get('/')
-        assert self.mock_obj.call_args == self.build_args('index.html', games=[self.game])
+        assert self.mock_obj.call_args == self.build_args('index.html', games=[self.expected_game])
         assert resp.status_code == 200
 
     def test_index(self):
         resp = self.client.get('/index')
-        assert self.mock_obj.call_args == self.build_args('index.html', games=[self.game])
+        assert self.mock_obj.call_args == self.build_args('index.html', games=[self.expected_game])
         assert resp.status_code == 200
