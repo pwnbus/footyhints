@@ -15,15 +15,16 @@ class TestGameInit(UnitTest):
     def test_init(self):
         assert self.game.home_team is self.home_team
         assert self.game.away_team is self.away_team
+        assert self.game.round_num == 1
 
     def test_init_bad_home(self):
         with raises(TypeError) as exception_obj:
-            Game(home_team="garbageteam", away_team=self.away_team)
+            Game(home_team="garbageteam", away_team=self.away_team, round_num=1)
         assert str(exception_obj.value) == 'home_team must be of type "Team"'
 
     def test_init_bad_away(self):
         with raises(TypeError) as exception_obj:
-            Game(home_team=self.home_team, away_team="garbageteam")
+            Game(home_team=self.home_team, away_team="garbageteam", round_num=1)
         assert str(exception_obj.value) == 'away_team must be of type "Team"'
 
 
@@ -76,7 +77,7 @@ class TestGameEquals(UnitTest):
         super(TestGameEquals, self).setup()
         self.tmp_team1 = Team(name='team1')
         self.tmp_team2 = Team(name='team2')
-        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2)
+        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, round_num=1)
 
     def test_equal_games(self):
         self.db.save(self.game)

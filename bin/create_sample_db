@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from random import randint, choice
+
 from footyhints.models.team import Team
 from footyhints.models.game import Game
 
@@ -11,9 +13,24 @@ db.connect()
 db.destroy()
 db.setup()
 
-print("Creating example game")
-team1 = Team(name='Chelsea')
-team2 = Team(name='Manchester United')
-game = Game(home_team=team1, away_team=team2)
-game.set_score(5, 1)
-db.save(game)
+teams = [
+    'Chelsea',
+    'Tottenham',
+    'Manchester City',
+    'Liverpool',
+    'Arsenal',
+    'Manchester United'
+]
+
+num_rounds = randint(10, 38)
+for num in range(1, num_games + 1):
+    home_team_name = choice(teams)
+    away_team_name = choice(teams)
+    while home_team_name == away_team_name:
+        away_team_name = choice(teams)
+    home_team = Team(name=home_team_name)
+    away_team = Team(name=away_team_name)
+    game = Game(home_team=home_team, away_team=away_team)
+    game.set_score(randint(0, randint(0, 7)), randint(0, randint(0, 7)))
+    print("Creating game\t{0} | {1}\t{2}-{3}".format(home_team_name, away_team_name, game.home_team_score, game.away_team_score))
+    db.save(game)
