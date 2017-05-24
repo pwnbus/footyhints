@@ -6,10 +6,23 @@
 {% block content %}
 Welcome!
 
-{% for game in games %}
-  <br>{{game.home_team.name}} | {{game.home_score}}
-  <br>{{game.away_team.name}} | {{game.away_score}}
-  <br>{{game.worth_watching()}}
-{% endfor %}
+<table>
+  <thead>
+    <th>Home Team</th>
+    <th>Away Team</th>
+    <th>Score</th>
+    <th>Exciting?</th>
+  </thead>
+  <tbody>
+    {% for game in games %}
+      <tr>
+        <td>{{game.home_team.name}}</td>
+        <td>{{game.away_team.name}}</td>
+        <td>{{game.home_score}} - {{game.away_score}}</td>
+        <td>{{game.worth_watching()}}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
 
