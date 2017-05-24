@@ -1,7 +1,5 @@
 ---
 engines:
-  pep8:
-    enabled: true
   csslint:
     enabled: true
   fixme:
