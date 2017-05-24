@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from pynsive import rlist_classes
@@ -29,8 +29,6 @@ class Game(Base):
         self.home_team = home_team
         self.away_team = away_team
         self.round_num = round_num
-        self.home_score = None
-        self.away_score = None
         self.decision_plugins = []
 
     def load_decision_plugins(self):
@@ -60,18 +58,23 @@ class Game(Base):
 
         # Main decision logic
         self.load_decision_plugins()
-        total_score = 50
+        total_score = 0
         for decision_plugin in self.decision_plugins:
             score = decision_plugin.score()
             if score is not None:
                 total_score += score
 
-        if total_score > 66:
-            return HIGH
-        elif total_score > 33:
-            return MEDIUM
-        else:
-            return LOW
+        self.interest_score = total_score
+        if self.interest_score > 100:
+            self.interest_score = 100
+        elif self.interest_score < 0:
+            self.interest_score = 0
+
+        self.interest_level = LOW
+        if self.interest_score > 66:
+            self.interest_level = HIGH
+        elif self.interest_score > 33:
+            self.interest_level = MEDIUM
 
     def __eq__(self, other):
         if isinstance(other, Game):

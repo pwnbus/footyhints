@@ -8,9 +8,9 @@ class TestIndex(WebTest):
         self.game.set_score(3, 3)
         self.db.save(self.game)
         self.expected_game = {
-            "Home Team": "Chelsea",
-            "Away Team": "Manchester United",
-            "Decision": "High",
+            "home_team": "Chelsea",
+            "away_team": "Manchester United",
+            "interest_level": "High",
         }
 
     def test_index_slash(self):
