@@ -4,22 +4,29 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
-Welcome!
-
-<table>
+<h3>Hello!</h3>
+<table class="table table-striped">
   <thead>
     <th>Home Team</th>
     <th>Away Team</th>
-    <th>Score</th>
-    <th>Exciting?</th>
+    <th>Decision</th>
   </thead>
   <tbody>
     {% for game in games %}
       <tr>
-        <td>{{game.home_team.name}}</td>
-        <td>{{game.away_team.name}}</td>
-        <td>{{game.home_score}} - {{game.away_score}}</td>
-        <td>{{game.worth_watching()}}</td>
+        <td>{{game['Home Team']}}</td>
+        <td>{{game['Away Team']}}</td>
+        <td>
+          <div class="progress">
+            {% if game['Decision'] == 'High' %}
+              <div class="progress-bar progress-bar-success" aria-valuemin="0" aria-valuemax="100" style="width: 100%;" />
+            {% elif game['Decision'] == 'Medium' %}
+              <div class="progress-bar progress-bar-warning" aria-valuemin="0" aria-valuemax="100" style="width: 50%;" />
+            {% else %}
+              <div class="progress-bar progress-bar-danger" aria-valuemin="0" aria-valuemax="100" style="width: 10%;" />
+            {% endif %}
+          </div>
+        </td>
       </tr>
     {% endfor %}
   </tbody>
