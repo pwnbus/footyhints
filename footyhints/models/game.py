@@ -31,21 +31,20 @@ class Game(Base):
             if attribute.name == name:
                 return attribute
 
-    @property
-    def home_team_score(self):
-        attribute = self.get_attribute_by_name('home_score')
+    def get_attribute_value(self, attribute):
         if attribute:
             attribute_value = attribute.value
             if attribute_value:
                 return int(attribute_value)
 
     @property
+    def home_team_score(self):
+        return self.get_attribute_value(self.get_attribute_by_name('home_score'))
+
+
+    @property
     def away_team_score(self):
-        attribute = self.get_attribute_by_name('away_score')
-        if attribute:
-            attribute_value = attribute.value
-            if attribute_value:
-                return int(attribute_value)
+        return self.get_attribute_value(self.get_attribute_by_name('away_score'))
 
     def load_decision_plugins(self):
         # wipe plugin list so we can 'refresh'
