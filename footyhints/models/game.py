@@ -21,7 +21,6 @@ class Game(Base):
     away_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
     away_team = relationship("Team", foreign_keys=[away_team_id], backref='away_games')
 
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.decision_plugins = []
@@ -29,22 +28,17 @@ class Game(Base):
     def get_attribute_by_name(self, name):
         for attribute in self.attributes:
             if attribute.name == name:
-                return attribute
-
-    def get_attribute_value(self, attribute):
-        if attribute:
-            attribute_value = attribute.value
-            if attribute_value:
-                return int(attribute_value)
+                attribute_value = attribute.value
+                if attribute_value:
+                    return int(attribute_value)
 
     @property
     def home_team_score(self):
-        return self.get_attribute_value(self.get_attribute_by_name('home_score'))
-
+        return self.get_attribute_by_name('home_score')
 
     @property
     def away_team_score(self):
-        return self.get_attribute_value(self.get_attribute_by_name('away_score'))
+        return self.get_attribute_by_name('away_score')
 
     def load_decision_plugins(self):
         # wipe plugin list so we can 'refresh'
