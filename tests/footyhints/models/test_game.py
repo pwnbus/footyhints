@@ -16,6 +16,7 @@ class TestGameInit(UnitTest):
         assert self.game.home_team is self.home_team
         assert self.game.away_team is self.away_team
         assert self.game.round.num == 1
+        assert self.game.attributes == [self.attribute]
 
     def test_init_bad_home(self):
         with raises(AttributeError) as exception_obj:

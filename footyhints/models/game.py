@@ -3,8 +3,9 @@ from sqlalchemy.orm import relationship
 
 from pynsive import rlist_classes
 
+from footyhints.db import db
 from footyhints.models.base import Base
-from footyhints.models.team import Team
+from footyhints.models.attribute import Attribute
 from footyhints.plugin import Plugin
 from footyhints.levels import LOW, MEDIUM, HIGH
 
@@ -14,16 +15,37 @@ class Game(Base):
     id = Column(Integer, primary_key=True)
     round_id = Column(Integer, ForeignKey('rounds.id'))
     round = relationship('Round', back_populates='games')
+    attributes = relationship("Attribute", back_populates="game")
     home_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
     home_team = relationship("Team", foreign_keys=[home_team_id], backref='home_games')
     away_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
     away_team = relationship("Team", foreign_keys=[away_team_id], backref='away_games')
-    home_team_score = Column(Integer, nullable=True)
-    away_team_score = Column(Integer, nullable=True)
+
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.decision_plugins = []
+
+    def get_attribute_by_name(self, name):
+        for attribute in self.attributes:
+            if attribute.name == name:
+                return attribute
+
+    @property
+    def home_team_score(self):
+        attribute = self.get_attribute_by_name('home_score')
+        if attribute:
+            attribute_value = attribute.value
+            if attribute_value:
+                return int(attribute_value)
+
+    @property
+    def away_team_score(self):
+        attribute = self.get_attribute_by_name('away_score')
+        if attribute:
+            attribute_value = attribute.value
+            if attribute_value:
+                return int(attribute_value)
 
     def load_decision_plugins(self):
         # wipe plugin list so we can 'refresh'
@@ -43,13 +65,14 @@ class Game(Base):
         elif type(away_team_score) is not int:
             raise TypeError('Away team score must be an integer')
 
-        self.home_team_score = home_team_score
-        self.away_team_score = away_team_score
+        home_score = Attribute(name='home_score', value=str(home_team_score), description='Home Team Score', game=self)
+        db.save(home_score)
+        away_score = Attribute(name='away_score', value=str(away_team_score), description='Away Team Score', game=self)
+        db.save(away_score)
 
     def worth_watching(self):
         if self.home_team_score is None and self.away_team_score is None:
             raise TypeError('Home and away scores must be set')
-
         # Main decision logic
         self.load_decision_plugins()
         total_score = 0
