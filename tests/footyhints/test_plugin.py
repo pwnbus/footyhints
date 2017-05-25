@@ -7,7 +7,7 @@ from tests.footyhints.unit_test import UnitTest
 
 class TestPlugin(UnitTest):
     def setup(self):
-        super(TestPlugin, self).setup()
+        super().setup()
         self.plugin = Plugin(self.game)
 
     def test_init(self):

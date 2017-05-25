@@ -1,5 +1,6 @@
 import pytest
 
+from footyhints.models.round import Round
 from footyhints.models.team import Team
 from footyhints.models.game import Game
 
@@ -40,15 +41,16 @@ class TestTeamGames(UnitTest):
         team2 = Team(name='Manchester United')
         team3 = Team(name='Arsenal')
         team4 = Team(name='Liverpool')
-        game1 = Game(home_team=team1, away_team=team2, round_num=1)
+        round1 = Round(1)
+        game1 = Game(home_team=team1, away_team=team2, round=round1)
         self.db.save(game1)
-        game2 = Game(home_team=team3, away_team=team1, round_num=2)
+        game2 = Game(home_team=team3, away_team=team1, round=round1)
         self.db.save(game2)
-        game3 = Game(home_team=team1, away_team=team4, round_num=3)
+        game3 = Game(home_team=team1, away_team=team4, round=round1)
         self.db.save(game3)
-        game4 = Game(home_team=team4, away_team=team1, round_num=4)
+        game4 = Game(home_team=team4, away_team=team1, round=round1)
         self.db.save(game4)
-        game5 = Game(home_team=team4, away_team=team2, round_num=5)
+        game5 = Game(home_team=team4, away_team=team2, round=round1)
         self.db.save(game5)
         assert team1.games == [game1, game3, game2, game4]
         assert team2.games == [game1, game5]

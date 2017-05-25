@@ -12,7 +12,8 @@ from footyhints.levels import LOW, MEDIUM, HIGH
 class Game(Base):
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
-    round_num = Column(Integer, nullable=False)
+    round_id = Column(Integer, ForeignKey('rounds.id'))
+    round = relationship('Round', back_populates='games')
     home_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
     home_team = relationship("Team", foreign_keys=[home_team_id], backref='home_games')
     away_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
@@ -20,15 +21,8 @@ class Game(Base):
     home_team_score = Column(Integer, nullable=True)
     away_team_score = Column(Integer, nullable=True)
 
-    def __init__(self, home_team, away_team, round_num):
-        if not type(home_team) is Team:
-            raise TypeError('home_team must be of type "Team"')
-        if not type(away_team) is Team:
-            raise TypeError('away_team must be of type "Team"')
-
-        self.home_team = home_team
-        self.away_team = away_team
-        self.round_num = round_num
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.decision_plugins = []
 
     def load_decision_plugins(self):
@@ -80,7 +74,7 @@ class Game(Base):
         if isinstance(other, Game):
             return (
                 self.id == other.id and
-                self.round_num == other.round_num and
+                self.round == other.round and
                 self.home_team.name == other.home_team.name and
                 self.away_team.name == other.away_team.name
             )

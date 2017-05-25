@@ -11,7 +11,7 @@ from tests.footyhints.unit_test import UnitTest
 class WebTest(UnitTest):
 
     def setup(self):
-        super(WebTest, self).setup()
+        super().setup()
         self.app = app
         self.app.test_client_class = BaseFlaskClient
         self.client = self.app.test_client()
