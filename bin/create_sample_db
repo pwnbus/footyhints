@@ -3,12 +3,12 @@
 from random import randint, shuffle
 
 from footyhints.models.team import Team
+from footyhints.models.round import Round
 from footyhints.models.game import Game
 
-from footyhints.db import DB
+from footyhints.db import db
 
 print("Setting up DB")
-db = DB()
 db.connect()
 db.destroy()
 db.setup()
