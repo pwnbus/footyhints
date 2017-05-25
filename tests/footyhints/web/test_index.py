@@ -4,7 +4,7 @@ from tests.footyhints.web.web_test import WebTest
 class TestIndex(WebTest):
 
     def setup(self):
-        super(TestIndex, self).setup()
+        super().setup()
         self.game.set_score(3, 3)
         self.db.save(self.game)
         self.expected_game = {
