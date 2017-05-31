@@ -10,7 +10,9 @@ class TestIndex(WebTest):
         self.expected_game = {
             "home_team": "Chelsea",
             "away_team": "Manchester United",
+            "match_day": 1,
             "interest_level": "High",
+            "interest_score": 90
         }
 
     def test_index_slash(self):
