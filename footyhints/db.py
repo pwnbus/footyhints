@@ -8,10 +8,10 @@ class DB(object):
     def __init__(self):
         self.connected = False
         self.db_uri = config.db_uri
+        self.engine = create_engine(self.db_uri, convert_unicode=True)
 
     def connect(self):
         self.connected = True
-        self.engine = create_engine(self.db_uri, convert_unicode=True)
         self.session = scoped_session(sessionmaker(bind=self.engine))
 
     def disconnect(self):

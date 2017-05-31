@@ -5,7 +5,11 @@ from pynsive import rlist_classes
 
 from footyhints.db import db
 from footyhints.models.base import Base
+from footyhints.models.team import Team
 from footyhints.models.attribute import Attribute
+from footyhints.models.round import Round
+from footyhints.models.score_modification import ScoreModification
+
 from footyhints.plugin import Plugin
 from footyhints.levels import LOW, MEDIUM, HIGH
 
@@ -14,12 +18,13 @@ class Game(Base):
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
     round_id = Column(Integer, ForeignKey('rounds.id'))
-    round = relationship('Round', back_populates='games')
-    attributes = relationship("Attribute", back_populates="game")
+    round = relationship(Round, back_populates='games')
+    attributes = relationship(Attribute, back_populates="game")
+    score_modifications = relationship(ScoreModification, back_populates="game")
     home_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
-    home_team = relationship("Team", foreign_keys=[home_team_id], backref='home_games')
+    home_team = relationship(Team, foreign_keys=[home_team_id], backref='home_games')
     away_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
-    away_team = relationship("Team", foreign_keys=[away_team_id], backref='away_games')
+    away_team = relationship(Team, foreign_keys=[away_team_id], backref='away_games')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
