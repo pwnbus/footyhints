@@ -8,6 +8,7 @@ from footyhints.models.attribute import Attribute
 class UnitTest(object):
     def setup(self):
         self.db = db
+        self.db.disconnect()
         self.db.connect()
         self.db.setup()
 
