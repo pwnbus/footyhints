@@ -1,16 +1,15 @@
-from footyhints.db import db
+from footyhints.db import engine, session
 from footyhints.models.round import Round
 from footyhints.models.team import Team
 from footyhints.models.game import Game
+from footyhints.models.base import Base
 from footyhints.models.attribute import Attribute
 
 
 class UnitTest(object):
     def setup(self):
-        self.db = db
-        self.db.disconnect()
-        self.db.connect()
-        self.db.setup()
+        self.session = session
+        Base.metadata.create_all(engine)
 
         self.home_team = Team(name='Chelsea')
         self.away_team = Team(name='Manchester United')
@@ -19,5 +18,5 @@ class UnitTest(object):
         self.attribute = Attribute(name='example', value='test', description='temp example value', game=self.game)
 
     def teardown(self):
-        self.db.destroy()
-        self.db.disconnect()
+        Base.metadata.drop_all(engine)
+        self.session.close()

@@ -14,5 +14,6 @@ class TestRoundSave(UnitTest):
     def test_normal_save(self):
         round_obj = Round(1)
         assert round_obj.id is None
-        self.db.save(round_obj)
+        self.session.add(round_obj)
+        self.session.commit()
         assert round_obj.id == 1

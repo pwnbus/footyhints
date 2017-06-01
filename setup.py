@@ -13,9 +13,10 @@ config = {
     'author_email': 'pwnbus@mozilla.com',
     'version': version,
     'install_requires': [
+        'pynsive',
         'sqlalchemy',
         'Flask',
-        'pynsive',
+		'Flask-SQLAlchemy',
         # Dev
         'pycodestyle',
         'coverage==4.3.4',

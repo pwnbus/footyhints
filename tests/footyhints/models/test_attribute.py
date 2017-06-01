@@ -16,5 +16,6 @@ class TestAttributeSave(UnitTest):
     def test_basic_save(self):
         attribute = Attribute(name='Test Name', value='100', description='Test description')
         assert attribute.id is None
-        self.db.save(attribute)
+        self.session.add(attribute)
+        self.session.commit()
         assert attribute.id is not None

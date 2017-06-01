@@ -13,7 +13,12 @@ class TestPlugin(UnitTest):
     def test_init(self):
         assert self.plugin.game == self.game
 
-    def test_decision(self):
+    def test_description(self):
+        with raises(NotImplementedError) as exception_obj:
+            self.plugin.description()
+        assert str(exception_obj.value) == 'Must specify a description property in the plugin'
+
+    def test_score(self):
         with raises(NotImplementedError) as exception_obj:
             self.plugin.score()
-        assert str(exception_obj.value) == 'Must specify a score function in plugin'
+        assert str(exception_obj.value) == 'Must specify a score function in the plugin'
