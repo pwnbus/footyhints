@@ -8,7 +8,7 @@ class TestDecisionsFromScore(UnitTest):
         self.game.set_score(0, 0)
         self.game.worth_watching()
         assert self.game.interest_level is LOW
-        assert self.game.interest_score == 0
+        assert self.game.interest_score == 10
 
     def test_1_0(self):
         self.game.set_score(1, 0)
@@ -20,37 +20,37 @@ class TestDecisionsFromScore(UnitTest):
         self.game.set_score(1, 1)
         self.game.worth_watching()
         assert self.game.interest_level is LOW
-        assert self.game.interest_score == 30
+        assert self.game.interest_score == 33
 
     def test_2_1(self):
         self.game.set_score(2, 1)
         self.game.worth_watching()
         assert self.game.interest_level is MEDIUM
-        assert self.game.interest_score == 45
+        assert self.game.interest_score == 43
 
     def test_2_2(self):
         self.game.set_score(2, 2)
         self.game.worth_watching()
         assert self.game.interest_level is MEDIUM
-        assert self.game.interest_score == 60
+        assert self.game.interest_score == 57
 
     def test_3_2(self):
         self.game.set_score(3, 2)
         self.game.worth_watching()
         assert self.game.interest_level is HIGH
-        assert self.game.interest_score == 75
+        assert self.game.interest_score == 68
 
     def test_3_3(self):
         self.game.set_score(3, 3)
         self.game.worth_watching()
         assert self.game.interest_level is HIGH
-        assert self.game.interest_score == 90
+        assert self.game.interest_score == 80
 
     def test_3_4(self):
         self.game.set_score(3, 4)
         self.game.worth_watching()
         assert self.game.interest_level is HIGH
-        assert self.game.interest_score == 100
+        assert self.game.interest_score == 91
 
     def test_4_4(self):
         self.game.set_score(4, 4)

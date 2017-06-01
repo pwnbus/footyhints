@@ -21,8 +21,8 @@ class TestTotalScore(UnitTest):
 
     def test_middle_score(self):
         self.game.set_score(2, 2)
-        assert self.total_score.score() == 60
+        assert self.total_score.score() == 45
 
     def test_exact_min_score(self):
         self.game.set_score(0, 0)
-        assert self.total_score.score() == self.total_score.min_score
+        assert self.total_score.score() == 0

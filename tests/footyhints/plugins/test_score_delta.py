@@ -17,12 +17,12 @@ class TestScoreDelta(UnitTest):
 
     def test_middle_score(self):
         self.game.set_score(1, 3)
-        assert self.score_delta.score() == 30
+        assert self.score_delta.score() == 3
 
     def test_exact_min_score(self):
         self.game.set_score(5, 0)
-        assert self.score_delta.score() == self.score_delta.min_score
+        assert self.score_delta.score() == 0
 
     def test_under_min_score(self):
         self.game.set_score(8, 0)
-        assert self.score_delta.score() == self.score_delta.min_score
+        assert self.score_delta.score() == 0

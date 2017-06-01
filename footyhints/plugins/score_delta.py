@@ -4,13 +4,15 @@ from footyhints.plugin import Plugin
 class ScoreDelta(Plugin):
     description = 'Difference between home team and away team goals'
     # Max score would be a 0 goal difference
-    max_score = 100
+    max_score = 5
     # Min Score would be a 0-5 game
-    min_score = 0
 
     def score(self):
         goal_delta = abs(self.game.home_team_score - self.game.away_team_score)
-        if goal_delta >= 5:
+        max_goals_delta = 5
+        if goal_delta >= max_goals_delta:
             return 0
+        elif goal_delta == 0:
+            return self.max_score
         else:
-            return abs(5 - goal_delta) * 20
+            return int((abs(max_goals_delta - goal_delta) / max_goals_delta) * self.max_score)

@@ -10,7 +10,7 @@ from footyhints.models.attribute import Attribute
 from footyhints.models.round import Round
 from footyhints.models.score_modification import ScoreModification
 
-from footyhints.plugin import Plugin
+from footyhints.plugin import Plugin, MAX_PLUGIN_SCORE
 from footyhints.levels import LOW, MEDIUM, HIGH
 
 
@@ -81,11 +81,10 @@ class Game(Base):
         # Main decision logic
         self.load_decision_plugins()
         total_max_score = 0
-        total_min_score = 0
         for decision_plugin in self.decision_plugins:
             total_max_score += decision_plugin.max_score
-            total_min_score += decision_plugin.min_score
-            score = decision_plugin.score()
+            # We give additional bonus points for 'importance'
+            score = decision_plugin.score() + (5 * (decision_plugin.max_score / MAX_PLUGIN_SCORE))
             if score is not None:
                 score_modification = ScoreModification(value=score, description=decision_plugin.description)
                 self.score_modifications.append(score_modification)
