@@ -14,7 +14,7 @@ class TestDecisionsFromScore(UnitTest):
         self.game.set_score(1, 0)
         self.game.worth_watching()
         assert self.game.interest_level is LOW
-        assert self.game.interest_score == 15
+        assert self.game.interest_score == 20
 
     def test_1_1(self):
         self.game.set_score(1, 1)

@@ -72,13 +72,6 @@ class TestGameWorthWatching(UnitTest):
             self.game.worth_watching()
         assert str(exception_obj.value) == 'Home and away scores must be set'
 
-    def test_good_scores(self):
-        self.game.set_score(5, 5)
-        self.game.worth_watching()
-        assert len(self.game.score_modifications) == 1
-        assert self.game.score_modifications[0].value == 150
-        assert self.game.score_modifications[0].description == 'Total amount of goals in the game'
-
 
 class TestGameDeleteScoreModifications(UnitTest):
     def test_delete_scores(self):
