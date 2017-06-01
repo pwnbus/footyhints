@@ -16,7 +16,7 @@ config = {
         'pynsive',
         'sqlalchemy',
         'Flask',
-		'Flask-SQLAlchemy',
+        'Flask-SQLAlchemy',
         # Dev
         'pycodestyle',
         'coverage==4.3.4',
