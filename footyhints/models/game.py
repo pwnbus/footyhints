@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 
 from pynsive import rlist_classes
 
-from footyhints.db import db
+from footyhints.db import session
 from footyhints.models.base import Base
 from footyhints.models.team import Team
 from footyhints.models.attribute import Attribute
@@ -64,20 +64,32 @@ class Game(Base):
             raise TypeError('Away team score must be an integer')
 
         home_score = Attribute(name='home_score', value=str(home_team_score), description='Home Team Score', game=self)
-        db.save(home_score)
+        session.add(home_score)
         away_score = Attribute(name='away_score', value=str(away_team_score), description='Away Team Score', game=self)
-        db.save(away_score)
+        session.add(away_score)
+        session.commit()
+
+    def delete_score_modifications(self):
+        for score_modification in self.score_modifications:
+            session.delete(score_modification)
+        session.commit()
 
     def worth_watching(self):
         if self.home_team_score is None and self.away_team_score is None:
             raise TypeError('Home and away scores must be set')
+        self.delete_score_modifications()
         # Main decision logic
         self.load_decision_plugins()
-        total_score = 0
         for decision_plugin in self.decision_plugins:
             score = decision_plugin.score()
             if score is not None:
-                total_score += score
+                score_modification = ScoreModification(value=score, description=decision_plugin.description, game=self)
+                session.add(score_modification)
+        session.commit()
+
+        total_score = 0
+        for score_modifcation in self.score_modifications:
+            total_score += score_modification.value
 
         self.interest_score = total_score
         if self.interest_score > 100:

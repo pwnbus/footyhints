@@ -7,6 +7,7 @@ from pytest import raises
 
 from footyhints.models.game import Game
 from footyhints.models.team import Team
+from footyhints.models.score_modification import ScoreModification
 
 from tests.footyhints.unit_test import UnitTest
 
@@ -41,7 +42,8 @@ class TestGameSave(UnitTest):
         assert self.game.id is None
         assert self.home_team.id is None
         assert self.away_team.id is None
-        self.db.save(self.game)
+        self.session.add(self.game)
+        self.session.commit()
         assert self.game.id == 1
         assert self.home_team.id == 1
         assert self.away_team.id == 2
@@ -70,6 +72,27 @@ class TestGameWorthWatching(UnitTest):
             self.game.worth_watching()
         assert str(exception_obj.value) == 'Home and away scores must be set'
 
+    def test_good_scores(self):
+        self.game.set_score(5, 5)
+        self.game.worth_watching()
+        assert len(self.game.score_modifications) == 1
+        assert self.game.score_modifications[0].value == 150
+        assert self.game.score_modifications[0].description == 'Total amount of goals in the game'
+
+
+class TestGameDeleteScoreModifications(UnitTest):
+    def test_delete_scores(self):
+        assert len(self.game.score_modifications) == 0
+        modification1 = ScoreModification(value=100, description='test description', game=self.game)
+        self.session.add(modification1)
+        modification2 = ScoreModification(value=10, description='test description again', game=self.game)
+        self.session.add(modification2)
+        self.session.commit()
+
+        assert len(self.game.score_modifications) == 2
+        self.game.delete_score_modifications()
+        assert len(self.game.score_modifications) == 0
+
 
 class TestGameEquals(UnitTest):
     def setup(self):
@@ -79,17 +102,20 @@ class TestGameEquals(UnitTest):
         self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, round=self.round)
 
     def test_equal_games(self):
-        self.db.save(self.game)
-        self.db.save(self.tmp_game)
+        self.session.add(self.game)
+        self.session.add(self.tmp_game)
+        self.session.commit()
         self.tmp_game.id = self.game.id
         assert self.game == self.tmp_game
 
     def test_nonequal_games(self):
-        self.db.save(self.game)
-        self.db.save(self.tmp_game)
+        self.session.add(self.game)
+        self.session.add(self.tmp_game)
+        self.session.commit()
         self.tmp_game.id = self.game.id + 1
         assert self.game != self.tmp_game
 
     def test_nonequal_objects(self):
-        self.db.save(self.game)
+        self.session.add(self.game)
+        self.session.commit()
         assert self.game != 'abcd'

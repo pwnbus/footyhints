@@ -22,11 +22,14 @@ class TestTeamInit(UnitTest):
 class TestTeamSave(UnitTest):
     def test_normal_save(self):
         assert self.home_team.id is None
-        self.db.save(self.home_team)
+        self.session.add(self.home_team)
+        self.session.commit()
         assert self.home_team.id is 1
 
     def test_normal_save_with_one_game(self):
-        self.db.save(self.game)
+        self.session.add(self.game)
+        self.session.commit()
+        assert self.home_team.id is 1
         assert self.home_team.games == [self.game]
         assert self.home_team.home_games == [self.game]
         assert self.home_team.away_games == []
@@ -43,15 +46,16 @@ class TestTeamGames(UnitTest):
         team4 = Team(name='Liverpool')
         round1 = Round(1)
         game1 = Game(home_team=team1, away_team=team2, round=round1)
-        self.db.save(game1)
+        self.session.add(game1)
         game2 = Game(home_team=team3, away_team=team1, round=round1)
-        self.db.save(game2)
+        self.session.add(game2)
         game3 = Game(home_team=team1, away_team=team4, round=round1)
-        self.db.save(game3)
+        self.session.add(game3)
         game4 = Game(home_team=team4, away_team=team1, round=round1)
-        self.db.save(game4)
+        self.session.add(game4)
         game5 = Game(home_team=team4, away_team=team2, round=round1)
-        self.db.save(game5)
+        self.session.add(game5)
+        self.session.commit()
         assert team1.games == [game1, game3, game2, game4]
         assert team2.games == [game1, game5]
         assert team3.games == [game2]

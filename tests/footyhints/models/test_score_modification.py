@@ -21,5 +21,6 @@ class TestScoreModificationSave(UnitTest):
     def test_basic_save(self):
         score_modification = ScoreModification(value=100, description='Goals', game=self.game)
         assert score_modification.id is None
-        self.db.save(score_modification)
+        self.session.add(score_modification)
+        self.session.commit()
         assert score_modification.id is not None
