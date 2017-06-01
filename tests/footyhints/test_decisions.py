@@ -8,7 +8,7 @@ class TestDecisionsFromScore(UnitTest):
         self.game.set_score(0, 0)
         self.game.worth_watching()
         assert self.game.interest_level is LOW
-        assert self.game.interest_score == 10
+        assert self.game.interest_score == 0
 
     def test_1_0(self):
         self.game.set_score(1, 0)

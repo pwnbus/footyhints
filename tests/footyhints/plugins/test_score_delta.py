@@ -11,8 +11,12 @@ class TestScoreDelta(UnitTest):
     def test_description(self):
         assert self.score_delta.description == 'Difference between home team and away team goals'
 
-    def test_exact_max_score(self):
+    def test_nil_nil(self):
         self.game.set_score(0, 0)
+        assert self.score_delta.score() == 0
+
+    def test_exact_max_score(self):
+        self.game.set_score(3, 3)
         assert self.score_delta.score() == self.score_delta.max_score
 
     def test_middle_score(self):
