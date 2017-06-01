@@ -30,11 +30,9 @@
               {% for score_modification in game.score_modifications %}
                 <div style="float: left;">
                 {% if score_modification.value > 0 %}
-                  <span class="glyphicon glyphicon-arrow-up"/>
-                {% elif score_modification.value < 0 %}
-                  <span class="glyphicon glyphicon-arrow-down"/>
+                  <span class="glyphicon glyphicon-arrow-up" style="color:green"/>
                 {% else %}
-                  <span class="glyphicon glyphicon-question-sign"/>
+                  <span class="glyphicon glyphicon-arrow-down" style="color:red"/>
                 {% endif %}
                 </div>
                 <div style="margin: 0 0 0 30px;">{{score_modification.description}}</div>

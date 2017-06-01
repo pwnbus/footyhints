@@ -1,6 +1,13 @@
+MAX_PLUGIN_SCORE = 100
+
+
 class Plugin(object):
     def __init__(self, game):
         self.game = game
+
+    @property
+    def max_score(self):
+        raise NotImplementedError('Must specify a max_score property in the plugin')
 
     @property
     def description(self):

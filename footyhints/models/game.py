@@ -10,7 +10,7 @@ from footyhints.models.attribute import Attribute
 from footyhints.models.round import Round
 from footyhints.models.score_modification import ScoreModification
 
-from footyhints.plugin import Plugin
+from footyhints.plugin import Plugin, MAX_PLUGIN_SCORE
 from footyhints.levels import LOW, MEDIUM, HIGH
 
 
@@ -80,21 +80,28 @@ class Game(Base):
         self.delete_score_modifications()
         # Main decision logic
         self.load_decision_plugins()
+        total_max_score = 0
+        total_earned_score = 0
         for decision_plugin in self.decision_plugins:
+            total_max_score += decision_plugin.max_score
             score = decision_plugin.score()
+            if score != 0:
+                # We give additional bonus points for 'importance'
+                # but, only if you earn it!
+                score += (5 * (decision_plugin.max_score / MAX_PLUGIN_SCORE))
             if score is not None:
-                score_modification = ScoreModification(value=score, description=decision_plugin.description, game=self)
+                total_earned_score += score
+                score_modification = ScoreModification(value=score, description=decision_plugin.description)
+                self.score_modifications.append(score_modification)
                 session.add(score_modification)
         session.commit()
 
-        total_score = 0
-        for score_modifcation in self.score_modifications:
-            total_score += score_modification.value
+        score_earned_percent = int((total_earned_score / total_max_score) * 100)
+        self.interest_score = score_earned_percent
 
-        self.interest_score = total_score
-        if self.interest_score > 100:
+        if self.interest_score >= 100:
             self.interest_score = 100
-        elif self.interest_score < 0:
+        elif self.interest_score <= 0:
             self.interest_score = 0
 
         self.interest_level = LOW
