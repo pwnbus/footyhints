@@ -1,10 +1,19 @@
+sudo: required
+services:
+  - docker
 language: python
 python:
   - '3.5'
-  - 'nightly'
+before_install:
+  - docker build -t pwnbus/footyhints .
 install: "pip install -e ."
 script:
   - cp config.txt.inc config.txt
   - py.test --cov=footyhints tests
   - codeclimate-test-reporter
   - pycodestyle --show-source --ignore=E501,E402  ./
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push pwnbus/footyhints;
+    fi
