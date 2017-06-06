@@ -18,4 +18,5 @@ RUN cp /home/footyhints/footyhints/src/config.txt.inc /home/footyhints/footyhint
 RUN sed -i -e 's/debug = True/debug = False/g' /home/footyhints/footyhints/src/config.txt
 
 EXPOSE 5000
+CMD /bin/bash -c "source /home/footyhints/footyhints/env/bin/activate;cd /home/footyhints/footyhints/src/;./bin/create_sample_db"
 CMD /bin/bash -c "source /home/footyhints/footyhints/env/bin/activate;cd /home/footyhints/footyhints/src/;python run.py"
