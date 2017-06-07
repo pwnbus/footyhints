@@ -7,6 +7,7 @@
     {% block head %}
       <title>Footyhints - {% block title %}{% endblock %}</title>
     {% endblock %}
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
