@@ -2,10 +2,10 @@
 {% block title %}Index{% endblock %}
 {% block head %}
   {{ super() }}
+  <link href="{{ url_for('static', filename='css/bootstrap-glyphicons.css') }}" rel="stylesheet">
   <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/bootstrap.min.css') }}"></script>
 {% endblock %}
 {% block content %}
 <h3>{{ season_name }}</h3>
