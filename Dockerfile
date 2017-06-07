@@ -18,5 +18,5 @@ RUN pip install -e .
 
 RUN FOOTYHINTS_API_TOKEN=$FOOTYHINTS_API_TOKEN python3.5 ./bin/import_pl_data
 
+EXPOSE 5000
 CMD python3.5 run.py
-
