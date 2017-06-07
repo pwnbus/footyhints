@@ -13,6 +13,9 @@ class TestSample1Config(object):
     def test_web_debug(self):
         assert self.config.web_debug is True
 
+    def test_fetch_season_name(self):
+        assert self.config.fetch_season_name == 'Some Season 11/12'
+
 
 class TestSample2Config(object):
     def setup(self):
@@ -23,6 +26,9 @@ class TestSample2Config(object):
 
     def test_web_debug(self):
         assert self.config.web_debug is False
+
+    def test_fetch_season_name(self):
+        assert self.config.fetch_season_name == 'Some Other Season 11/12'
 
 
 class TestNonexistentConfig(object):

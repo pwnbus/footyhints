@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from pynsive import rlist_classes
@@ -25,6 +25,8 @@ class Game(Base):
     home_team = relationship(Team, foreign_keys=[home_team_id], backref='home_games')
     away_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
     away_team = relationship(Team, foreign_keys=[away_team_id], backref='away_games')
+    interest_score = Column(Integer, nullable=True)
+    interest_level = Column(String, nullable=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

@@ -3,3 +3,6 @@ debug = True
 
 [DB]
 uri = sqlite:///:memory:
+
+[FETCH]
+season_name = Some Season 11/12

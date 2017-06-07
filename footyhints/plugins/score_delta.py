@@ -10,6 +10,8 @@ class ScoreDelta(Plugin):
     def score(self):
         total_goals = self.game.home_team_score + self.game.away_team_score
         goal_delta = abs(self.game.home_team_score - self.game.away_team_score)
+        if total_goals == 0:
+            return 0
         max_goals_delta = 5
         if goal_delta >= max_goals_delta:
             return 0
