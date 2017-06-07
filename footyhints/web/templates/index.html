@@ -51,6 +51,7 @@
       'bInfo': false,
       "bLengthChange": false,
       "bPaginate": true,
+      "iDisplayLength": 15,
       "createdRow": function ( row, data, index ) {
         if ( data.interest_level == "High" ) {
           $('td:eq(3)', row).html( '<a href="#gameModal' + data.game_id + '" class="label label-success" data-toggle="modal">High</a>' );
