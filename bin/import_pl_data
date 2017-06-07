@@ -19,7 +19,6 @@ if 'FOOTYHINTS_API_TOKEN' not in environ:
     exit(1)
 
 API_TOKEN = environ['FOOTYHINTS_API_TOKEN']
-print(API_TOKEN)
 
 print("Setting up DB")
 delete_db()
@@ -44,7 +43,7 @@ response = json.loads(connection.getresponse().read().decode())
 rounds = []
 for fixture in response['fixtures']:
     if not fixture['status'] == 'FINISHED':
-        print("Fixture is not finished...weirddd!?")
+        print("Fixture is not finished...weird!?")
         continue
 
     round_num = fixture['matchday']
@@ -54,11 +53,9 @@ for fixture in response['fixtures']:
             round_obj = tmp_round
 
     if round_obj is None:
-        print("Creating new round " + str(round_num))
         round_obj = Round(round_num)
         rounds.append(round_obj)
         session.add(round_obj)
-    print("Round: " + str(round_obj.num))
     home_team_name = fixture['homeTeamName']
     away_team_name = fixture['awayTeamName']
     home_team_score = fixture['result']['goalsHomeTeam']
@@ -68,7 +65,7 @@ for fixture in response['fixtures']:
     away_team = Team(name=away_team_name)
     game = Game(home_team=home_team, away_team=away_team, round=round_obj)
     game.set_score(home_team_score, away_team_score)
-    print("\tCreating game\t{0} | {1}\t{2}-{3}".format(home_team_name, away_team_name, game.home_team_score, game.away_team_score))
+    print("Creating game\t{0} | {1}\t{2}-{3} ({4})".format(home_team_name, away_team_name, game.home_team_score, game.away_team_score, round_obj.num))
     game.worth_watching()
     session.add(game)
 session.commit()
