@@ -13,7 +13,7 @@ class TestScoreDelta(UnitTest):
 
     def test_nil_nil(self):
         self.game.set_score(0, 0)
-        assert self.score_delta.score() == 5
+        assert self.score_delta.score() == 0
 
     def test_exact_max_score(self):
         self.game.set_score(3, 3)

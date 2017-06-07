@@ -72,6 +72,14 @@ class TestGameWorthWatching(UnitTest):
             self.game.worth_watching()
         assert str(exception_obj.value) == 'Home and away scores must be set'
 
+    def test_before_method_call(self):
+        self.game.set_score(1, 1)
+        assert self.game.interest_score is None
+        assert self.game.interest_level is None
+        self.game.worth_watching()
+        assert type(self.game.interest_score) is int
+        assert type(self.game.interest_level) is str
+
 
 class TestGameDeleteScoreModifications(UnitTest):
     def test_delete_scores(self):
