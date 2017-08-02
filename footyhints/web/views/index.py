@@ -1,6 +1,4 @@
 from flask import Blueprint, render_template
-from footyhints.db import session
-from footyhints.models.game import Game
 from footyhints.config import config
 
 mod = Blueprint('index', __name__)

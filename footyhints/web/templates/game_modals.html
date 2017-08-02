@@ -1,0 +1,96 @@
+<div id='game_modals'>
+</div>
+
+<table id='game_list_new' class="table table-striped table-bordered table-compact" style="clear: both;margin-top: 20px;">
+  <thead>
+    <th>Home Team</th>
+    <th>Away Team</th>
+    <th>Match Day</th>
+    <th>Interest Level</th>
+    <th>Interest Score</th>
+  </thead>
+</table>
+
+<script>
+  $(document).ready(function(){
+    var table = $('#game_list_new').DataTable({
+      "ajax": "{{ game_modal_ajax_url }}",
+      "columns": [
+          { "data": "home_team_name" },
+          { "data": "away_team_name" },
+          { "data": "round_num" },
+          { "data": "interest_level" },
+          { "data": "interest_score" }
+      ],
+      "columnDefs": [
+        {
+          "targets": [0,1,2,3],
+          "bSortable": false,
+        },
+        {
+          "targets": [4],
+          "visible": false,
+          "searchable": false
+        },
+      ],
+      'order': [[2, 'desc'], [4, 'desc']],
+      'bFilter': false,
+      'bInfo': false,
+      "bLengthChange": false,
+      "bPaginate": true,
+      "iDisplayLength": 15,
+      "createdRow": function ( row, data, index ) {
+        $('td:eq(0)', row).html( '<a href="/team/' + data.home_team_id + '">' + data.home_team_name + '</a>' );
+        $('td:eq(1)', row).html( '<a href="/team/' + data.away_team_id + '">' + data.away_team_name + '</a>' );
+        if ( data.interest_level == "High" ) {
+          $('td:eq(3)', row).html( '<a href="#gameModal' + data.game_id + '" class="label label-success" data-toggle="modal">High</a>' );
+        } else if ( data.interest_level == "Medium" ) {
+          $('td:eq(3)', row).html( '<a href="#gameModal' + data.game_id + '" class="label label-warning" data-toggle="modal">Medium</a>' );
+        } else {
+          $('td:eq(3)', row).html( '<a href="#gameModal' + data.game_id + '" class="label label-danger" data-toggle="modal">Low</a>' );
+        }
+        var game_modal_str = '<div id="gameModal' + data.game_id + '" class="modal fade">'
+        game_modal_str += `
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">Scoring Reasons</h4>
+                </div>
+                <div class="modal-body">
+                  <div>`
+        for (var index in data.score_modifications) {
+          var modification_value = data.score_modifications[index][0]
+          var modification_description = data.score_modifications[index][1]
+          if ( modification_value != 0 ) {
+            game_modal_str += '<div style="float: left;">'
+            if ( modification_value > 0) {
+              game_modal_str += '<span class="glyphicon glyphicon-arrow-up" style="color:green"/>'
+            }
+            else {
+              game_modal_str += '<span class="glyphicon glyphicon-arrow-down" style="color:red"/>'
+            }
+            game_modal_str += `
+                  </div>
+                  <div style="margin: 0 0 15px 30px;">`
+            game_modal_str += modification_description
+            game_modal_str += `
+                  </div>`
+          }
+        }
+        game_modal_str += `
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>`
+        $( "#game_modals" ).append(game_modal_str);
+      }
+    });
+    setInterval( function () {
+        table.ajax.reload();
+    }, 60000 );
+  });
+</script>
