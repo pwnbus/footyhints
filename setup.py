@@ -19,13 +19,13 @@ config = {
         'Flask-SQLAlchemy',
         # Dev
         'pycodestyle',
-        'coverage==4.3.4',
+        'coverage',
         'pytest-cov',
         'pytest',
         'codeclimate-test-reporter',
         'mock',
     ],
-    'packages': ['footyhints', 'tests'],
+    'packages': ['footyhints'],
     'scripts': [],
     'name': 'footyhints'
 }
