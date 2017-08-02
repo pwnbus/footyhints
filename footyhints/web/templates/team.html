@@ -11,6 +11,10 @@
 {% block content %}
 <h3>{{team.name}}</h3>
 
+<ul class="breadcrumb">
+  <li><a href="/">Premier League 2016/17</a></li>
+</ul>
+
 {% set game_modal_ajax_url = "/api/team/" + team.id|string + "/games" %}
 {% include 'game_modals.html' %}
 
