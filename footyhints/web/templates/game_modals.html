@@ -16,8 +16,8 @@
     var table = $('#game_list_new').DataTable({
       "ajax": "{{ game_modal_ajax_url }}",
       "columns": [
-          { "data": "home_team" },
-          { "data": "away_team" },
+          { "data": "home_team_name" },
+          { "data": "away_team_name" },
           { "data": "round_num" },
           { "data": "interest_level" },
           { "data": "interest_score" }
@@ -40,6 +40,8 @@
       "bPaginate": true,
       "iDisplayLength": 15,
       "createdRow": function ( row, data, index ) {
+        $('td:eq(0)', row).html( '<a href="/team/' + data.home_team_id + '">' + data.home_team_name + '</a>' );
+        $('td:eq(1)', row).html( '<a href="/team/' + data.away_team_id + '">' + data.away_team_name + '</a>' );
         if ( data.interest_level == "High" ) {
           $('td:eq(3)', row).html( '<a href="#gameModal' + data.game_id + '" class="label label-success" data-toggle="modal">High</a>' );
         } else if ( data.interest_level == "Medium" ) {
