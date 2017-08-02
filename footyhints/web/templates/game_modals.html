@@ -13,7 +13,13 @@
 
 <script>
   $(document).ready(function(){
-    var table = $('#game_list_new').DataTable({
+    $.fn.dataTable.ext.errMode = 'none';
+
+    var table = $('#game_list_new')
+    .on('error.dt', function (e, settings, techNote, message) {
+        console.log( 'An error has been reported by DataTables: ', message );
+    })
+    .DataTable({
       "ajax": "{{ game_modal_ajax_url }}",
       "columns": [
           { "data": "home_team_name" },
