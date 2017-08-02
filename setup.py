@@ -25,7 +25,7 @@ config = {
         'codeclimate-test-reporter',
         'mock',
     ],
-    'packages': ['footyhints', 'tests'],
+    'packages': ['footyhints'],
     'scripts': [],
     'name': 'footyhints'
 }
