@@ -17,13 +17,6 @@ config = {
         'sqlalchemy',
         'Flask',
         'Flask-SQLAlchemy',
-        # Dev
-        'pycodestyle',
-        'coverage==4.3.4',
-        'pytest-cov',
-        'pytest',
-        'codeclimate-test-reporter',
-        'mock',
     ],
     'packages': ['footyhints'],
     'scripts': [],
