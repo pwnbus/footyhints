@@ -9,8 +9,4 @@ mod = Blueprint('index', __name__)
 @mod.route('/')
 @mod.route("/index")
 def home():
-    games = []
-    for game in session.query(Game).all():
-        games.append(game)
-
-    return render_template('index.html', games=games, season_name=config.fetch_season_name)
+    return render_template('index.html', season_name=config.fetch_season_name)
