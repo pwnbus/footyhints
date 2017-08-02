@@ -19,7 +19,7 @@ config = {
         'Flask-SQLAlchemy',
         # Dev
         'pycodestyle',
-        'coverage',
+        'coverage==4.3.4',
         'pytest-cov',
         'pytest',
         'codeclimate-test-reporter',
