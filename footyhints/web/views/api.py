@@ -1,14 +1,22 @@
 from flask import Blueprint, jsonify
 from footyhints.db import session
 from footyhints.models.game import Game
+from footyhints.models.team import Team
 
 mod = Blueprint('api', __name__)
 
 
-@mod.route('/api/games')
-def api_games():
+@mod.route('/api/games/all')
+def api_games_all():
     data = []
-    for game in session.query(Game).all():
+    games = session.query(Game).all()
+    data = generate_games_data(games)
+    return jsonify(data=data)
+
+
+def generate_games_data(games):
+    data = []
+    for game in games:
         score_modifications = []
         for score_modification in game.score_modifications:
             score_modifications.append([score_modification.value, score_modification.description])
@@ -22,4 +30,11 @@ def api_games():
             interest_score=game.interest_score,
             score_modifications=score_modifications
         ))
+    return data
+
+
+@mod.route('/api/team/<id>/games')
+def api_team_games(id):
+    team = session.query(Team).get(id)
+    data = generate_games_data(team.games)
     return jsonify(data=data)
