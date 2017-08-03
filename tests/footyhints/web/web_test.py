@@ -23,6 +23,3 @@ class WebTest(UnitTest):
 
     def build_args(self, *args, **kwargs):
         return call(*args, **kwargs)
-
-    def test_debug(self):
-        assert self.app.debug is True

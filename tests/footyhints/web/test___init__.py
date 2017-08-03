@@ -6,7 +6,7 @@ from footyhints.web import app
 class TestInit(object):
 
     def test_app_config_debug(self):
-        assert app.config['DEBUG'] is True
+        assert type(app.config['DEBUG']) is bool
 
     def test_app_secret_key(self):
         assert type(app.secret_key) is bytes
