@@ -1,5 +1,5 @@
 [WEB]
-debug = True
+debug = False
 
 [DB]
 # SQLite
