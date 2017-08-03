@@ -20,8 +20,6 @@ WORKDIR /app
 RUN pip install -e .
 
 COPY config.txt.inc /app/config.txt
-RUN sed -i -e 's/debug = True/debug = False/g' config.txt
-
 COPY bin /app/bin
 RUN python3.5 ./bin/create_sample_db
 
