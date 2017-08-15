@@ -6,3 +6,5 @@ Table of Contents
 
   overview
   installation
+
+.. image:: images/main_page.png
