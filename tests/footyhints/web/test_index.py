@@ -12,7 +12,8 @@ class TestIndex(WebTest):
     def verify_index(self, resp):
         assert len(self.mock_obj.call_args) == 2
         assert self.mock_obj.call_args[0][0] == 'index.html'
-        assert self.mock_obj.call_args[1]['season_name'] == 'Premier League 2016/17'
+        assert type(self.mock_obj.call_args[1]['season_name']) is str
+        assert self.mock_obj.call_args[1]['season_name'] is not ""
         assert resp.status_code == 200
 
     def test_index_slash(self):
