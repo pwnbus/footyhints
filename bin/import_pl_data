@@ -43,7 +43,6 @@ response = json.loads(connection.getresponse().read().decode())
 rounds = []
 for fixture in response['fixtures']:
     if not fixture['status'] == 'FINISHED':
-        print("Fixture is not finished...weird!?")
         continue
 
     round_num = fixture['matchday']
