@@ -29,6 +29,10 @@ headers = {'X-Auth-Token': API_TOKEN, 'X-Response-Control': 'minified'}
 connection.request('GET', '/v1/competitions', None, headers)
 response = json.loads(connection.getresponse().read().decode())
 
+if 'error' in response:
+    print(response['error'])
+    exit(1)
+
 competition_id = ""
 current_match_day = ""
 for competition in response:
