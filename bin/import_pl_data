@@ -41,6 +41,14 @@ for competition in response:
     competition_id = competition['id']
     current_match_day = competition['currentMatchday']
 
+connection.request('GET', "/v1/competitions/{}/teams".format(competition_id), None, headers)
+response = json.loads(connection.getresponse().read().decode())
+teams = {}
+for team_dict in response['teams']:
+    name = team_dict['name']
+    team = Team(name=name)
+    teams[name] = team
+
 connection.request('GET', "/v1/competitions/{}/fixtures".format(competition_id), None, headers)
 response = json.loads(connection.getresponse().read().decode())
 
@@ -64,8 +72,8 @@ for fixture in response['fixtures']:
     home_team_score = fixture['result']['goalsHomeTeam']
     away_team_score = fixture['result']['goalsAwayTeam']
 
-    home_team = Team(name=home_team_name)
-    away_team = Team(name=away_team_name)
+    home_team = teams[home_team_name]
+    away_team = teams[away_team_name]
     game = Game(home_team=home_team, away_team=away_team, round=round_obj)
     game.set_score(home_team_score, away_team_score)
     print("Creating game\t{0} | {1}\t{2}-{3} ({4})".format(home_team_name, away_team_name, game.home_team_score, game.away_team_score, round_obj.num))
