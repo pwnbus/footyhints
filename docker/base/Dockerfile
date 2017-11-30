@@ -6,8 +6,8 @@ RUN \
   apt-get install -y --fix-missing \
     python3 \
     python3-pip && \
-  ln -s /usr/bin/python3 /usr/bin/python && \
   apt-get clean all && \
+  pip3 install --upgrade pip && \
   mkdir /app && \
   mkdir /app/data
 
