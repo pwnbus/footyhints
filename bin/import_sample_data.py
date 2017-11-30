@@ -36,7 +36,7 @@ def import_development_data():
         team = Team(name=team_name)
         teams[team_name] = team
 
-    num_rounds = randint(1, 38)
+    num_rounds = randint(5, 38)
     for num in range(1, num_rounds + 1):
         temp_team_names = [team[:] for team in team_names]
         shuffle(temp_team_names)
