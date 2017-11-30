@@ -14,6 +14,11 @@ class Config(object):
         self.parser = configparser.ConfigParser()
         self.parser.read(config_location)
 
+        self.mode = self.parser['GENERAL']['mode']
+        self.api_key = None
+        if self.mode.lower() == 'production':
+            self.api_key = self.parser['GENERAL']['api_key']
+
         self.db_uri = self.parser['DB']['uri']
         self.web_debug = self.parser['WEB']['debug'] == 'True'
         self.fetch_season_name = self.parser['FETCH']['season_name']

@@ -1,3 +1,6 @@
+[GENERAL]
+mode = development
+
 [WEB]
 debug = True
 
