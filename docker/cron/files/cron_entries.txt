@@ -1,1 +1,1 @@
-0 * * * * python3 /app/bin/import_pl_data
+0 * * * * /app/bin/import_pl_data

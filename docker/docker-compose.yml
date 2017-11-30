@@ -9,6 +9,7 @@ services:
     build:
       context: ../
       dockerfile: docker/bootstrap/Dockerfile
+    command: /app/bin/setup_db
     depends_on:
       - base
     volumes:
@@ -17,6 +18,7 @@ services:
     build:
       context: ../
       dockerfile: docker/flask/Dockerfile
+    command: python /app/run.py
     depends_on:
       - bootstrap
     volumes:
