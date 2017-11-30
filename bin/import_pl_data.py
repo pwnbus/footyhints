@@ -67,6 +67,7 @@ def import_production_data():
         game.worth_watching()
         session.add(game)
     session.commit()
+    session.close()
 
 
 if __name__ == '__main__':
