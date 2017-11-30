@@ -10,22 +10,22 @@ from footyhints.db import session, create_db, delete_db
 
 import http.client
 import json
-from os import environ
 from sys import exit
 
 
-if 'FOOTYHINTS_API_TOKEN' not in environ:
-    print("Must set the FOOTYHINTS_API_TOKEN environment variable!")
+if config.mode != 'production':
+    print("Mode must be 'production'")
     exit(1)
-
-API_TOKEN = environ['FOOTYHINTS_API_TOKEN']
+if config.api_key is None:
+    print("Must specify the 'api_key' value in the config")
+    exit(1)
 
 print("Setting up DB")
 delete_db()
 create_db()
 
 connection = http.client.HTTPConnection('api.football-data.org')
-headers = {'X-Auth-Token': API_TOKEN, 'X-Response-Control': 'minified'}
+headers = {'X-Auth-Token': config.api_key, 'X-Response-Control': 'minified'}
 connection.request('GET', '/v1/competitions', None, headers)
 response = json.loads(connection.getresponse().read().decode())
 

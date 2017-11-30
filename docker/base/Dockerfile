@@ -17,5 +17,3 @@ WORKDIR /app
 RUN pip3 install -e .
 
 COPY docker/base/files/config.inc /app/config.txt
-COPY bin /app/bin
-

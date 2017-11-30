@@ -1,1 +1,1 @@
-0 * * * * python3 /app/bin/create_sample_db
+0 * * * * python3 /app/bin/import_pl_data

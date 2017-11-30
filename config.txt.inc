@@ -1,7 +1,8 @@
 [GENERAL]
 mode = development
-# For production, 'mode = production'
-# and then specify the API token 'api_token = whateveritishere'
+# For production:
+# mode = production
+# api_key = 12345678
 
 [WEB]
 debug = False

@@ -23,17 +23,6 @@ services:
       - data:/app/data
     networks:
       - default
-  cron:
-    build:
-      context: ../
-      dockerfile: docker/cron/Dockerfile
-    depends_on:
-      - bootstrap
-    command: cron -f
-    volumes:
-      - data:/app/data
-    networks:
-      - default
   nginx:
     build:
       context: ../
@@ -45,6 +34,19 @@ services:
       - default
     ports:
       - 80:80
+
+  # cron:
+  #   build:
+  #     context: ../
+  #     dockerfile: docker/cron/Dockerfile
+  #   depends_on:
+  #     - bootstrap
+  #   command: cron -f
+  #   volumes:
+  #     - data:/app/data
+  #   networks:
+  #     - default
+
 
 volumes:
   data:
