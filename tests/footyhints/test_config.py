@@ -7,6 +7,12 @@ class TestSample1Config(object):
     def setup(self):
         self.config = Config(location="../tests/footyhints/example_configs/config1.txt")
 
+    def test_mode(self):
+        assert self.config.mode == "development"
+
+    def test_api_key(self):
+        assert self.config.api_key is None
+
     def test_db_uri(self):
         assert self.config.db_uri == "sqlite:///:memory:"
 
@@ -20,6 +26,12 @@ class TestSample1Config(object):
 class TestSample2Config(object):
     def setup(self):
         self.config = Config(location="../tests/footyhints/example_configs/config2.txt")
+
+    def test_mode(self):
+        assert self.config.mode == "production"
+
+    def test_api_key(self):
+        assert self.config.api_key == '12345678'
 
     def test_db_uri(self):
         assert self.config.db_uri == "mysql://user:pass@127.0.0.1/footyhints"

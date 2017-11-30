@@ -1,0 +1,1 @@
+0 * * * * python3 /app/bin/import_pl_data.py

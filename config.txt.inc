@@ -1,3 +1,9 @@
+[GENERAL]
+mode = development
+# For production:
+# mode = production
+# api_key = 12345678
+
 [WEB]
 debug = False
 
