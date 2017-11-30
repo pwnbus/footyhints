@@ -18,7 +18,7 @@ services:
     build:
       context: ../
       dockerfile: docker/flask/Dockerfile
-    command: bash -c 'sleep 30 && python3 /app/run.py'
+    command: python3 /app/run.py
     depends_on:
       - bootstrap
     volumes:
