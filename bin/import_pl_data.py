@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-
-
 from footyhints.models.team import Team
 from footyhints.models.round import Round
 from footyhints.models.game import Game

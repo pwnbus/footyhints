@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-
-
 from random import randint, shuffle
 
 from footyhints.models.team import Team
