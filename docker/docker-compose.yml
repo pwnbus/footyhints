@@ -1,0 +1,53 @@
+---
+version: '2.2'
+services:
+  base:
+    build:
+      context: ../
+      dockerfile: docker/base/Dockerfile
+  bootstrap:
+    build:
+      context: ../
+      dockerfile: docker/bootstrap/Dockerfile
+    depends_on:
+      - base
+    volumes:
+      - data:/app/data
+  flask:
+    build:
+      context: ../
+      dockerfile: docker/flask/Dockerfile
+    depends_on:
+      - bootstrap
+    volumes:
+      - data:/app/data
+    networks:
+      - default
+  cron:
+    build:
+      context: ../
+      dockerfile: docker/cron/Dockerfile
+    depends_on:
+      - bootstrap
+    command: cron -f
+    volumes:
+      - data:/app/data
+    networks:
+      - default
+  nginx:
+    build:
+      context: ../
+      dockerfile: docker/nginx/Dockerfile
+    depends_on:
+      - flask
+    command: /usr/sbin/nginx
+    networks:
+      - default
+    ports:
+      - 80:80
+
+volumes:
+  data:
+
+networks:
+  default:
