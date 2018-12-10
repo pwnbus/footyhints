@@ -4,7 +4,6 @@ python:
   - 'nightly'
 install:
   - pip install -e .
-  - pip install -r requirements.txt
 script:
   - cp config.txt.inc config.txt
   - py.test --cov=footyhints tests
