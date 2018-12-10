@@ -6,7 +6,8 @@ install:
   - pip install -e .
   - pip install -r requirements.txt
 script:
+  - codeclimate-test-reporter before-build
+  - pycodestyle --show-source --ignore=E501,E402  ./
   - cp config.txt.inc config.txt
   - py.test --cov=footyhints tests
   - codeclimate-test-reporter
-  - pycodestyle --show-source --ignore=E501,E402  ./
