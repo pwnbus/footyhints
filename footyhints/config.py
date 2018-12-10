@@ -21,7 +21,8 @@ class Config(object):
 
         self.db_uri = self.parser['DB']['uri']
         self.web_debug = self.parser['WEB']['debug'] == 'True'
-        self.fetch_season_name = self.parser['FETCH']['season_name']
+        self.fetch_league_country = self.parser['FETCH']['league_country']
+        self.fetch_league_name = self.parser['FETCH']['league_name']
 
 
 config = Config()

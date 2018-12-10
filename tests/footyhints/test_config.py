@@ -19,8 +19,11 @@ class TestSample1Config(object):
     def test_web_debug(self):
         assert self.config.web_debug is True
 
-    def test_fetch_season_name(self):
-        assert self.config.fetch_season_name == 'Some Season 11/12'
+    def test_fetch_league_country(self):
+        assert self.config.fetch_league_country == 'United States'
+
+    def test_fetch_league_name(self):
+        assert self.config.fetch_league_name == 'Premier League'
 
 
 class TestSample2Config(object):
@@ -39,8 +42,11 @@ class TestSample2Config(object):
     def test_web_debug(self):
         assert self.config.web_debug is False
 
-    def test_fetch_season_name(self):
-        assert self.config.fetch_season_name == 'Some Other Season 11/12'
+    def test_fetch_league_country(self):
+        assert self.config.fetch_league_country == 'United States'
+
+    def test_fetch_league_name(self):
+        assert self.config.fetch_league_name == 'MLS'
 
 
 class TestNonexistentConfig(object):

@@ -12,4 +12,9 @@ def team(id):
     team = session.query(Team).get(id)
     if team is None:
         return redirect("/"), 404
-    return render_template('team.html', team=team, season_name=config.fetch_season_name)
+    return render_template(
+        'team.html',
+        team=team,
+        league_country=config.fetch_league_country,
+        league_name=config.fetch_league_name
+    )
