@@ -16,4 +16,5 @@ uri = sqlite:////tmp/footyhints.db
 #uri = postgresql://user:pass@127.0.0.1/footyhints
 
 [FETCH]
-season_name = Premier League 2017/18
+league_country = England
+league_name = Premier League

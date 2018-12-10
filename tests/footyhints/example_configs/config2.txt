@@ -9,4 +9,5 @@ debug = False
 uri = mysql://user:pass@127.0.0.1/footyhints
 
 [FETCH]
-season_name = Some Other Season 11/12
+league_country = United States
+league_name = MLS

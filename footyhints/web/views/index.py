@@ -7,4 +7,4 @@ mod = Blueprint('index', __name__)
 @mod.route('/')
 @mod.route("/index")
 def home():
-    return render_template('index.html', season_name=config.fetch_season_name)
+    return render_template('index.html', league_name=config.fetch_league_name)

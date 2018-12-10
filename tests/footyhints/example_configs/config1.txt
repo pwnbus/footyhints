@@ -8,4 +8,5 @@ debug = True
 uri = sqlite:///:memory:
 
 [FETCH]
-season_name = Some Season 11/12
+league_country = United States
+league_name = Premier League

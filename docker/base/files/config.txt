@@ -8,4 +8,5 @@ debug = False
 uri = sqlite:////app/data/footyhints.db
 
 [FETCH]
-season_name = Premier League 2017/18
+league_country = England
+league_name = Premier League
