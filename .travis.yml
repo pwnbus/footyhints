@@ -12,5 +12,5 @@ before_script:
 script:
   - flake8 --config .flake8 ./
   - cp config.txt.inc config.txt
-  - py.test --cov=footyhints tests
+  - py.test --cov=footyhints --cov-report=xml tests
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

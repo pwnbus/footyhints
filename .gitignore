@@ -4,3 +4,4 @@ footyhints.egg-info/
 config.txt
 docs/_build
 .DS_Store
+coverage.xml
