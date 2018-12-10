@@ -9,7 +9,7 @@
   <link href="{{ url_for('static', filename='css/bootstrap-glyphicons.css') }}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<h3>{{ league_name }}</h3>
+<h3>{{ league_country }} - {{ league_name }}</h3>
 
 {% set game_modal_ajax_url = "/api/games/all" %}
 {% include 'game_modals.html' %}
