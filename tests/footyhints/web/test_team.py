@@ -13,6 +13,8 @@ class TestTeam(WebTest):
         assert len(self.mock_obj.call_args) == 2
         assert self.mock_obj.call_args[0][0] == 'team.html'
         assert self.mock_obj.call_args[1]['team'].name == team_name
+        assert type(self.mock_obj.call_args[1]['league_country']) is str
+        assert self.mock_obj.call_args[1]['league_country'] is not ""
         assert type(self.mock_obj.call_args[1]['league_name']) is str
         assert self.mock_obj.call_args[1]['league_name'] is not ""
         assert resp.status_code == 200
