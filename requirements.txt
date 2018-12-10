@@ -1,4 +1,4 @@
-pycodestyle
+flake8==3.5.0
 coverage==4.3.4
 pytest-cov==2.4.0
 pytest==3.0.6
