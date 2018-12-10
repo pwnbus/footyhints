@@ -20,11 +20,11 @@ class TestGameInit(UnitTest):
         assert self.game.attributes == [self.attribute]
 
     def test_init_bad_home(self):
-        with raises(AttributeError) as exception_obj:
+        with raises(AttributeError):
             Game(home_team="garbageteam", away_team=self.away_team, round=self.round)
 
     def test_init_bad_away(self):
-        with raises(AttributeError) as exception_obj:
+        with raises(AttributeError):
             Game(home_team=self.home_team, away_team="garbageteam", round=self.round)
 
 
