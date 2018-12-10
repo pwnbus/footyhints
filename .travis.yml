@@ -5,8 +5,12 @@ python:
 install:
   - pip install -e .
   - pip install -r tests/requirements.txt
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script:
-  - pycodestyle --show-source --ignore=E501,E402  ./
+  - flake8 --config .flake8 ./
   - cp config.txt.inc config.txt
   - py.test --cov=footyhints tests
-  - codeclimate-test-reporter
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
