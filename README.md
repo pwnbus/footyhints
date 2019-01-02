@@ -3,4 +3,4 @@
 [![Build Status](https://travis-ci.org/pwnbus/footyhints.svg?branch=master)](https://travis-ci.org/pwnbus/footyhints)
 [![Test Coverage](https://codeclimate.com/github/pwnbus/footyhints/badges/coverage.svg)](https://codeclimate.com/github/pwnbus/footyhints/coverage)
 # footyhints 
-A tool to determine if a soccer/football game is worth watching.
+A tool to determine if a soccer/football game is worth watching after the game has already been played.
