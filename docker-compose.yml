@@ -1,0 +1,71 @@
+---
+version: '3.7'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+      cache_from:
+        - footyhints_nginx:latest
+    depends_on:
+      - flask
+    networks:
+      - default
+    ports:
+      - 80:80
+  mysql:
+    image: mysql:5
+    environment:
+      - MYSQL_ROOT_PASSWORD=CHANGEME
+      - MYSQL_DATABASE=footyhints
+      - MYSQL_USER=footyhints_user
+      - MYSQL_PASSWORD=CHANGEME
+    restart: on-failure
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - default
+    # ports:
+    #   - 3306:3306
+  base:
+    build:
+      context: .
+      dockerfile: ./docker/base/Dockerfile
+      cache_from:
+        - footyhints_base:latest
+  bootstrap:
+    build:
+      context: .
+      dockerfile: ./docker/bootstrap/Dockerfile
+      cache_from:
+        - footyhints_bootstrap:latest
+    depends_on:
+      - base
+    networks:
+      - default
+  flask:
+    build:
+      context: .
+      dockerfile: ./docker/flask/Dockerfile
+      cache_from:
+        - footyhints_flask:latest
+    depends_on:
+      - bootstrap
+    networks:
+      - default
+  cron:
+    build:
+      context: .
+      dockerfile: ./docker/cron/Dockerfile
+      cache_from:
+        - footyhints_cron:latest
+    depends_on:
+      - bootstrap
+    networks:
+      - default
+
+volumes:
+  mysql:
+
+networks:
+  default:

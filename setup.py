@@ -17,6 +17,7 @@ config = {
         'sqlalchemy',
         'Flask',
         'Flask-SQLAlchemy',
+        'mysqlclient',
     ],
     'packages': ['footyhints'],
     'scripts': [],

@@ -5,7 +5,7 @@ mode = development
 debug = False
 
 [DB]
-uri = sqlite:////app/data/footyhints.db
+uri = mysql://footyhints_user:CHANGEME@mysql/footyhints?charset=utf8mb4
 
 [FETCH]
 league_country = England

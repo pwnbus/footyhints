@@ -1,8 +1,17 @@
-FROM footyhints_base:latest
+FROM footyhints_base
 
-RUN apt-get install -y cron
+USER root
 
-COPY bin /app/bin
-COPY docker/cron/files/cron_entries.txt /cron_entries.txt
+RUN \
+  apt-get update --fix-missing && \
+  apt-get install -y --fix-missing cron && \
+  rm -rf /var/lib/apt/lists/*
 
-RUN crontab /cron_entries.txt
+USER footyhints
+
+COPY --chown=footyhints:footyhints bin/setup_db bin/setup_db
+COPY --chown=footyhints:footyhints docker/cron/files/cron_entries.txt ./cron_entries.txt
+
+RUN crontab ./cron_entries.txt
+
+CMD ["./wait-for-container.sh", "bootstrap", "cron -f"]

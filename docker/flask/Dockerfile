@@ -1,5 +1,7 @@
-FROM footyhints_base:latest
+FROM footyhints_base
 
-COPY run.py /app/run.py
+COPY --chown=footyhints:footyhints bin/web bin/web
 
 EXPOSE 5000
+
+CMD ["./wait-for-container.sh", "bootstrap", "./bin/web"]

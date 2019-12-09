@@ -5,17 +5,31 @@ RUN \
   apt-get upgrade -y && \
   apt-get install -y --fix-missing \
     python3 \
-    python3-pip && \
+    python3-pip \
+    libssl-dev \
+    libmysqlclient-dev && \
   apt-get clean all && \
-  pip3 install --upgrade pip && \
-  mkdir /app && \
-  mkdir /app/data
+  rm -rf /var/lib/apt/lists/* && \
+  pip3 install virtualenv && \
+  useradd --create-home --shell /bin/bash --home-dir /opt/footyhints footyhints && \
+  mkdir -p /opt/footyhints/envs/footyhints && \
+  chown -R footyhints:footyhints /opt/footyhints/envs
 
-COPY setup.py /app/setup.py
-COPY footyhints /app/footyhints
+USER footyhints
 
-WORKDIR /app
+RUN virtualenv -p `which python3` /opt/footyhints/envs/python
 
-RUN pip3 install -e .
+# Automatically source into python virtual environment
+ENV PATH=/opt/footyhints/envs/python/bin:$PATH
 
-COPY docker/base/files/config.txt /app/config.txt
+COPY --chown=footyhints:footyhints footyhints /opt/footyhints/envs/footyhints/footyhints
+COPY --chown=footyhints:footyhints setup.py /opt/footyhints/envs/footyhints/setup.py
+
+RUN pip install -e /opt/footyhints/envs/footyhints
+
+WORKDIR /opt/footyhints/envs/footyhints
+
+COPY --chown=footyhints:footyhints docker/wait-for-container.sh /opt/footyhints/envs/footyhints/wait-for-container.sh
+COPY --chown=footyhints:footyhints docker/wait-for-port.sh /opt/footyhints/envs/footyhints/wait-for-port.sh
+
+COPY --chown=footyhints:footyhints docker/base/files/config.txt /opt/footyhints/envs/footyhints/config.txt
