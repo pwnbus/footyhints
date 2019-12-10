@@ -24,13 +24,6 @@ class DataClient():
                 continue
             competition_id = competition['id']
 
-        connection.request('GET', "/v2/competitions/{}/teams".format(competition_id), None, headers)
-        response = json.loads(connection.getresponse().read().decode())
-        teams = []
-        for team_dict in response['teams']:
-            name = team_dict['name']
-            teams.append(name)
-
         connection.request('GET', "/v2/competitions/{}/matches".format(competition_id), None, headers)
         response = json.loads(connection.getresponse().read().decode())
 
@@ -47,4 +40,4 @@ class DataClient():
                 "away_score": match['score']['fullTime']['awayTeam'],
                 "match_day": match_day
             })
-        return teams, results
+        return results

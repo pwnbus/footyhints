@@ -21,6 +21,6 @@ if __name__ == '__main__':
     else:
         client = SampleDataClient()
 
-    teams, results = client.get_results()
+    results = client.get_results()
     parser = ParseResults()
-    parser.parse_results(results, teams)
+    parser.parse_results(results)

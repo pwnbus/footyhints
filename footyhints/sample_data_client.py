@@ -41,4 +41,4 @@ class SampleDataClient():
                     "match_day": match_day
                 })
 
-        return teams, results
+        return results

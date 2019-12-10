@@ -7,7 +7,10 @@ from footyhints.db import session
 
 class ParseResults():
 
-    def parse_results(self, results, teams):
+    def parse_results(self, results):
+        home_teams = [result['home_team'] for result in results]
+        away_teams = [result['away_team'] for result in results]
+        teams = set(home_teams + away_teams)
         team_objs = {}
         for team_name in teams:
             team_objs[team_name] = Team(name=team_name)
