@@ -3,12 +3,6 @@ from tests.footyhints.web.web_test import WebTest
 
 class TestIndex(WebTest):
 
-    def setup(self):
-        super().setup()
-        self.game.set_score(3, 3)
-        self.session.add(self.game)
-        self.session.commit()
-
     def verify_index(self, resp):
         assert len(self.mock_obj.call_args) == 2
         assert self.mock_obj.call_args[0][0] == 'index.html'

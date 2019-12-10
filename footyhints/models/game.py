@@ -65,6 +65,16 @@ class Game(Base):
         elif type(away_team_score) is not int:
             raise TypeError('Away team score must be an integer')
 
+        if home_team_score > away_team_score:
+            self.home_team.points += 3
+        elif home_team_score == away_team_score:
+            self.home_team.points += 1
+            self.away_team.points += 1
+        else:
+            self.away_team.points += 3
+        session.add(self.home_team)
+        session.add(self.away_team)
+
         home_score = Attribute(name='home_score', value=str(home_team_score), description='Home Team Score', game=self)
         session.add(home_score)
         away_score = Attribute(name='away_score', value=str(away_team_score), description='Away Team Score', game=self)

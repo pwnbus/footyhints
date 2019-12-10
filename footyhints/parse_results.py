@@ -6,19 +6,30 @@ from footyhints.db import session
 
 
 class ParseResults():
+    def determine_worth_watching(self, games):
+        for game in games:
+            game.worth_watching()
+            session.add(game)
 
     def parse_results(self, results):
         home_teams = [result['home_team'] for result in results]
         away_teams = [result['away_team'] for result in results]
-        teams = set(home_teams + away_teams)
-        team_objs = {}
-        for team_name in teams:
-            team_objs[team_name] = Team(name=team_name)
-
+        team_names = set(home_teams + away_teams)
+        teams = {}
+        for team_name in team_names:
+            team = Team(name=team_name)
+            teams[team_name] = team
+            session.add(team)
+        session.commit()
+        games = []
         for match in results:
             round_obj = Round(match['match_day'])
             session.add(round_obj)
-            game = Game(home_team=team_objs[match['home_team']], away_team=team_objs[match['away_team']], round=round_obj)
+            game = Game(
+                home_team=teams[match['home_team']],
+                away_team=teams[match['away_team']],
+                round=round_obj
+            )
             game.set_score(match['home_score'], match['away_score'])
             print("Creating game\t{0} | {1}\t{2}-{3} ({4})".format(
                 match['home_team'],
@@ -27,7 +38,8 @@ class ParseResults():
                 game.away_team_score,
                 round_obj.num
             ))
-            game.worth_watching()
-            session.add(game)
+            games.append(game)
+
+        self.determine_worth_watching(games)
         session.commit()
         session.close()

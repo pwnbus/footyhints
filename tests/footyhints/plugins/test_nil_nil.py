@@ -6,6 +6,9 @@ from tests.footyhints.unit_test import UnitTest
 class TestNilNil(UnitTest):
     def setup(self):
         super().setup()
+        self.session.add(self.home_team)
+        self.session.add(self.away_team)
+        self.session.commit()
         self.nil_nil = NilNil(self.game)
 
     def test_description(self):

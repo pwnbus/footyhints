@@ -5,12 +5,6 @@ from tests.footyhints.web.web_test import WebTest
 
 class TestApi(WebTest):
 
-    def setup(self):
-        super().setup()
-        self.game.set_score(3, 3)
-        self.session.add(self.game)
-        self.session.commit()
-
     def verify_games_resp(self, games_resp):
         table_obj = loads(games_resp.data.decode('utf8'))
         assert len(table_obj) == 1

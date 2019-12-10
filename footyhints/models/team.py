@@ -7,6 +7,7 @@ class Team(Base):
     __tablename__ = 'teams'
     id = Column(Integer, primary_key=True)
     name = Column(Text, nullable=False)
+    points = Column(Integer, default=0)
 
     def __init__(self, name):
         if type(name) is not str:

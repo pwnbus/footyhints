@@ -17,6 +17,7 @@
 </ul>
 
 <h3>{{team.name}}</h3>
+<h4>Points: {{team.points}}</h4>
 
 {% set game_modal_ajax_url = "/api/team/" + team.id|string + "/games" %}
 {% include 'game_modals.html' %}

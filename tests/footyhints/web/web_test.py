@@ -21,5 +21,13 @@ class WebTest(UnitTest):
         self.mock_obj = self.view_module.render_template
         self.mock_obj.side_effect = lambda *args, **kwargs: render_template_orig(*args, **kwargs)
 
+        self.session.add(self.home_team)
+        self.session.add(self.away_team)
+        self.session.commit()
+        self.game.set_score(3, 3)
+        self.session.add(self.game)
+        self.session.commit()
+
+
     def build_args(self, *args, **kwargs):
         return call(*args, **kwargs)

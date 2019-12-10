@@ -73,6 +73,9 @@ class TestGameWorthWatching(UnitTest):
         assert str(exception_obj.value) == 'Home and away scores must be set'
 
     def test_before_method_call(self):
+        self.session.add(self.home_team)
+        self.session.add(self.away_team)
+        self.session.commit()
         self.game.set_score(1, 1)
         assert self.game.interest_score is None
         assert self.game.interest_level is None

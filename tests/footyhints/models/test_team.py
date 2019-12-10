@@ -25,6 +25,7 @@ class TestTeamSave(UnitTest):
         self.session.add(self.home_team)
         self.session.commit()
         assert self.home_team.id is 1
+        assert self.home_team.points == 0
 
     def test_normal_save_with_one_game(self):
         self.session.add(self.game)
