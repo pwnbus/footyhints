@@ -92,7 +92,6 @@ class Game(Base):
         self.delete_score_modifications()
         # Main decision logic
         self.load_decision_plugins()
-        total_max_score = 0
         total_earned_score = 0
         for decision_plugin in self.decision_plugins:
             score, reason = decision_plugin.score()

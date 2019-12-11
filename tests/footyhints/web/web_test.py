@@ -28,6 +28,5 @@ class WebTest(UnitTest):
         self.session.add(self.game)
         self.session.commit()
 
-
     def build_args(self, *args, **kwargs):
         return call(*args, **kwargs)

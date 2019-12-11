@@ -33,6 +33,6 @@ run-tests-resources:  ## Just run the external resources required for tests
 	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) up -d
 
 .PHONY: run-tests
-run-tests: run-tests-resources ## Just run the tests (no build/get). Use `make TEST_CASE=tests/...` for specific tests only
-	#docker run -it --rm test-footyhints_tester bash -c "source /opt/footyhints/envs/python/bin/activate && flake8 --config .flake8 ./"
-	docker run -it --rm --network=test-footyhints_default test-footyhints_tester bash -c "source /opt/footyhints/envs/python/bin/activate && py.test tests"
+run-tests: run-tests-resources ## Run testing suite
+	docker run -it --rm footyhints_tester bash -c "source /opt/footyhints/envs/python/bin/activate && flake8 --config .flake8 ./"
+	docker run -it --rm --network=footyhints_default footyhints_tester bash -c "source /opt/footyhints/envs/python/bin/activate && py.test tests"
