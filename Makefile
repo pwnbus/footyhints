@@ -21,16 +21,16 @@ tests: build-tests run-tests  ## Run all tests (getting/building images as neede
 
 .PHONY: build-tests
 build-tests:  ## Build end-to-end test environment only
-	docker-compose -f docker/docker-compose-tests.yml -p test-$(NAME) $(NO_CACHE) $(BUILD_MODE) base
-	docker-compose -f docker/docker-compose-tests.yml -p test-$(NAME) $(NO_CACHE) $(BUILD_MODE)
+	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) $(NO_CACHE) $(BUILD_MODE) base
+	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) $(NO_CACHE) $(BUILD_MODE)
 
 .PHONY: run-tests-resources-external
 run-tests-resources-external: ## Just spin up external resources for tests and have them listen externally
-	docker-compose -f docker/docker-compose-tests.yml -p test-$(NAME) run -p 3306:3306 -d mysql
+	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) run -p 3306:3306 -d mysql
 
 .PHONY: run-tests-resources
 run-tests-resources:  ## Just run the external resources required for tests
-	docker-compose -f docker/docker-compose-tests.yml -p test-$(NAME) up -d
+	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) up -d
 
 .PHONY: run-tests
 run-tests: run-tests-resources ## Just run the tests (no build/get). Use `make TEST_CASE=tests/...` for specific tests only
