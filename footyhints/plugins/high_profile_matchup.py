@@ -1,14 +1,13 @@
 from footyhints.plugin import Plugin
 
 
-MATCHUPS = [
-    ["Arsenal FC", "Tottenham Hotspur FC"],
-    ["Arsenal FC", "Chelsea FC"],
-    ["Chelsea FC", "Tottenham Hotspur FC"],
-    ["Chelsea FC", "West Ham United FC"],
-    ["Liverpool FC", "Everton FC"],
-    ["Liverpool FC", "Manchester United FC"],
-    ["Manchester City FC", "Manchester United FC"],
+HIGH_PROFILE_TEAMS = [
+    "Arsenal FC",
+    "Chelsea FC",
+    "Liverpool FC",
+    "Manchester United FC",
+    "Manchester City FC",
+    "Tottenham Hotspur FC",
 ]
 
 
@@ -19,9 +18,7 @@ class HighProfileMatchup(Plugin):
     # Min Score would be a non matchup
 
     def score(self):
-        for matchup in MATCHUPS:
-            if self.game.home_team.name in matchup[0] and self.game.away_team.name in matchup[1]:
-                return self.max_score
-            elif self.game.away_team.name in matchup[0] and self.game.home_team.name in matchup[1]:
-                return self.max_score
-        return 0
+        if self.game.home_team.name in HIGH_PROFILE_TEAMS and self.game.away_team.name in HIGH_PROFILE_TEAMS:
+            return self.max_score
+        else:
+            return 0
