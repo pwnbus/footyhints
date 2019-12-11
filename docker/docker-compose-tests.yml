@@ -2,7 +2,7 @@
 version: '3.7'
 services:
   mysql:
-    image: mariadb/server:10.3
+    image: mysql:5
     environment:
       - MYSQL_ROOT_PASSWORD=CHANGEME
       - MYSQL_DATABASE=footyhints
@@ -12,20 +12,26 @@ services:
     networks:
       - default
   base:
+    image: footyhints/base:latest
     build:
       context: ../
       dockerfile: ./docker/base/Dockerfile
       cache_from:
-        - footyhints_base:latest
+        - footyhints/base:latest
+    restart: "no"
   tester:
+    image: footyhints/tester:latest
     build:
       context: ../
       dockerfile: ./docker/tester/Dockerfile
       cache_from:
-        - footyhints_tester:latest
+        - footyhints/tester:latest
+    command: bash -c 'exit 0'
     depends_on:
       - base
+      - mysql
     networks:
       - default
+    restart: "no"
 networks:
   default:

@@ -1,7 +1,7 @@
-.cache
-footyhints.egg-info/
-.coverage
-config.txt
-docs/_build
+/.cache
+/footyhints.egg-info/
+/.coverage
+/config.txt
+/docs/_build
 .DS_Store
 coverage.xml

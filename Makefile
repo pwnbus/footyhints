@@ -5,14 +5,14 @@ NO_CACHE	:= ## Pass `--no-cache` in order to disable Docker cache
 PARALLEL	:= --parallel
 
 run:
-	docker-compose -f docker-compose.yml -p footyhints up -d
+	docker-compose -f docker-compose.yml -p $(NAME) up -d
 
 build:
-	docker-compose -f docker-compose.yml -p footyhints build base
-	docker-compose -f docker-compose.yml -p footyhints build --parallel
+	docker-compose -f docker-compose.yml -p $(NAME) build base
+	docker-compose -f docker-compose.yml -p $(NAME) build --parallel
 
 stop:
-	docker-compose -f docker-compose.yml -p footyhints stop
+	docker-compose -f docker-compose.yml -p $(NAME) stop
 
 rebuild: build stop run
 
@@ -34,5 +34,5 @@ run-tests-resources:  ## Just run the external resources required for tests
 
 .PHONY: run-tests
 run-tests: run-tests-resources ## Run testing suite
-	docker run -it --rm footyhints_tester bash -c "source /opt/footyhints/envs/python/bin/activate && flake8 --config .flake8 ./"
-	docker run -it --rm --network=footyhints_default footyhints_tester bash -c "source /opt/footyhints/envs/python/bin/activate && py.test tests"
+	docker run -it --rm footyhints/tester bash -c "flake8 --config .flake8 ./"
+	docker run -it --rm --network=footyhints_default footyhints/tester
