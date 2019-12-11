@@ -3,19 +3,20 @@ from footyhints.plugin import Plugin
 
 class ScoreDelta(Plugin):
     description = 'Difference between home team and away team goals'
-    # Max score would be a 0 goal difference
-    max_score = 5
-    # Min Score would be a 0-5 game
 
     def score(self):
-        total_goals = self.game.home_team_score + self.game.away_team_score
         goal_delta = abs(self.game.home_team_score - self.game.away_team_score)
-        if total_goals == 0:
-            return 0
-        max_goals_delta = 5
-        if goal_delta >= max_goals_delta:
-            return 0
-        elif goal_delta == 0:
-            return self.max_score
+        if goal_delta == 0:
+            return 75, "Close game"
+        if goal_delta == 1:
+            return 75, "Close game"
+        elif goal_delta == 2:
+            return 60, "Decent game"
+        elif goal_delta == 3:
+            return 60, "Decent game"
+        elif goal_delta == 4:
+            return 50, "OK game"
+        elif goal_delta == 5:
+            return 25, "Blow out"
         else:
-            return int((abs(max_goals_delta - goal_delta) / max_goals_delta) * self.max_score)
+            return 0, "Not a competitive game"

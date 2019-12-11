@@ -95,20 +95,15 @@ class Game(Base):
         total_max_score = 0
         total_earned_score = 0
         for decision_plugin in self.decision_plugins:
-            total_max_score += decision_plugin.max_score
-            score = decision_plugin.score()
-            if score != 0:
-                # We give additional bonus points for 'importance'
-                # but, only if you earn it!
-                score += (5 * (decision_plugin.max_score / MAX_PLUGIN_SCORE))
+            score, reason = decision_plugin.score()
             if score is not None:
                 total_earned_score += score
-                score_modification = ScoreModification(value=score, description=decision_plugin.description)
+                score_modification = ScoreModification(value=score, description=decision_plugin.description, reason=reason)
                 self.score_modifications.append(score_modification)
                 session.add(score_modification)
         session.commit()
 
-        score_earned_percent = int((total_earned_score / total_max_score) * 100)
+        score_earned_percent = int((total_earned_score / (len(self.decision_plugins) * 100)) * 100)
         self.interest_score = score_earned_percent
 
         if self.interest_score >= 100:

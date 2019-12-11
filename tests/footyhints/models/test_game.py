@@ -87,9 +87,9 @@ class TestGameWorthWatching(UnitTest):
 class TestGameDeleteScoreModifications(UnitTest):
     def test_delete_scores(self):
         assert len(self.game.score_modifications) == 0
-        modification1 = ScoreModification(value=100, description='test description', game=self.game)
+        modification1 = ScoreModification(value=100, description='test description', game=self.game, reason="Example reason")
         self.session.add(modification1)
-        modification2 = ScoreModification(value=10, description='test description again', game=self.game)
+        modification2 = ScoreModification(value=10, description='test description again', game=self.game, reason="Example reason")
         self.session.add(modification2)
         self.session.commit()
 

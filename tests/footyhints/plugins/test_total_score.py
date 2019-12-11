@@ -16,16 +16,24 @@ class TestTotalScore(UnitTest):
 
     def test_over_max_score(self):
         self.game.set_score(10, 10)
-        assert self.total_score.score() == self.total_score.max_score
+        score, reason = self.total_score.score()
+        assert score == 120
+        assert reason == 'Tons of goals'
 
     def test_exact_max_score(self):
         self.game.set_score(4, 4)
-        assert self.total_score.score() == self.total_score.max_score
+        score, reason = self.total_score.score()
+        assert score == 120
+        assert reason == 'Tons of goals'
 
     def test_middle_score(self):
         self.game.set_score(2, 2)
-        assert self.total_score.score() == 45
+        score, reason = self.total_score.score()
+        assert score == 75
+        assert reason == 'Decent amount of goals'
 
     def test_exact_min_score(self):
         self.game.set_score(0, 0)
-        assert self.total_score.score() == 0
+        score, reason = self.total_score.score()
+        assert score == -25
+        assert reason == 'No goals'

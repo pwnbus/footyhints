@@ -13,11 +13,6 @@ class TestPlugin(UnitTest):
     def test_init(self):
         assert self.plugin.game == self.game
 
-    def test_max_score(self):
-        with raises(NotImplementedError) as exception_obj:
-            self.plugin.max_score()
-        assert str(exception_obj.value) == 'Must specify a max_score property in the plugin'
-
     def test_description(self):
         with raises(NotImplementedError) as exception_obj:
             self.plugin.description()

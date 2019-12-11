@@ -3,16 +3,20 @@ from footyhints.plugin import Plugin
 
 class TotalScore(Plugin):
     description = 'Total amount of goals'
-    # Max score would be 8 total goals in the game
-    max_score = 90
-    # Min score would be 0 goals scored
 
     def score(self):
         total_goals = self.game.home_team_score + self.game.away_team_score
-        max_num_goals = 8
-        if total_goals >= max_num_goals:
-            return self.max_score
-        elif total_goals == 0:
-            return 0
+        if total_goals == 0:
+            return -25, "No goals"
+        elif total_goals <= 2:
+            return 25, "Couple of goals"
+        elif total_goals <= 3:
+            return 50, "Few goals"
+        elif total_goals <= 4:
+            return 75, "Decent amount of goals"
+        elif total_goals <= 5:
+            return 90, "Good amount of goals"
+        elif total_goals <= 6:
+            return 95, "Lots of goals"
         else:
-            return int((total_goals / max_num_goals) * self.max_score)
+            return 120, "Tons of goals"

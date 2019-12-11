@@ -10,8 +10,6 @@
 {% endblock %}
 {% block content %}
 
-<h3></h3>
-
 <ul class="breadcrumb">
   <li><a href="/">{{ league_country }} - {{ league_name }}</a></li>
 </ul>
@@ -19,7 +17,7 @@
 <h3>{{team.name}}</h3>
 <h4>Points: {{team.points}}</h4>
 
-{% set game_modal_ajax_url = "/api/team/" + team.id|string + "/games" %}
-{% include 'game_modals.html' %}
+{% set games = team.games %}
+{% include 'games_table.html' %}
 
 {% endblock %}

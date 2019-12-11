@@ -16,20 +16,30 @@ class TestScoreDelta(UnitTest):
 
     def test_nil_nil(self):
         self.game.set_score(0, 0)
-        assert self.score_delta.score() == 0
+        score, reason = self.score_delta.score()
+        assert score == 75
+        assert reason == 'Close game'
 
     def test_exact_max_score(self):
         self.game.set_score(3, 3)
-        assert self.score_delta.score() == self.score_delta.max_score
+        score, reason = self.score_delta.score()
+        assert score == 75
+        assert reason == 'Close game'
 
     def test_middle_score(self):
         self.game.set_score(1, 3)
-        assert self.score_delta.score() == 3
+        score, reason = self.score_delta.score()
+        assert score == 60
+        assert reason == 'Decent game'
 
     def test_exact_min_score(self):
         self.game.set_score(5, 0)
-        assert self.score_delta.score() == 0
+        score, reason = self.score_delta.score()
+        assert score == 25
+        assert reason == 'Blow out'
 
     def test_under_min_score(self):
         self.game.set_score(8, 0)
-        assert self.score_delta.score() == 0
+        score, reason = self.score_delta.score()
+        assert score == 0
+        assert reason == 'Not a competitive game'

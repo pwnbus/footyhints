@@ -21,14 +21,20 @@ class TestRivalryMatchup(UnitTest):
     def test_rivalry_matchup(self):
         game = self.create_tmp_game('Liverpool FC', 'Manchester United FC')
         matchup = RivalryMatchup(game)
-        assert matchup.score() == 100
+        score, reason = matchup.score()
+        assert score == 100
+        assert reason == 'Rivalry matchup'
 
     def test_reverse_rivalry_matchup(self):
         game = self.create_tmp_game('Manchester United FC', 'Liverpool FC')
         matchup = RivalryMatchup(game)
-        assert matchup.score() == 100
+        score, reason = matchup.score()
+        assert score == 100
+        assert reason == 'Rivalry matchup'
 
     def test_other_matchup(self):
         game = self.create_tmp_game('Chelsea FC', 'Everton FC')
         matchup = RivalryMatchup(game)
-        assert matchup.score() == 0
+        score, reason = matchup.score()
+        assert score == 0
+        assert reason == 'Not a rivalry matchup'

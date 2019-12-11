@@ -14,14 +14,11 @@ MATCHUPS = [
 
 class RivalryMatchup(Plugin):
     description = 'Rivalry Matchup'
-    # Max score would be a match on matchups
-    max_score = 100
-    # Min Score would be a non matchup
 
     def score(self):
         for matchup in MATCHUPS:
             if self.game.home_team.name in matchup[0] and self.game.away_team.name in matchup[1]:
-                return self.max_score
+                return 100, "Rivalry matchup"
             elif self.game.away_team.name in matchup[0] and self.game.home_team.name in matchup[1]:
-                return self.max_score
-        return 0
+                return 100, "Rivalry matchup"
+        return 0, "Not a rivalry matchup"

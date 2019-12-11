@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Index{% endblock %}
+{% block title %}{{ league_country }} - {{ league_name }}{% endblock %}
 {% block head %}
   {{ super() }}
   <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
@@ -11,7 +11,5 @@
 {% block content %}
 <h3>{{ league_country }} - {{ league_name }}</h3>
 
-{% set game_modal_ajax_url = "/api/games/all" %}
-{% include 'game_modals.html' %}
-
+{% include 'games_table.html' %}
 {% endblock %}
