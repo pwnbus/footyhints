@@ -1,4 +1,4 @@
-from footyhints.db import engine, session
+from footyhints.db import session
 from footyhints.models.team import Team
 
 from tests.footyhints.unit_test import UnitTest
@@ -6,9 +6,9 @@ from tests.footyhints.unit_test import UnitTest
 
 class TestDB(UnitTest):
 
-    def test_engine(self):
-        assert str(engine.url) == 'sqlite:////tmp/footyhints.db'
-        assert len(engine.table_names()) > 0
+    def test_creation(self):
+        assert str(session.bind.url) == 'sqlite:////tmp/footyhints.db'
+        assert len(session.bind.table_names()) > 0
 
     def test_session(self):
         assert session.is_active is True

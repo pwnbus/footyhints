@@ -24,7 +24,15 @@ build-tests:  ## Build end-to-end test environment only
 	docker-compose -f docker/docker-compose-tests.yml -p test-$(NAME) $(NO_CACHE) $(BUILD_MODE) base
 	docker-compose -f docker/docker-compose-tests.yml -p test-$(NAME) $(NO_CACHE) $(BUILD_MODE)
 
+.PHONY: run-tests-resources-external
+run-tests-resources-external: ## Just spin up external resources for tests and have them listen externally
+	docker-compose -f docker/docker-compose-tests.yml -p test-$(NAME) run -p 3306:3306 -d mysql
+
+.PHONY: run-tests-resources
+run-tests-resources:  ## Just run the external resources required for tests
+	docker-compose -f docker/docker-compose-tests.yml -p test-$(NAME) up -d
+
 .PHONY: run-tests
-run-tests: ## Just run the tests (no build/get). Use `make TEST_CASE=tests/...` for specific tests only
+run-tests: run-tests-resources ## Just run the tests (no build/get). Use `make TEST_CASE=tests/...` for specific tests only
 	#docker run -it --rm test-footyhints_tester bash -c "source /opt/footyhints/envs/python/bin/activate && flake8 --config .flake8 ./"
 	docker run -it --rm --network=test-footyhints_default test-footyhints_tester bash -c "source /opt/footyhints/envs/python/bin/activate && py.test tests"

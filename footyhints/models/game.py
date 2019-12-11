@@ -10,7 +10,7 @@ from footyhints.models.attribute import Attribute
 from footyhints.models.round import Round
 from footyhints.models.score_modification import ScoreModification
 
-from footyhints.plugin import Plugin, MAX_PLUGIN_SCORE
+from footyhints.plugin import Plugin
 from footyhints.levels import LOW, MEDIUM, HIGH
 
 

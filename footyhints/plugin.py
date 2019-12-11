@@ -1,6 +1,3 @@
-MAX_PLUGIN_SCORE = 100
-
-
 class Plugin(object):
     def __init__(self, game):
         self.game = game
