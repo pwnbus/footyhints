@@ -4,14 +4,20 @@ NAME		:= footyhints
 NO_CACHE	:= ## Pass `--no-cache` in order to disable Docker cache
 PARALLEL	:= --parallel
 
-run:
+.PHONY:all
+all:
+	@echo 'Available make targets:'
+	@grep '^[^#[:space:]^\.PHONY.*].*:' Makefile
+
+
+run: ## Run the full docker stack
 	docker-compose -f docker-compose.yml -p $(NAME) up -d
 
-build:
+build: ## Build the full docker stack
 	docker-compose -f docker-compose.yml -p $(NAME) build base
 	docker-compose -f docker-compose.yml -p $(NAME) build --parallel
 
-stop:
+stop: ## Stop the full docker stack
 	docker-compose -f docker-compose.yml -p $(NAME) stop
 
 rebuild: build stop run
