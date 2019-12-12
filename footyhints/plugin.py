@@ -1,3 +1,5 @@
+LOWEST_PRIORITY = 2
+
 class Plugin(object):
     def __init__(self, game):
         self.game = game

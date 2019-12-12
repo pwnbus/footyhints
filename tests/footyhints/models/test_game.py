@@ -1,15 +1,17 @@
-from glob import glob
-
-
-from os.path import join, dirname, abspath
-
 from pytest import raises
 
 from footyhints.models.game import Game
 from footyhints.models.team import Team
-from footyhints.models.score_modification import ScoreModification
+
+from footyhints.decision_maker import DecisionMaker
 
 from tests.footyhints.unit_test import UnitTest
+
+
+class GameTest(UnitTest):
+    def setup(self):
+        super().setup()
+        self.decision = DecisionMaker
 
 
 class TestGameInit(UnitTest):
@@ -28,16 +30,7 @@ class TestGameInit(UnitTest):
             Game(home_team=self.home_team, away_team="garbageteam", round=self.round)
 
 
-class TestGameLoadDecisionPlugins(UnitTest):
-    def test_plugins(self):
-        plugins_path = join(dirname(abspath(__file__)), '../../../footyhints/plugins')
-        assert len(self.game.decision_plugins) == 0
-        self.game.load_decision_plugins()
-        expected_plugin_num = len(glob(plugins_path + "/*.py")) - 1
-        assert len(self.game.decision_plugins) == expected_plugin_num
-
-
-class TestGameSave(UnitTest):
+class TestGameSave(GameTest):
     def test_basic_save(self):
         assert self.game.id is None
         assert self.home_team.id is None
@@ -49,7 +42,7 @@ class TestGameSave(UnitTest):
         assert self.away_team.id == 2
 
 
-class TestGameSetScore(UnitTest):
+class TestGameSetScore(GameTest):
     def test_bad_scores(self):
         with raises(TypeError) as exception_obj:
             self.game.set_score('abcd', 'someother')
@@ -66,51 +59,7 @@ class TestGameSetScore(UnitTest):
         assert str(exception_obj.value) == 'Away team score must be an integer'
 
 
-class TestGameWorthWatching(UnitTest):
-    def test_no_scores(self):
-        with raises(TypeError) as exception_obj:
-            self.game.worth_watching()
-        assert str(exception_obj.value) == 'Home and away scores must be set'
-
-    def test_before_method_call(self):
-        self.session.add(self.home_team)
-        self.session.add(self.away_team)
-        self.session.commit()
-        self.game.set_score(1, 1)
-        assert self.game.interest_score is None
-        assert self.game.interest_level is None
-        self.game.worth_watching()
-        assert type(self.game.interest_score) is int
-        assert type(self.game.interest_level) is str
-
-
-class TestGameDeleteScoreModifications(UnitTest):
-    def test_delete_scores(self):
-        assert len(self.game.score_modifications) == 0
-        modification1 = ScoreModification(
-            value=100,
-            description='test description',
-            game=self.game,
-            reason="Example reason",
-            priority=1
-        )
-        self.session.add(modification1)
-        modification2 = ScoreModification(
-            value=10,
-            description='test description again',
-            game=self.game,
-            reason="Example reason",
-            priority=1
-        )
-        self.session.add(modification2)
-        self.session.commit()
-
-        assert len(self.game.score_modifications) == 2
-        self.game.delete_score_modifications()
-        assert len(self.game.score_modifications) == 0
-
-
-class TestGameEquals(UnitTest):
+class TestGameEquals(GameTest):
     def setup(self):
         super().setup()
         self.tmp_team1 = Team(name='Chelsea')
