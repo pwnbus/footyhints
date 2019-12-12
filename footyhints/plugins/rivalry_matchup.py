@@ -14,6 +14,7 @@ MATCHUPS = [
 
 class RivalryMatchup(Plugin):
     description = 'Rivalry Matchup'
+    priority = 1
 
     def score(self):
         for matchup in MATCHUPS:

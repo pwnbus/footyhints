@@ -9,6 +9,7 @@ class ScoreModification(Base):
     id = Column(Integer, primary_key=True)
     value = Column(Integer, nullable=False)
     description = Column(Text, nullable=False)
+    priority = Column(Integer, nullable=False)
     reason = Column(Text, nullable=False)
     game_id = Column(Integer, ForeignKey('games.id'))
     game = relationship('Game', back_populates='score_modifications')

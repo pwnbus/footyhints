@@ -27,7 +27,7 @@ class TestSimilarPoints(UnitTest):
         self.game.away_team.points = 0
         self.game.set_score(2, 2)
         score, reason = self.similar_points.score()
-        assert score == 50
+        assert score == 75
         assert reason == 'Close proximity in points'
 
     def test_two_games_diff(self):
@@ -35,15 +35,15 @@ class TestSimilarPoints(UnitTest):
         self.game.away_team.points = 0
         self.game.set_score(2, 2)
         score, reason = self.similar_points.score()
-        assert score == 25
-        assert reason == 'Nearby proximity in points'
+        assert score == 75
+        assert reason == 'Close proximity in points'
 
     def test_three_games_diff(self):
         self.game.home_team.points = 9
         self.game.away_team.points = 0
         self.game.set_score(2, 2)
         score, reason = self.similar_points.score()
-        assert score == 15
+        assert score == 50
         assert reason == 'Nearby proximity in points'
 
     def test_exact_min_score(self):
@@ -51,5 +51,5 @@ class TestSimilarPoints(UnitTest):
         self.game.away_team.points = 0
         self.game.set_score(0, 0)
         score, reason = self.similar_points.score()
-        assert score == 0
-        assert reason == 'Huge gap between teams in points'
+        assert score == -25
+        assert reason == 'Large gap between teams in points'

@@ -93,16 +93,20 @@ class Game(Base):
         # Main decision logic
         self.load_decision_plugins()
         total_earned_score = 0
+        total_potential_points = 0
+        LOWEST_PRIORITY = 2
         for decision_plugin in self.decision_plugins:
             score, reason = decision_plugin.score()
             if score is not None:
-                total_earned_score += score
-                score_modification = ScoreModification(value=score, description=decision_plugin.description, reason=reason)
+                importance = LOWEST_PRIORITY - decision_plugin.priority
+                total_earned_score += score * importance
+                total_potential_points += 75 * importance
+                score_modification = ScoreModification(value=score, description=decision_plugin.description, reason=reason, priority=decision_plugin.priority)
                 self.score_modifications.append(score_modification)
                 session.add(score_modification)
         session.commit()
 
-        score_earned_percent = int((total_earned_score / (len(self.decision_plugins) * 100)) * 100)
+        score_earned_percent = int(total_earned_score / total_potential_points) * 100
         self.interest_score = score_earned_percent
 
         if self.interest_score >= 100:

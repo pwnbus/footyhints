@@ -13,6 +13,7 @@ HIGH_PROFILE_TEAMS = [
 
 class HighProfileMatchup(Plugin):
     description = 'High Profile Matchups'
+    priority = 1
 
     def score(self):
         if self.game.home_team.name in HIGH_PROFILE_TEAMS and self.game.away_team.name in HIGH_PROFILE_TEAMS:
