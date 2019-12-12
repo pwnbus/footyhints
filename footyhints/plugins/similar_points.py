@@ -29,16 +29,16 @@ class SimilarPoints(Plugin):
         if difference == 0:
             return 100, "Same number of points in table"
         elif difference <= 6:
-            return 75, "Close proximity in points"
+            return 75, "Close proximity in points ({})".format(difference)
         elif difference <= 12:
-            return 50, "Nearby proximity in points"
+            return 50, "Nearby proximity in points ({})".format(difference)
         elif difference <= 18:
-            return 25, "Nearby proximity in points"
+            return 25, "Nearby proximity in points ({})".format(difference)
         elif difference <= 24:
-            return 0, "Gap between teams in points"
+            return 0, "Gap between teams in points ({})".format(difference)
         elif difference <= 30:
-            return -25, "Large gap between teams in points"
+            return -25, "Large gap between teams in points ({})".format(difference)
         elif difference <= 36:
-            return -50, "Large gap between teams in points"
+            return -50, "Large gap between teams in points ({})".format(difference)
         else:
-            return -10, "Huge gap between teams in points"
+            return -10, "Huge gap between teams in points ({})".format(difference)

@@ -12,14 +12,14 @@ class TotalScore(Plugin):
         elif total_goals == 1:
             return -25, "A goal"
         elif total_goals == 2:
-            return 25, "Couple of goals"
+            return 25, "Couple of goals ({})".format(total_goals)
         elif total_goals == 3:
-            return 50, "Few goals"
+            return 50, "Few goals ({})".format(total_goals)
         elif total_goals == 4:
-            return 75, "Decent amount of goals"
+            return 75, "Decent amount of goals ({})".format(total_goals)
         elif total_goals == 5:
-            return 90, "Good amount of goals"
+            return 90, "Good amount of goals ({})".format(total_goals)
         elif total_goals == 6:
-            return 95, "Lots of goals"
+            return 95, "Lots of goals ({})".format(total_goals)
         else:
-            return 125, "Tons of goals"
+            return 125, "Tons of goals ({})".format(total_goals)
