@@ -1,3 +1,7 @@
 .game-stats-modal {
-  width: 380px;
+  width: 750px;
+}
+
+.blurred-content{
+    filter: blur(10px);
 }

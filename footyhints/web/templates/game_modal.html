@@ -10,20 +10,50 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-sm-6">Level: {% include 'severity_badge.html' %}</div>
-          <div class="col-sm-6">Score: {{ game.interest_score }}</div>
+          <div class="col-sm-6">Score: <div class='blur-content blurred-content'>{{ game.interest_score }}</div></div>
         </div>
+        <button class="blur-button reveal" onclick='(
+          function() {
+            var blur_elements = document.getElementsByClassName("blur-content");
+            var i;
+            for (i = 0; i < blur_elements.length; i++) {
+              ele = blur_elements[i]
+              if (ele.classList.contains("blurred-content")){
+                  ele.classList.remove("blurred-content");
+              } else {
+                ele.classList.add("blurred-content");
+              }
+            }
+            var blur_buttons = document.getElementsByClassName("blur-button");
+            for (i = 0; i < blur_buttons.length; i++) {
+              ele = blur_buttons[i];
+              if (ele.classList.contains("blur")){
+                ele.innerHTML = "Reveal";
+                ele.classList.remove("blur");
+                ele.classList.add("reveal");
+              }
+              else {
+                ele.innerHTML = "Blur"
+                ele.classList.remove("reveal");
+                ele.classList.add("blur");
+              }
+            }
+          })()'>Reveal
+        </button>
         <table class="table table-striped table-bordered table-compact" style="clear: both;margin-top: 20px;">
           <thead>
             <th>Points</th>
             <th>Priority</th>
             <th>Reason</th>
+            <th>Plugin</th>
           </thead>
           <tbody>
             {% for score_modification in game.score_modifications %}
               <tr>
-                <td>{{ score_modification.value }}</a></td>
-                <td>{{ score_modification.priority }}</a></td>
-                <td><div title="{{ score_modification.description }}">{{ score_modification.reason }}</div></td>
+                <td><div class='blur-content blurred-content'>{{ score_modification.value }}</div></td>
+                <td><div class='blur-content blurred-content'>{{ score_modification.priority }}</div></td>
+                <td><div class='blur-content blurred-content'>{{ score_modification.reason }}</div></td>
+                <td>{{ score_modification.description }}</td>
               </tr>
             {% endfor %}
           </tbody>
