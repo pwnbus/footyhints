@@ -1,1 +1,1 @@
-0 * * * * /app/bin/setup_db
+0 * * * * source /opt/footyhints/env/python/bin/activate && /opt/footyhints/envs/footyhints/bin/setup_db

@@ -2,17 +2,19 @@
 version: '3.7'
 services:
   nginx:
+    image: footyhints/nginx:latest
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
       cache_from:
-        - footyhints_nginx:latest
+        - footyhints/nginx:latest
     depends_on:
       - flask
     networks:
       - default
     ports:
       - 80:80
+    restart: always
   mysql:
     image: mysql:5
     environment:
@@ -27,42 +29,51 @@ services:
       - default
     # ports:
     #   - 3306:3306
+    restart: always
   base:
+    image: footyhints/base:latest
     build:
       context: .
       dockerfile: ./docker/base/Dockerfile
       cache_from:
-        - footyhints_base:latest
+        - footyhints/base:latest
+    restart: "no"
   bootstrap:
+    image: footyhints/bootstrap:latest
     build:
       context: .
       dockerfile: ./docker/bootstrap/Dockerfile
       cache_from:
-        - footyhints_bootstrap:latest
+        - footyhints/bootstrap:latest
     depends_on:
       - base
     networks:
       - default
+    restart: on-failure
   flask:
+    image: footyhints/flask:latest
     build:
       context: .
       dockerfile: ./docker/flask/Dockerfile
       cache_from:
-        - footyhints_flask:latest
+        - footyhints/flask:latest
     depends_on:
       - bootstrap
     networks:
       - default
+    restart: always
   cron:
+    image: footyhints/cron:latest
     build:
       context: .
       dockerfile: ./docker/cron/Dockerfile
       cache_from:
-        - footyhints_cron:latest
+        - footyhints/cron:latest
     depends_on:
       - bootstrap
     networks:
       - default
+    restart: always
 
 volumes:
   mysql:

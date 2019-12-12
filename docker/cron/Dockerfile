@@ -1,4 +1,4 @@
-FROM footyhints_base
+FROM footyhints/base
 
 USER root
 
@@ -14,4 +14,6 @@ COPY --chown=footyhints:footyhints docker/cron/files/cron_entries.txt ./cron_ent
 
 RUN crontab ./cron_entries.txt
 
-CMD ["./wait-for-container.sh", "bootstrap", "cron -f"]
+USER root
+
+CMD ["./wait-for-container.sh", "bootstrap", "/usr/sbin/cron", "-f"]

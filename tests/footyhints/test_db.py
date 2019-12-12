@@ -7,7 +7,6 @@ from tests.footyhints.unit_test import UnitTest
 class TestDB(UnitTest):
 
     def test_creation(self):
-        assert str(session.bind.url) == 'sqlite:////tmp/footyhints.db'
         assert len(session.bind.table_names()) > 0
 
     def test_session(self):
