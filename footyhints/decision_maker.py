@@ -39,8 +39,14 @@ class DecisionMaker():
             if score is not None:
                 importance = LOWEST_PRIORITY - decision_plugin.priority
                 total_earned_score += score * importance
-                total_potential_points += 75 * importance
-                score_modification = ScoreModification(value=score, description=decision_plugin.description, reason=reason, priority=decision_plugin.priority)
+                # Average 75 points for each for high importance
+                total_potential_points += 60 * importance
+                score_modification = ScoreModification(
+                    value=score,
+                    description=decision_plugin.description,
+                    reason=reason,
+                    priority=decision_plugin.priority
+                )
                 game.score_modifications.append(score_modification)
                 session.add(score_modification)
         session.commit()
