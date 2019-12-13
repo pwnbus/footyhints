@@ -11,7 +11,6 @@ RUN \
   mkdir /opt/footyhints/envs/artifacts && \
   chown footyhints:footyhints /opt/footyhints/envs/artifacts
 
-COPY --chown=footyhints:footyhints docker/tester/files/config.txt config.txt
 COPY --chown=footyhints:footyhints .flake8 .flake8
 
 USER footyhints

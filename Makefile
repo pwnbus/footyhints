@@ -4,15 +4,21 @@ NAME		:= footyhints
 NO_CACHE	:= ## Pass `--no-cache` in order to disable Docker cache
 PARALLEL	:= --parallel
 
-run:
-	docker-compose -f docker-compose.yml -p $(NAME) up -d
+.PHONY:all
+all:
+	@echo 'Available make targets:'
+	@grep '^[^#[:space:]^\.PHONY.*].*:' Makefile
 
-build:
-	docker-compose -f docker-compose.yml -p $(NAME) build base
-	docker-compose -f docker-compose.yml -p $(NAME) build --parallel
 
-stop:
-	docker-compose -f docker-compose.yml -p $(NAME) stop
+run: ## Run the full docker stack
+	docker-compose -f docker/docker-compose.yml -p $(NAME) up -d
+
+build: ## Build the full docker stack
+	docker-compose -f docker/docker-compose.yml -p $(NAME) build base
+	docker-compose -f docker/docker-compose.yml -p $(NAME) build --parallel
+
+stop: ## Stop the full docker stack
+	docker-compose -f docker/docker-compose.yml -p $(NAME) stop
 
 rebuild: build stop run
 
@@ -35,4 +41,4 @@ run-tests-resources:  ## Just run the external resources required for tests
 .PHONY: run-tests
 run-tests: run-tests-resources ## Run testing suite
 	docker run -it --rm footyhints/tester bash -c "flake8 --config .flake8 ./"
-	docker run -it --rm --network=footyhints_default footyhints/tester
+	docker run -it --rm --env-file=docker/tests.env --network=footyhints_default footyhints/tester

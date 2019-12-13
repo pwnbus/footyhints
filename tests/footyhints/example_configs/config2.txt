@@ -2,12 +2,9 @@
 mode = production
 api_key = 12345678
 
-[WEB]
-debug = False
+web_debug = False
 
-[DB]
-uri = mysql://user:pass@127.0.0.1/footyhints
+db_uri = mysql://user:pass@127.0.0.1/footyhints
 
-[FETCH]
-league_country = United States
-league_name = MLS
+fetch_league_country = United States
+fetch_league_name = MLS

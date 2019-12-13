@@ -3,12 +3,14 @@ from footyhints.models.round import Round
 from footyhints.models.game import Game
 
 from footyhints.db import session
+from footyhints.decision_maker import DecisionMaker
 
 
 class ParseResults():
     def determine_worth_watching(self, games):
+        decision_maker = DecisionMaker()
         for game in games:
-            game.worth_watching()
+            decision_maker.worth_watching(game)
             session.add(game)
 
     def parse_results(self, results):

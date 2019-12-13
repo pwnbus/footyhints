@@ -4,7 +4,7 @@ services:
   nginx:
     image: footyhints/nginx:latest
     build:
-      context: .
+      context: ../
       dockerfile: ./docker/nginx/Dockerfile
       cache_from:
         - footyhints/nginx:latest
@@ -17,11 +17,6 @@ services:
     restart: always
   mysql:
     image: mysql:8
-    environment:
-      - MYSQL_ROOT_PASSWORD=CHANGEME
-      - MYSQL_DATABASE=footyhints
-      - MYSQL_USER=footyhints_user
-      - MYSQL_PASSWORD=CHANGEME
     restart: on-failure
     volumes:
       - mysql:/var/lib/mysql
@@ -30,10 +25,11 @@ services:
     # ports:
     #   - 3306:3306
     restart: always
+    env_file: footyhints.env
   base:
     image: footyhints/base:latest
     build:
-      context: .
+      context: ../
       dockerfile: ./docker/base/Dockerfile
       cache_from:
         - footyhints/base:latest
@@ -41,7 +37,7 @@ services:
   bootstrap:
     image: footyhints/bootstrap:latest
     build:
-      context: .
+      context: ../
       dockerfile: ./docker/bootstrap/Dockerfile
       cache_from:
         - footyhints/bootstrap:latest
@@ -50,10 +46,11 @@ services:
     networks:
       - default
     restart: on-failure
+    env_file: footyhints.env
   flask:
     image: footyhints/flask:latest
     build:
-      context: .
+      context: ../
       dockerfile: ./docker/flask/Dockerfile
       cache_from:
         - footyhints/flask:latest
@@ -62,10 +59,11 @@ services:
     networks:
       - default
     restart: always
+    env_file: footyhints.env
   cron:
     image: footyhints/cron:latest
     build:
-      context: .
+      context: ../
       dockerfile: ./docker/cron/Dockerfile
       cache_from:
         - footyhints/cron:latest
@@ -74,6 +72,7 @@ services:
     networks:
       - default
     restart: always
+    env_file: footyhints.env
 
 volumes:
   mysql:
