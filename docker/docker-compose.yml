@@ -16,7 +16,7 @@ services:
       - 80:80
     restart: always
   mysql:
-    image: mysql:5
+    image: mysql:8
     restart: on-failure
     volumes:
       - mysql:/var/lib/mysql
