@@ -1,12 +1,9 @@
 [GENERAL]
 mode = development
 
-[WEB]
-debug = True
+web_debug = True
 
-[DB]
-uri = sqlite:///:memory:
+db_uri = sqlite:///:memory:
 
-[FETCH]
-league_country = United States
-league_name = Premier League
+fetch_league_country = United States
+fetch_league_name = Premier League

@@ -46,7 +46,7 @@ class TestSimilarPoints(UnitTest):
         similar_points = SimilarPoints(game)
         score, reason = similar_points.score()
         assert score == 75
-        assert reason == 'Close proximity in points'
+        assert reason == 'Close proximity in points (3)'
 
     def test_two_games_diff(self):
         self.game.set_score(2, 2)
@@ -59,4 +59,4 @@ class TestSimilarPoints(UnitTest):
         similar_points = SimilarPoints(game)
         score, reason = similar_points.score()
         assert score == 50
-        assert reason == 'Nearby proximity in points'
+        assert reason == 'Nearby proximity in points (9)'
