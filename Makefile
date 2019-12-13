@@ -41,4 +41,4 @@ run-tests-resources:  ## Just run the external resources required for tests
 .PHONY: run-tests
 run-tests: run-tests-resources ## Run testing suite
 	docker run -it --rm footyhints/tester bash -c "flake8 --config .flake8 ./"
-	docker run -it --rm --env-file=docker/tests.env --network=footyhints_default footyhints/tester
+	docker run -it --rm --env-file=docker/tests.env -v artifacts:/opt/footyhints/envs/artifacts/ --network=footyhints_default footyhints/tester

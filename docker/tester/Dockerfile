@@ -19,4 +19,4 @@ COPY --chown=footyhints:footyhints ./tests tests
 
 RUN pip install -r tests/requirements.txt
 
-CMD ["./wait-for-port.sh", "mysql:3306", "py.test", "tests"]
+CMD ["./wait-for-port.sh", "mysql:3306", "py.test", "--cov=footyhints", "--cov-report=xml:/opt/footyhints/envs/artifacts/coverage.xml", "tests"]
