@@ -42,3 +42,13 @@ run-tests-resources:  ## Just run the external resources required for tests
 run-tests: run-tests-resources ## Run testing suite
 	docker run -it --rm footyhints/tester bash -c "flake8 --config .flake8 ./"
 	docker run -it --rm --env-file=docker/tests.env -v artifacts:/opt/footyhints/envs/artifacts/ --network=footyhints_default footyhints/tester
+
+.PHONY: push-latest-images
+push-latest-images: ## Push images to dockerhub
+	@echo "Logging into dockerhub"
+	@echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+	docker push footyhints/nginx:latest
+	docker push footyhints/base:latest
+	docker push footyhints/bootstrap:latest
+	docker push footyhints/flask:latest
+	docker push footyhints/cron:latest
