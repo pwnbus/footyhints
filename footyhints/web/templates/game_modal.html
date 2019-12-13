@@ -12,7 +12,28 @@
           <div class="col-sm-6">Level: {% include 'severity_badge.html' %}</div>
           <div class="col-sm-6">Score: <div class='blur-content blurred-content'>{{ game.interest_score }}</div></div>
         </div>
-        <button class="blur-button reveal" onclick='(
+        <table class="table table-striped table-bordered table-compact" style="clear: both;margin-top: 20px;">
+          <thead>
+            <th>Points</th>
+            <th>Priority</th>
+            <th>Reason</th>
+            <th>Plugin</th>
+          </thead>
+          <tbody>
+            {% for score_modification in game.score_modifications %}
+              <tr>
+                <td><div class='blur-content blurred-content'>{{ score_modification.value }}</div></td>
+                <td><div class='blur-content blurred-content'>{{ score_modification.priority }}</div></td>
+                <td><div class='blur-content blurred-content'>{{ score_modification.reason }}</div></td>
+                <td>{{ score_modification.description }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button class="blur-button reveal btn btn-secondary" style="float:left;" onclick='(
           function() {
             var blur_elements = document.getElementsByClassName("blur-content");
             var i;
@@ -40,27 +61,6 @@
             }
           })()'>Reveal
         </button>
-        <table class="table table-striped table-bordered table-compact" style="clear: both;margin-top: 20px;">
-          <thead>
-            <th>Points</th>
-            <th>Priority</th>
-            <th>Reason</th>
-            <th>Plugin</th>
-          </thead>
-          <tbody>
-            {% for score_modification in game.score_modifications %}
-              <tr>
-                <td><div class='blur-content blurred-content'>{{ score_modification.value }}</div></td>
-                <td><div class='blur-content blurred-content'>{{ score_modification.priority }}</div></td>
-                <td><div class='blur-content blurred-content'>{{ score_modification.reason }}</div></td>
-                <td>{{ score_modification.description }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
