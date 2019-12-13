@@ -14,6 +14,8 @@ install:
   - curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` -o docker-compose
   - chmod +x docker-compose
   - export PATH=./:$PATH
+  # Make sure we can build all containers
+  - make build
   # Build containers needed for tests only
   - make build-tests
 before_script:
