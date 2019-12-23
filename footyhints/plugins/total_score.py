@@ -5,8 +5,8 @@ class TotalScore(Plugin):
     description = 'Total amount of goals'
     priority = 1
 
-    def score(self):
-        total_goals = self.game.home_team_score + self.game.away_team_score
+    def score(self, game):
+        total_goals = game.home_team_score + game.away_team_score
         if total_goals == 0:
             return -50, "No goals"
         elif total_goals == 1:

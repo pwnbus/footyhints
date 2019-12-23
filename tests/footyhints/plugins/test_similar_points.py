@@ -12,7 +12,7 @@ class TestSimilarPoints(UnitTest):
         self.session.add(self.home_team)
         self.session.add(self.away_team)
         self.session.commit()
-        self.similar_points = SimilarPoints(self.game)
+        self.similar_points = SimilarPoints()
 
     def create_round(self, round_num, winner="Home"):
         round_obj = Round(round_num)
@@ -33,7 +33,7 @@ class TestSimilarPoints(UnitTest):
         self.game.home_team.points = 0
         self.game.away_team.points = 0
         self.game.set_score(0, 0)
-        score, reason = self.similar_points.score()
+        score, reason = self.similar_points.score(self.game)
         assert score == 100
         assert reason == 'Same number of points in table'
 
@@ -43,8 +43,8 @@ class TestSimilarPoints(UnitTest):
         self.session.commit()
         self.create_round(2)
         game = self.create_round(3)
-        similar_points = SimilarPoints(game)
-        score, reason = similar_points.score()
+        similar_points = SimilarPoints()
+        score, reason = similar_points.score(game)
         assert score == 75
         assert reason == 'Close proximity in points (3)'
 
@@ -56,7 +56,7 @@ class TestSimilarPoints(UnitTest):
         self.create_round(3)
         self.create_round(4)
         game = self.create_round(5)
-        similar_points = SimilarPoints(game)
-        score, reason = similar_points.score()
+        similar_points = SimilarPoints()
+        score, reason = similar_points.score(game)
         assert score == 50
         assert reason == 'Nearby proximity in points (9)'

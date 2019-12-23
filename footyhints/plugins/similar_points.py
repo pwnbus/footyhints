@@ -22,9 +22,9 @@ class SimilarPoints(Plugin):
     description = 'Proximity in points'
     priority = 2
 
-    def score(self):
-        home_points = points_at_matchday(self.game.home_team, self.game.round.num)
-        away_points = points_at_matchday(self.game.away_team, self.game.round.num)
+    def score(self, game):
+        home_points = points_at_matchday(game.home_team, game.round.num)
+        away_points = points_at_matchday(game.away_team, game.round.num)
         difference = abs(home_points - away_points)
         if difference == 0:
             return 100, "Same number of points in table"

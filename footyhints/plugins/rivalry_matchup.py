@@ -16,10 +16,10 @@ class RivalryMatchup(Plugin):
     description = 'Rivalry Matchup'
     priority = 1
 
-    def score(self):
+    def score(self, game):
         for matchup in MATCHUPS:
-            if self.game.home_team.name in matchup[0] and self.game.away_team.name in matchup[1]:
+            if game.home_team.name in matchup[0] and game.away_team.name in matchup[1]:
                 return 100, "Rivalry matchup"
-            elif self.game.away_team.name in matchup[0] and self.game.home_team.name in matchup[1]:
+            elif game.away_team.name in matchup[0] and game.home_team.name in matchup[1]:
                 return 100, "Rivalry matchup"
         return 0, "Not a rivalry matchup"

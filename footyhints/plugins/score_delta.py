@@ -5,8 +5,8 @@ class ScoreDelta(Plugin):
     description = 'Difference between home team and away team goals'
     priority = 2
 
-    def score(self):
-        goal_delta = abs(self.game.home_team_score - self.game.away_team_score)
+    def score(self, game):
+        goal_delta = abs(game.home_team_score - game.away_team_score)
         if goal_delta == 0:
             return 100, "Close game ({})".format(goal_delta)
         if goal_delta == 1:

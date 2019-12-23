@@ -9,31 +9,31 @@ class TestTotalScore(UnitTest):
         self.session.add(self.home_team)
         self.session.add(self.away_team)
         self.session.commit()
-        self.total_score = TotalScore(self.game)
+        self.total_score = TotalScore()
 
     def test_description(self):
         assert self.total_score.description == 'Total amount of goals'
 
     def test_over_max_score(self):
         self.game.set_score(10, 10)
-        score, reason = self.total_score.score()
+        score, reason = self.total_score.score(self.game)
         assert score == 125
         assert reason == 'Tons of goals (20)'
 
     def test_exact_max_score(self):
         self.game.set_score(4, 4)
-        score, reason = self.total_score.score()
+        score, reason = self.total_score.score(self.game)
         assert score == 125
         assert reason == 'Tons of goals (8)'
 
     def test_middle_score(self):
         self.game.set_score(2, 2)
-        score, reason = self.total_score.score()
+        score, reason = self.total_score.score(self.game)
         assert score == 75
         assert reason == 'Decent amount of goals (4)'
 
     def test_exact_min_score(self):
         self.game.set_score(0, 0)
-        score, reason = self.total_score.score()
+        score, reason = self.total_score.score(self.game)
         assert score == -50
         assert reason == 'No goals'
