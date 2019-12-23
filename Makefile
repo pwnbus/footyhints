@@ -14,8 +14,8 @@ run: ## Run the full docker stack
 	docker-compose -f docker/docker-compose.yml -p $(NAME) up -d
 
 build: ## Build the full docker stack
-	docker-compose -f docker/docker-compose.yml -p $(NAME) build base
-	docker-compose -f docker/docker-compose.yml -p $(NAME) build --parallel
+	docker-compose -f docker/docker-compose.yml -p $(NAME) $(BUILD_MODE) base
+	docker-compose -f docker/docker-compose.yml -p $(NAME) $(BUILD_MODE) --parallel
 
 stop: ## Stop the full docker stack
 	docker-compose -f docker/docker-compose.yml -p $(NAME) stop
