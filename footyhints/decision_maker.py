@@ -11,7 +11,7 @@ class DecisionMaker():
     def __init__(self):
         self.decision_plugins = []
 
-    def load_decision_plugins(self, game):
+    def load_decision_plugins(self):
         # wipe plugin list so we can 'refresh'
         self.decision_plugins = []
         decision_classes = rlist_classes('footyhints.plugins')
@@ -19,7 +19,7 @@ class DecisionMaker():
             # Exclude root Plugin class
             if decision_class == Plugin:
                 continue
-            self.decision_plugins.append(decision_class(game))
+            self.decision_plugins.append(decision_class())
 
     def delete_score_modifications(self, game):
         for score_modification in game.score_modifications:
@@ -31,11 +31,11 @@ class DecisionMaker():
             raise TypeError('Home and away scores must be set')
         self.delete_score_modifications(game)
         # Main decision logic
-        self.load_decision_plugins(game)
+        self.load_decision_plugins()
         total_earned_score = 0
         total_potential_points = 0
         for decision_plugin in self.decision_plugins:
-            score, reason = decision_plugin.score()
+            score, reason = decision_plugin.score(game)
             if score is not None:
                 importance = LOWEST_PRIORITY - decision_plugin.priority
                 total_earned_score += score * importance

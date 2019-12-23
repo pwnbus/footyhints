@@ -19,7 +19,7 @@ class TestDecisionMakerLoadDecisionPlugins(DecisionMakerTest):
     def test_plugins(self):
         plugins_path = join(dirname(abspath(__file__)), '../../footyhints/plugins')
         assert len(self.decision.decision_plugins) == 0
-        self.decision.load_decision_plugins(self.game)
+        self.decision.load_decision_plugins()
         expected_plugin_num = len(glob(plugins_path + "/*.py")) - 1
         assert len(self.decision.decision_plugins) == expected_plugin_num
 
