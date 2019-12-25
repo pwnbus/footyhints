@@ -14,10 +14,6 @@ class TestHighProfileMatchup(UnitTest):
         round_obj = Round(1)
         return Game(home_team=home_team, away_team=away_team, round=round_obj)
 
-    def test_description(self):
-        matchup = HighProfileMatchup()
-        assert matchup.description == 'High Profile Matchups'
-
     def test_high_profile_matchup(self):
         game = self.create_tmp_game('Liverpool FC', 'Manchester United FC')
         matchup = HighProfileMatchup()

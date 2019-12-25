@@ -19,7 +19,6 @@ def points_at_matchday(team, matchday):
 
 
 class SimilarPoints(Plugin):
-    description = 'Proximity in points'
     priority = 2
 
     def score(self, game):
@@ -27,18 +26,18 @@ class SimilarPoints(Plugin):
         away_points = points_at_matchday(game.away_team, game.round.num)
         difference = abs(home_points - away_points)
         if difference == 0:
-            return 100, "Same number of points in table"
+            return 100, "Proximity in points (0)"
         elif difference <= 6:
-            return 75, "Close proximity in points ({})".format(difference)
+            return 75, "Proximity in points ({})".format(difference)
         elif difference <= 12:
-            return 50, "Nearby proximity in points ({})".format(difference)
+            return 50, "Proximity in points ({})".format(difference)
         elif difference <= 18:
-            return 25, "Nearby proximity in points ({})".format(difference)
+            return 25, "Proximity in points ({})".format(difference)
         elif difference <= 24:
-            return 0, "Gap between teams in points ({})".format(difference)
+            return 0, "Proximity in points ({})".format(difference)
         elif difference <= 30:
-            return -25, "Large gap between teams in points ({})".format(difference)
+            return -25, "Proximity in points ({})".format(difference)
         elif difference <= 36:
-            return -50, "Large gap between teams in points ({})".format(difference)
+            return -50, "Proximity in points ({})".format(difference)
         else:
-            return -10, "Huge gap between teams in points ({})".format(difference)
+            return -10, "Proximity in points ({})".format(difference)

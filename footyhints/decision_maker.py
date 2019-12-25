@@ -43,7 +43,6 @@ class DecisionMaker():
                 total_potential_points += 60 * importance
                 score_modification = ScoreModification(
                     value=score,
-                    description=decision_plugin.description,
                     reason=reason,
                     priority=decision_plugin.priority
                 )

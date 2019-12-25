@@ -26,16 +26,13 @@ class TestSimilarPoints(UnitTest):
         self.session.commit()
         return game
 
-    def test_description(self):
-        assert self.similar_points.description == 'Proximity in points'
-
     def test_over_max_score(self):
         self.game.home_team.points = 0
         self.game.away_team.points = 0
         self.game.set_score(0, 0)
         score, reason = self.similar_points.score(self.game)
         assert score == 100
-        assert reason == 'Same number of points in table'
+        assert reason == 'Proximity in points (0)'
 
     def test_middle_score(self):
         self.game.set_score(2, 2)
@@ -46,7 +43,7 @@ class TestSimilarPoints(UnitTest):
         similar_points = SimilarPoints()
         score, reason = similar_points.score(game)
         assert score == 75
-        assert reason == 'Close proximity in points (3)'
+        assert reason == 'Proximity in points (3)'
 
     def test_two_games_diff(self):
         self.game.set_score(2, 2)
@@ -59,4 +56,4 @@ class TestSimilarPoints(UnitTest):
         similar_points = SimilarPoints()
         score, reason = similar_points.score(game)
         assert score == 50
-        assert reason == 'Nearby proximity in points (9)'
+        assert reason == 'Proximity in points (9)'

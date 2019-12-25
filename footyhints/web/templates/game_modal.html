@@ -21,7 +21,6 @@
             <th>Points</th>
             <th>Priority</th>
             <th>Reason</th>
-            <th>Plugin</th>
           </thead>
           <tbody>
             {% for score_modification in game.score_modifications %}
@@ -29,7 +28,6 @@
                 <td><div class='blur-content blurred-content blur-content{{ game.id }}'>{{ score_modification.value }}</div></td>
                 <td><div class='blur-content blurred-content blur-content{{ game.id }}'>{{ score_modification.priority }}</div></td>
                 <td><div class='blur-content blurred-content blur-content{{ game.id }}'>{{ score_modification.reason }}</div></td>
-                <td>{{ score_modification.description }}</td>
               </tr>
             {% endfor %}
           </tbody>

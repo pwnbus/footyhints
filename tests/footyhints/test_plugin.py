@@ -10,11 +10,6 @@ class TestPlugin(UnitTest):
         super().setup()
         self.plugin = Plugin()
 
-    def test_description(self):
-        with raises(NotImplementedError) as exception_obj:
-            self.plugin.description()
-        assert str(exception_obj.value) == 'Must specify a description property in the plugin'
-
     def test_score(self):
         with raises(NotImplementedError) as exception_obj:
             self.plugin.score(self.game)

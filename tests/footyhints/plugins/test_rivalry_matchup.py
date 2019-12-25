@@ -14,10 +14,6 @@ class TestRivalryMatchup(UnitTest):
         round_obj = Round(1)
         return Game(home_team=home_team, away_team=away_team, round=round_obj)
 
-    def test_description(self):
-        matchup = RivalryMatchup()
-        assert matchup.description == 'Rivalry Matchup'
-
     def test_rivalry_matchup(self):
         game = self.create_tmp_game('Liverpool FC', 'Manchester United FC')
         matchup = RivalryMatchup()

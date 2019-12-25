@@ -8,7 +8,6 @@ class ScoreModification(Base):
     __tablename__ = 'score_modifications'
     id = Column(Integer, primary_key=True)
     value = Column(Integer, nullable=False)
-    description = Column(Text, nullable=False)
     priority = Column(Integer, nullable=False)
     reason = Column(Text, nullable=False)
     game_id = Column(Integer, ForeignKey('games.id'))

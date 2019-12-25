@@ -12,7 +12,6 @@ HIGH_PROFILE_TEAMS = [
 
 
 class HighProfileMatchup(Plugin):
-    description = 'High Profile Matchups'
     priority = 1
 
     def score(self, game):
