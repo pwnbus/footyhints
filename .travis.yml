@@ -42,6 +42,5 @@ after_script:
         -e CC_TEST_REPORTER_ID=$CC_TEST_REPORTER_ID \
         footyhints/tester:latest bash -c \
       "cp /opt/footyhints/env/artifacts/coverage.xml ./ && /usr/bin/cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
-      make build
-      make push-latest-images
+      make release-latest-images
     fi
