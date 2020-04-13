@@ -4,4 +4,5 @@
 /config.txt
 /docs/_build
 .DS_Store
+.python-version
 coverage.xml
