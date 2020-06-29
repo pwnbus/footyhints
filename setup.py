@@ -13,6 +13,7 @@ config = {
     'author_email': 'pwnbus@mozilla.com',
     'version': version,
     'install_requires': [
+        'requests',
         'pynsive',
         'sqlalchemy',
         'Flask',

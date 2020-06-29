@@ -1,19 +1,23 @@
 from footyhints.config import config
 
-import http.client
+import requests
 import json
 
 
 class DataClient():
 
+    API_URL = "https://api.football-data.org"
+
     def get_results(self):
-        connection = http.client.HTTPConnection('api.football-data.org')
         headers = {
             'X-Auth-Token': config.api_key,
             'X-Response-Control': 'minified'
         }
-        connection.request('GET', '/v2/competitions/', None, headers)
-        response = json.loads(connection.getresponse().read().decode())
+        competition_resp = requests.get('{0}/v2/competitions/'.format(self.API_URL), headers=headers)
+        if not competition_resp.ok:
+            raise Exception('{0}: {1}'.format(competition_resp.status_code, competition_resp.text))
+
+        response = json.loads(competition_resp.text)
 
         if 'error' in response:
             raise Exception(response['error'])
@@ -24,8 +28,11 @@ class DataClient():
                 continue
             competition_id = competition['id']
 
-        connection.request('GET', "/v2/competitions/{}/matches".format(competition_id), None, headers)
-        response = json.loads(connection.getresponse().read().decode())
+        matches_resp = requests.get('{0}/v2/competitions/{1}/matches'.format(self.API_URL, competition_id), headers=headers)
+        if not matches_resp.ok:
+            raise Exception('{0}: {1}'.format(matches_resp.status_code, matches_resp.text))
+
+        response = json.loads(matches_resp.text)
 
         results = []
         for match in response['matches']:
