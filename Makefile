@@ -5,8 +5,6 @@ NO_CACHE	:= ## Pass `--no-cache` in order to disable Docker cache
 PARALLEL	:= --parallel
 
 HASH    := $$(git log -1 --pretty=%h)
-RELEASE_TAG := $$(git describe --abbrev=0 --tags)
-RELEASE_VERSION := $(filter-out 'v',$(RELEASE_TAG))
 REGISTRY := footyhints
 
 IMAGES := nginx base bootstrap flask cron
@@ -63,15 +61,15 @@ update-remote-tags: ## Ensure local git has most recent tags
 
 .PHONY: build-release-images
 build-release-images: ## Build release images with latest and newest tag
-	@echo "Building release images for latest and ${RELEASE_TAG} with registry: ${REGISTRY}"
+	@echo "Building release images for latest and ${HASH} with registry: ${REGISTRY}"
 	@for image in $(IMAGES); do \
-		docker build -f docker/$$image/Dockerfile -t ${REGISTRY}/$$image:latest -t ${REGISTRY}/$$image:${RELEASE_TAG} .; \
+		docker build -f docker/$$image/Dockerfile -t ${REGISTRY}/$$image:latest -t ${REGISTRY}/$$image:${HASH} .; \
 	done
 
 .PHONY: push-release-images
 push-release-images: ## Push release images with latest and newest tag
-	@echo "Pushing release images for latest and ${RELEASE_TAG} to registry: ${REGISTRY}"
+	@echo "Pushing release images for latest and ${HASH} to registry: ${REGISTRY}"
 	@for image in $(IMAGES); do \
-		docker push ${REGISTRY}/$$image:latest
-		docker push ${REGISTRY}/$$image:${RELEASE_TAG}
+		docker push ${REGISTRY}/$$image:latest; \
+		docker push ${REGISTRY}/$$image:${HASH}; \
 	done
