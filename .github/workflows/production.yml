@@ -1,12 +1,12 @@
 name: Production
-# on:
-#   push:
-#     branches:
-#       - master
-
 on:
   push:
-    branches: '*'
+    branches:
+      - master
+
+# on:
+#   push:
+#     branches: '*'
 
 jobs:
   production:
