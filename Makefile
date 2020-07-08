@@ -55,10 +55,6 @@ login-dockerhub: ## Login to DockerHub
 	@echo "Logging into dockerhub"
 	@echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 
-.PHONY: update-remote-tags
-update-remote-tags: ## Ensure local git has most recent tags
-	git fetch --all --tags
-
 .PHONY: build-release-images
 build-release-images: ## Build release images with latest and newest tag
 	@echo "Building release images for latest and ${HASH} with registry: ${REGISTRY}"

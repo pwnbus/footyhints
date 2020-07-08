@@ -9,14 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Update tags
-      run: make update-remote-tags
+
     - name: Login to DockerHub
       run: make login-dockerhub
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
     - name: Build images
       run: make build-release-images
+
     - name: Push images to DockerHub
       run: make push-release-images
