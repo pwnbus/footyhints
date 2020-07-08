@@ -1,0 +1,27 @@
+---
+version: '3.7'
+services:
+  nginx:
+    build:
+      context: ../
+      dockerfile: ./docker/nginx/Dockerfile
+      cache_from:
+        - footyhints/footyhints_nginx:latest
+  bootstrap:
+    build:
+      context: ../
+      dockerfile: ./docker/bootstrap/Dockerfile
+      cache_from:
+        - footyhints/footyhints_bootstrap:latest
+  flask:
+    build:
+      context: ../
+      dockerfile: ./docker/flask/Dockerfile
+      cache_from:
+        - footyhints/footyhints_flask:latest
+  cron:
+    build:
+      context: ../
+      dockerfile: ./docker/cron/Dockerfile
+      cache_from:
+        - footyhints/footyhints_cron:latest

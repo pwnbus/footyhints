@@ -19,8 +19,8 @@ run: ## Run the full docker stack
 	docker-compose -f docker/docker-compose.yml -p $(NAME) up -d
 
 build: ## Build the full docker stack
-	docker-compose -f docker/docker-compose.yml -p $(NAME) $(BUILD_MODE) base
-	docker-compose -f docker/docker-compose.yml -p $(NAME) $(BUILD_MODE) --parallel
+	docker build -f docker/base/Dockerfile -t footyhints/footyhints_base:latest .
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose-build.yml -p $(NAME) build --parallel
 
 stop: ## Stop the full docker stack
 	docker-compose -f docker/docker-compose.yml -p $(NAME) stop
@@ -32,8 +32,8 @@ tests: build-tests run-tests  ## Run all tests (getting/building images as neede
 
 .PHONY: build-tests
 build-tests:  ## Build end-to-end test environment only
-	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) $(NO_CACHE) $(BUILD_MODE) base
-	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) $(NO_CACHE) $(BUILD_MODE)
+	docker build -f docker/base/Dockerfile -t footyhints/footyhints_base:latest .
+	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) $(NO_CACHE) build
 
 .PHONY: run-tests-resources-external
 run-tests-resources-external: ## Just spin up external resources for tests and have them listen externally
@@ -45,8 +45,8 @@ run-tests-resources:  ## Just run the external resources required for tests
 
 .PHONY: run-tests
 run-tests: run-tests-resources ## Run testing suite
-	docker run --rm footyhints_tester bash -c "flake8 --config .flake8 ./"
-	docker run --rm --env-file=docker/tests.env -v artifacts:/opt/footyhints/envs/artifacts/ --network=footyhints_default footyhints_tester
+	docker run --rm footyhints/footyhints_tester bash -c "flake8 --config .flake8 ./"
+	docker run --rm --env-file=docker/tests.env -v artifacts:/opt/footyhints/envs/artifacts/ --network=footyhints_default footyhints/footyhints_tester
 
 ## RELEASES ##
 
@@ -58,7 +58,7 @@ login-dockerhub: ## Login to DockerHub
 .PHONY: build-release-images
 build-release-images: ## Build release images with latest and newest tag
 	@echo "Building release images for latest and ${HASH} with registry: ${REGISTRY}"
-	docker build -f docker/base/Dockerfile -t footyhints_base:latest .
+	docker build -f docker/base/Dockerfile -t footyhints/footyhints_base:latest .
 	@for image in $(IMAGES); do \
 		docker build -f docker/$$image/Dockerfile -t ${REGISTRY}footyhints_$$image:latest -t ${REGISTRY}footyhints_$$image:${HASH} .; \
 	done
