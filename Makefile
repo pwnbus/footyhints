@@ -59,13 +59,13 @@ login-dockerhub: ## Login to DockerHub
 build-release-images: ## Build release images with latest and newest tag
 	@echo "Building release images for latest and ${HASH} with registry: ${REGISTRY}"
 	@for image in $(IMAGES); do \
-		docker build -f docker/$$image/Dockerfile -t ${REGISTRY}/$$image:latest -t ${REGISTRY}/$$image:${HASH} .; \
+		docker build -f docker/$$image/Dockerfile -t ${REGISTRY}/footyhints_$$image:latest -t ${REGISTRY}/footyhints_$$image:${HASH} .; \
 	done
 
 .PHONY: push-release-images
 push-release-images: ## Push release images with latest and newest tag
 	@echo "Pushing release images for latest and ${HASH} to registry: ${REGISTRY}"
 	@for image in $(IMAGES); do \
-		docker push ${REGISTRY}/$$image:latest; \
-		docker push ${REGISTRY}/$$image:${HASH}; \
+		docker push ${REGISTRY}/footyhints_$$image:latest; \
+		docker push ${REGISTRY}/footyhints_$$image:${HASH}; \
 	done
