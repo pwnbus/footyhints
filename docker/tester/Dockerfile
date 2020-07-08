@@ -1,4 +1,4 @@
-FROM footyhints/base
+FROM footyhints_base
 
 USER root
 

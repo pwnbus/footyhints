@@ -5,9 +5,9 @@ NO_CACHE	:= ## Pass `--no-cache` in order to disable Docker cache
 PARALLEL	:= --parallel
 
 HASH    := $$(git log -1 --pretty=%h)
-REGISTRY := footyhints
+REGISTRY := ""
 
-IMAGES := nginx base bootstrap flask cron
+IMAGES := nginx bootstrap flask cron
 
 .PHONY:all
 all:
@@ -45,8 +45,8 @@ run-tests-resources:  ## Just run the external resources required for tests
 
 .PHONY: run-tests
 run-tests: run-tests-resources ## Run testing suite
-	docker run --rm footyhints/tester bash -c "flake8 --config .flake8 ./"
-	docker run --rm --env-file=docker/tests.env -v artifacts:/opt/footyhints/envs/artifacts/ --network=footyhints_default footyhints/tester
+	docker run --rm footyhints_tester bash -c "flake8 --config .flake8 ./"
+	docker run --rm --env-file=docker/tests.env -v artifacts:/opt/footyhints/envs/artifacts/ --network=footyhints_default footyhints_tester
 
 ## RELEASES ##
 
@@ -58,14 +58,15 @@ login-dockerhub: ## Login to DockerHub
 .PHONY: build-release-images
 build-release-images: ## Build release images with latest and newest tag
 	@echo "Building release images for latest and ${HASH} with registry: ${REGISTRY}"
+	docker build -f docker/base/Dockerfile -t footyhints_base:latest .
 	@for image in $(IMAGES); do \
-		docker build -f docker/$$image/Dockerfile -t ${REGISTRY}/footyhints_$$image:latest -t ${REGISTRY}/footyhints_$$image:${HASH} .; \
+		docker build -f docker/$$image/Dockerfile -t ${REGISTRY}footyhints_$$image:latest -t ${REGISTRY}footyhints_$$image:${HASH} .; \
 	done
 
 .PHONY: push-release-images
 push-release-images: ## Push release images with latest and newest tag
 	@echo "Pushing release images for latest and ${HASH} to registry: ${REGISTRY}"
 	@for image in $(IMAGES); do \
-		docker push ${REGISTRY}/footyhints_$$image:latest; \
-		docker push ${REGISTRY}/footyhints_$$image:${HASH}; \
+		docker push ${REGISTRY}footyhints_$$image:latest; \
+		docker push ${REGISTRY}footyhints_$$image:${HASH}; \
 	done

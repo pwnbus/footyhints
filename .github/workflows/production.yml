@@ -29,13 +29,13 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run:
-        make build-release-images REGISTRY=$ECR_REGISTRY
+        make build-release-images REGISTRY=$ECR_REGISTRY/
 
     - name: Push images to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run:
-        make push-release-images REGISTRY=$ECR_REGISTRY
+        make push-release-images REGISTRY=$ECR_REGISTRY/
 
     - name: Logout of Amazon ECR
       if: always()

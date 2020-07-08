@@ -8,20 +8,20 @@ services:
       - default
     env_file: tests.env
   base:
-    image: footyhints/base:latest
+    image: footyhints_base:latest
     build:
       context: ../
       dockerfile: ./docker/base/Dockerfile
       cache_from:
-        - footyhints/base:latest
+        - footyhints_base:latest
     restart: "no"
   tester:
-    image: footyhints/tester:latest
+    image: footyhints_tester:latest
     build:
       context: ../
       dockerfile: ./docker/tester/Dockerfile
       cache_from:
-        - footyhints/tester:latest
+        - footyhints_tester:latest
     command: bash -c 'exit 0'
     depends_on:
       - base
