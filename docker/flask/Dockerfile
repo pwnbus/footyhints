@@ -1,4 +1,4 @@
-FROM footyhints/base
+FROM footyhints_base
 
 COPY --chown=footyhints:footyhints bin/web bin/web
 
