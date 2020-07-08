@@ -7,24 +7,15 @@ services:
     networks:
       - default
     env_file: tests.env
-  base:
-    image: footyhints_base:latest
-    build:
-      context: ../
-      dockerfile: ./docker/base/Dockerfile
-      cache_from:
-        - footyhints_base:latest
-    restart: "no"
   tester:
-    image: footyhints_tester:latest
+    image: footyhints/footyhints_tester:latest
     build:
       context: ../
       dockerfile: ./docker/tester/Dockerfile
       cache_from:
-        - footyhints_tester:latest
+        - footyhints/footyhints_tester:latest
     command: bash -c 'exit 0'
     depends_on:
-      - base
       - mysql
     networks:
       - default

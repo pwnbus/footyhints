@@ -2,12 +2,7 @@
 version: '3.7'
 services:
   nginx:
-    image: footyhints_nginx:latest
-    build:
-      context: ../
-      dockerfile: ./docker/nginx/Dockerfile
-      cache_from:
-        - footyhints_nginx:latest
+    image: footyhints/footyhints_nginx:latest
     depends_on:
       - flask
     networks:
@@ -26,34 +21,14 @@ services:
     #   - 3306:3306
     restart: always
     env_file: footyhints.env
-  base:
-    image: footyhints_base:latest
-    build:
-      context: ../
-      dockerfile: ./docker/base/Dockerfile
-      cache_from:
-        - footyhints_base:latest
-    restart: "no"
   bootstrap:
-    image: footyhints_bootstrap:latest
-    build:
-      context: ../
-      dockerfile: ./docker/bootstrap/Dockerfile
-      cache_from:
-        - footyhints_bootstrap:latest
-    depends_on:
-      - base
+    image: footyhints/footyhints_bootstrap:latest
     networks:
       - default
     restart: on-failure
     env_file: footyhints.env
   flask:
-    image: footyhints_flask:latest
-    build:
-      context: ../
-      dockerfile: ./docker/flask/Dockerfile
-      cache_from:
-        - footyhints_flask:latest
+    image: footyhints/footyhints_flask:latest
     depends_on:
       - bootstrap
     networks:
@@ -61,12 +36,7 @@ services:
     restart: always
     env_file: footyhints.env
   cron:
-    image: footyhints_cron:latest
-    build:
-      context: ../
-      dockerfile: ./docker/cron/Dockerfile
-      cache_from:
-        - footyhints_cron:latest
+    image: footyhints/footyhints_cron:latest
     depends_on:
       - bootstrap
     networks:
