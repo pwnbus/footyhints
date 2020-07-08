@@ -7,12 +7,12 @@ PARALLEL	:= --parallel
 HASH    := $$(git log -1 --pretty=%h)
 RELEASE_TAG := $$(git describe --abbrev=0 --tags)
 RELEASE_VERSION := $(filter-out 'v',$(RELEASE_TAG))
+REGISTRY := footyhints
 
 IMAGES := nginx base bootstrap flask cron
 
 .PHONY:all
 all:
-	@echo $(RELEASE_VERSION)
 	@echo 'Available make targets:'
 	@grep '^[^#[:space:]^\.PHONY.*].*:' Makefile
 
@@ -47,11 +47,10 @@ run-tests-resources:  ## Just run the external resources required for tests
 
 .PHONY: run-tests
 run-tests: run-tests-resources ## Run testing suite
-	docker run -it --rm footyhints/tester bash -c "flake8 --config .flake8 ./"
-	docker run -it --rm --env-file=docker/tests.env -v artifacts:/opt/footyhints/envs/artifacts/ --network=footyhints_default footyhints/tester
+	docker run --rm footyhints/tester bash -c "flake8 --config .flake8 ./"
+	docker run --rm --env-file=docker/tests.env -v artifacts:/opt/footyhints/envs/artifacts/ --network=footyhints_default footyhints/tester
 
 ## RELEASES ##
-REGISTRY := footyhints
 
 .PHONY: login-dockerhub
 login-dockerhub: ## Login to DockerHub
