@@ -1,11 +1,11 @@
-name: Push DockerHub
+name: DockerHub
 on:
   push:
     branches:
       - master
 
 jobs:
-  build:
+  dockerhub:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
