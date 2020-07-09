@@ -1,4 +1,4 @@
-name: Build and Deploy to Production
+name: Production
 
 on:
   push:
@@ -16,6 +16,7 @@ env:
 
 jobs:
   dockerhub:
+    name: Push to Dockerhub
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -32,8 +33,9 @@ jobs:
     - name: Push images to DockerHub
       run: make push-release-images REGISTRY=footyhints/
 
-  production:
-    name: Setup, Build, Publish, and Deploy
+  gke:
+    name: Deploy to GKE
+    needs: dockerhub
     runs-on: ubuntu-latest
     steps:
 
@@ -55,4 +57,4 @@ jobs:
       run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
 
     - name: Create deployment
-      run: kubectl apply -f $GITHUB_WORKSPACE/deployment.yml
+      run: kubectl apply -f $GITHUB_WORKSPACE/docker/deployment.yml
