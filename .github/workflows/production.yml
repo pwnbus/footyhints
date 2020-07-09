@@ -1,42 +1,58 @@
-name: Production
+name: Build and Deploy to Production
+
 on:
   push:
     branches:
       - master
 
-# on:
-#   push:
-#     branches: '*'
+# Environment variables available to all jobs and steps in this workflow
+env:
+  GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
+  GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
+  GITHUB_SHA: ${{ github.sha }}
+  GKE_ZONE: us-central1-c
+  GKE_CLUSTER: footyhints
+  REGISTRY_HOSTNAME: gcr.io
 
 jobs:
-  production:
+  dockerhub:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+    - name: Login to DockerHub
+      run: make login-dockerhub
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build images
+      run: make build-release-images REGISTRY=footyhints/
+
+    - name: Push images to DockerHub
+      run: make push-release-images REGISTRY=footyhints/
+
+  production:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Setup gcloud CLI
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+        version: '270.0.0'
+        service_account_email: ${{ secrets.GKE_EMAIL }}
+        service_account_key: ${{ secrets.GKE_KEY }}
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+    # Configure docker to use the gcloud command-line tool as a credential helper
+    - name: Setup docker to authenticate to gcloud
+      run: gcloud auth configure-docker
 
-    - name: Build and tag images
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      run:
-        make build-release-images REGISTRY=$ECR_REGISTRY/
+    - name: Auth to gcloud
+      run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
 
-    - name: Push images to Amazon ECR
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      run:
-        make push-release-images REGISTRY=$ECR_REGISTRY/
-
-    - name: Logout of Amazon ECR
-      if: always()
-      run: docker logout ${{ steps.login-ecr.outputs.registry }}
+    - name: Create deployment
+      run: kubectl apply -f $GITHUB_WORKSPACE/deployment.yml
