@@ -69,8 +69,12 @@ jobs:
     - name: Auth to gcloud
       run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
 
-    - name: Set version in deployment
-      run: sed -i'' -e "s/FOOTYHINTS_VERSION_STUB/$TAG_VERSION/g" $GITHUB_WORKSPACE/docker/deployment.yml
+    - name: Replace placeholder variables in deployment
+      run: |
+        sed -i'' -e "s/FOOTYHINTS_VERSION_PLACEHOLDER/$TAG_VERSION/g" $GITHUB_WORKSPACE/docker/deployment.yml
+        sed -i'' -e "s/FOOTYHINTS_API_KEY_PLACEHOLDER/${{ secrets.FOOTYHINTS_API_KEY }}/g" $GITHUB_WORKSPACE/docker/deployment.yml
+        sed -i'' -e "s/MYSQL_ROOT_PASSWORD_PLACEHOLDER/${{ secrets.MYSQL_ROOT_PASSWORD }}/g" $GITHUB_WORKSPACE/docker/deployment.yml
+        sed -i'' -e "s/MYSQL_PASSWORD_PLACEHOLDER/${{ secrets.MYSQL_PASSWORD }}/g" $GITHUB_WORKSPACE/docker/deployment.yml
 
     - name: Create deployment
       run: kubectl apply -f $GITHUB_WORKSPACE/docker/deployment.yml
