@@ -4,7 +4,7 @@ NAME		:= footyhints
 NO_CACHE	:= ## Pass `--no-cache` in order to disable Docker cache
 PARALLEL	:= --parallel
 
-HASH    := $$(git log -1 --pretty=%h)
+VERSION    := $$(git log -1 --pretty=%h)
 REGISTRY := ""
 
 IMAGES := nginx bootstrap flask cron
@@ -16,7 +16,7 @@ all:
 
 
 run: ## Run the full docker stack
-	docker-compose -f docker/docker-compose.yml -p $(NAME) up -d
+	FOOTYHINTS_VERSION=$(VERSION) docker-compose -f docker/docker-compose.yml -p $(NAME) up -d
 
 build: ## Build the full docker stack
 	docker build -f docker/base/Dockerfile -t footyhints/footyhints_base:latest .
@@ -57,16 +57,16 @@ login-dockerhub: ## Login to DockerHub
 
 .PHONY: build-release-images
 build-release-images: ## Build release images with latest and newest tag
-	@echo "Building release images for latest and ${HASH} with registry: ${REGISTRY}"
+	@echo "Building release images for latest and ${VERSION} with registry: ${REGISTRY}"
 	docker build -f docker/base/Dockerfile -t footyhints/footyhints_base:latest .
 	@for image in $(IMAGES); do \
-		docker build -f docker/$$image/Dockerfile -t ${REGISTRY}footyhints_$$image:latest -t ${REGISTRY}footyhints_$$image:${HASH} .; \
+		docker build -f docker/$$image/Dockerfile -t ${REGISTRY}footyhints_$$image:latest -t ${REGISTRY}footyhints_$$image:${VERSION} .; \
 	done
 
 .PHONY: push-release-images
 push-release-images: ## Push release images with latest and newest tag
-	@echo "Pushing release images for latest and ${HASH} to registry: ${REGISTRY}"
+	@echo "Pushing release images for latest and ${VERSION} to registry: ${REGISTRY}"
 	@for image in $(IMAGES); do \
 		docker push ${REGISTRY}footyhints_$$image:latest; \
-		docker push ${REGISTRY}footyhints_$$image:${HASH}; \
+		docker push ${REGISTRY}footyhints_$$image:${VERSION}; \
 	done
