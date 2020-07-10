@@ -25,9 +25,9 @@ jobs:
 
     # Set release information from the tag
     - name: Set TAG_VERSION env
-      run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
-    - name: Set NUMBER_VERSION env
-      run: echo ::set-env name=NUMBER_VERSION::$(echo $RELEASE_VERSION | cut -c 2-)
+      run: echo ::set-env name=TAG_VERSION::${GITHUB_REF#refs/*/}
+    - name: Set RELEASE_VERSION env
+      run: echo ::set-env name=RELEASE_VERSION::$(echo $TAG_VERSION | cut -c 2-)
 
     - name: Login to DockerHub
       run: make login-dockerhub
@@ -36,10 +36,10 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build images
-      run: make build-release-images REGISTRY=footyhints/ HASH=$NUMBER_VERSION
+      run: make build-release-images REGISTRY=footyhints/ VERSION=$RELEASE_VERSION
 
     - name: Push images to DockerHub
-      run: make push-release-images REGISTRY=footyhints/ HASH=$NUMBER_VERSION
+      run: make push-release-images REGISTRY=footyhints/ VERSION=$RELEASE_VERSION
 
 
   gke:
@@ -50,6 +50,10 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v2
+
+    # Set release information from the tag
+    - name: Set TAG_VERSION env
+      run: echo ::set-env name=TAG_VERSION::${GITHUB_REF#refs/*/}
 
     # Setup gcloud CLI
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -64,6 +68,9 @@ jobs:
 
     - name: Auth to gcloud
       run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
+
+    - name: Set version in deployment
+      run: sed -i'' -e "s/FOOTYHINTS_VERSION_STUB/$TAG_VERSION/g" $GITHUB_WORKSPACE/docker/deployment.yml
 
     - name: Create deployment
       run: kubectl apply -f $GITHUB_WORKSPACE/docker/deployment.yml
