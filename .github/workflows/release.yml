@@ -1,0 +1,41 @@
+name: Github Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Pull all tags
+        run: git fetch --tags -f
+
+      # Set release information from the tag
+      - name: Set RELEASE_VERSION env
+        run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
+      - name: Set PREVIOUS_TAG env
+        run: echo ::set-env name=PREVIOUS_TAG::$(git tag --sort=taggerdate | tail -n2 | head -n1)
+
+      - name: Create release description
+        id: release-description
+        run: |
+          DESCRIPTION=$(echo Changelog: https://github.com/pwnbus/footyhints/compare/$PREVIOUS_TAG...$RELEASE_VERSION)
+          echo "::set-output name=RELEASE_DESCRIPTION::$DESCRIPTION"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: ${{ steps.release-description.outputs.RELEASE_DESCRIPTION }}
+          draft: false
+          prerelease: false
