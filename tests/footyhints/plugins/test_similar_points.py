@@ -17,7 +17,7 @@ class TestSimilarPoints(UnitTest):
     def create_round(self, round_num, winner="Home"):
         round_obj = Round(round_num)
         self.session.add(round_obj)
-        game = Game(home_team=self.home_team, away_team=self.away_team, round=round_obj)
+        game = Game(home_team=self.home_team, away_team=self.away_team, round=round_obj, start_time=1594445619)
         if winner == "Home":
             game.set_score(1, 0)
         else:

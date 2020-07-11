@@ -30,7 +30,8 @@ class ParseResults():
             game = Game(
                 home_team=teams[match['home_team']],
                 away_team=teams[match['away_team']],
-                round=round_obj
+                round=round_obj,
+                start_time=match['start_time']
             )
             game.set_score(match['home_score'], match['away_score'])
             print("Creating game\t{0} | {1}\t{2}-{3} ({4})".format(

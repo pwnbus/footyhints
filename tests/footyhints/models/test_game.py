@@ -19,15 +19,16 @@ class TestGameInit(UnitTest):
         assert self.game.home_team is self.home_team
         assert self.game.away_team is self.away_team
         assert self.game.round.num == 1
+        assert self.game.start_time == 1594445619
         assert self.game.attributes == [self.attribute]
 
     def test_init_bad_home(self):
         with raises(AttributeError):
-            Game(home_team="garbageteam", away_team=self.away_team, round=self.round)
+            Game(home_team="garbageteam", away_team=self.away_team, round=self.round, start_time=1594445619)
 
     def test_init_bad_away(self):
         with raises(AttributeError):
-            Game(home_team=self.home_team, away_team="garbageteam", round=self.round)
+            Game(home_team=self.home_team, away_team="garbageteam", round=self.round, start_time=1594445619)
 
 
 class TestGameSave(GameTest):
@@ -64,7 +65,7 @@ class TestGameEquals(GameTest):
         super().setup()
         self.tmp_team1 = Team(name='Chelsea')
         self.tmp_team2 = Team(name='Manchester United')
-        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, round=self.round)
+        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, round=self.round, start_time=1594445619)
 
     def test_equal_games(self):
         self.session.add(self.game)

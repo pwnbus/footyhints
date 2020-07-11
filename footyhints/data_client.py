@@ -2,6 +2,7 @@ from footyhints.config import config
 
 import requests
 import json
+from dateutil.parser import parse
 
 
 class DataClient():
@@ -45,6 +46,7 @@ class DataClient():
                 "away_team": match['awayTeam']['name'],
                 "home_score": match['score']['fullTime']['homeTeam'],
                 "away_score": match['score']['fullTime']['awayTeam'],
-                "match_day": match_day
+                "match_day": match_day,
+                "start_time": parse(match['utcDate']).timestamp()
             })
         return results
