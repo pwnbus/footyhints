@@ -13,7 +13,7 @@ class UnitTest(object):
         self.home_team = Team(name='Chelsea')
         self.away_team = Team(name='Manchester United')
         self.round = Round(1)
-        self.game = Game(home_team=self.home_team, away_team=self.away_team, round=self.round)
+        self.game = Game(home_team=self.home_team, away_team=self.away_team, round=self.round, start_time=1594445619)
         self.attribute = Attribute(name='example', value='test', description='temp example value', game=self.game)
 
     def teardown(self):

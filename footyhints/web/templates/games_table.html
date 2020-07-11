@@ -2,16 +2,16 @@
     <thead>
       <th>Home Team</th>
       <th>Away Team</th>
-      <th>Match Day</th>
+      <th>Start Time</th>
       <th>Interest Level</th>
     </thead>
     <tbody>
       {% for game in games %}
         <tr>
-          <td><a href="/team/{{ game.home_team_id }}">{{ game.home_team.name }}</a></td>
-          <td><a href="/team/{{ game.away_team_id }}">{{ game.away_team.name }}</a></td>
-          <td>{{ game.round.num }}</td>
-          <td>
+          <td width="35%"><a href="/team/{{ game.home_team_id }}">{{ game.home_team.name }}</a></td>
+          <td width="35%"><a href="/team/{{ game.away_team_id }}">{{ game.away_team.name }}</a></td>
+          <td width="20%" class="start_time">{{ game.start_time }}</td>
+          <td width="10%">
             {% include 'game_modal.html' %}
             {% include 'severity_badge.html' %}
           </td>
@@ -30,11 +30,23 @@
       "bPaginate": true,
       "iDisplayLength": 15,
       "columnDefs": [
-          {
-            "targets": [0,1,2,3],
-            "bSortable": false,
-          }
-        ],
+        {
+          "targets": [0,1,2,3],
+          "bSortable": false,
+        }
+      ],
+      "initComplete": function(settings, json) {
+        $('#game_list_new .start_time').each(function(){
+          var start_time = new Date($(this).html()*1000);
+          var locale = document.querySelector('html').getAttribute('lang')
+          var options = {
+            weekday: "short",
+            month: "2-digit",
+            day: "numeric",
+          };
+          $(this).html(start_time.toLocaleDateString(locale, options) + " " + start_time.toLocaleTimeString())
+        })
+      }
     });
   });
 </script>

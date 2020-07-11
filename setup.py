@@ -19,6 +19,7 @@ config = {
         'Flask',
         'Flask-SQLAlchemy',
         'mysqlclient',
+        'python-dateutil',
     ],
     'packages': ['footyhints'],
     'scripts': [],
