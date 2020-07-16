@@ -23,9 +23,9 @@
 <script>
   $(document).ready( function () {
     $('#game_list_new').DataTable({
-      'order': [[2, 'desc']],
-      'bFilter': false,
-      'bInfo': false,
+      "order": [[2, 'desc']],
+      "bFilter": false,
+      "bInfo": false,
       "bLengthChange": false,
       "bPaginate": true,
       "iDisplayLength": 15,
@@ -33,20 +33,20 @@
         {
           "targets": [0,1,2,3],
           "bSortable": false,
+          "createdCell": function (td, cellData, rowData, row, col) {
+            if (col == 2){
+              var start_time = new Date(cellData*1000);
+              var locale = document.querySelector('html').getAttribute('lang')
+              var options = {
+                weekday: "short",
+                month: "2-digit",
+                day: "numeric",
+              };
+              $(td).html(start_time.toLocaleDateString(locale, options) + " " + start_time.toLocaleTimeString())
+            }
+          }
         }
       ],
-      "initComplete": function(settings, json) {
-        $('#game_list_new .start_time').each(function(){
-          var start_time = new Date($(this).html()*1000);
-          var locale = document.querySelector('html').getAttribute('lang')
-          var options = {
-            weekday: "short",
-            month: "2-digit",
-            day: "numeric",
-          };
-          $(this).html(start_time.toLocaleDateString(locale, options) + " " + start_time.toLocaleTimeString())
-        })
-      }
     });
   });
 </script>
