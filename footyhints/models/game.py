@@ -5,15 +5,13 @@ from footyhints.db import session
 from footyhints.models.base import Base
 from footyhints.models.team import Team
 from footyhints.models.attribute import Attribute
-from footyhints.models.round import Round
 from footyhints.models.score_modification import ScoreModification
 
 
 class Game(Base):
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
-    round_id = Column(Integer, ForeignKey('rounds.id'))
-    round = relationship(Round, back_populates='games')
+    match_day = Column(Integer, nullable=False)
     attributes = relationship(Attribute, back_populates="game")
     score_modifications = relationship(ScoreModification, back_populates="game")
     home_team_id = Column(Integer, ForeignKey('teams.id'), nullable=False)
@@ -68,5 +66,5 @@ class Game(Base):
 
     def __eq__(self, other):
         if isinstance(other, Game):
-            return self.id == other.id and self.round == other.round and self.home_team.name == other.home_team.name and self.away_team.name == other.away_team.name
+            return self.id == other.id and self.match_day == other.match_day and self.home_team.name == other.home_team.name and self.away_team.name == other.away_team.name
         return False
