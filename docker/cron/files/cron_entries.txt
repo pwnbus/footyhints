@@ -1,1 +1,1 @@
-0 * * * * source /opt/footyhints/env/python/bin/activate && /opt/footyhints/envs/footyhints/bin/setup_db
+*/5 * * * * source /opt/footyhints/envs/python/bin/activate && /opt/footyhints/envs/footyhints/bin/setup_db --update
