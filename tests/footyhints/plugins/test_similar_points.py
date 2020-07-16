@@ -2,7 +2,6 @@ from footyhints.plugins.similar_points import SimilarPoints
 
 from tests.footyhints.unit_test import UnitTest
 
-from footyhints.models.round import Round
 from footyhints.models.game import Game
 
 
@@ -14,10 +13,8 @@ class TestSimilarPoints(UnitTest):
         self.session.commit()
         self.similar_points = SimilarPoints()
 
-    def create_round(self, round_num, winner="Home"):
-        round_obj = Round(round_num)
-        self.session.add(round_obj)
-        game = Game(home_team=self.home_team, away_team=self.away_team, round=round_obj, start_time=1594445619)
+    def create_match_day(self, match_day, winner="Home"):
+        game = Game(home_team=self.home_team, away_team=self.away_team, match_day=match_day, start_time=1594445619)
         if winner == "Home":
             game.set_score(1, 0)
         else:
@@ -38,8 +35,8 @@ class TestSimilarPoints(UnitTest):
         self.game.set_score(2, 2)
         self.session.add(self.game)
         self.session.commit()
-        self.create_round(2)
-        game = self.create_round(3)
+        self.create_match_day(2)
+        game = self.create_match_day(3)
         similar_points = SimilarPoints()
         score, reason = similar_points.score(game)
         assert score == 75
@@ -49,10 +46,10 @@ class TestSimilarPoints(UnitTest):
         self.game.set_score(2, 2)
         self.session.add(self.game)
         self.session.commit()
-        self.create_round(2)
-        self.create_round(3)
-        self.create_round(4)
-        game = self.create_round(5)
+        self.create_match_day(2)
+        self.create_match_day(3)
+        self.create_match_day(4)
+        game = self.create_match_day(5)
         similar_points = SimilarPoints()
         score, reason = similar_points.score(game)
         assert score == 50

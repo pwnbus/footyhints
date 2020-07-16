@@ -1,5 +1,4 @@
 from footyhints.models.team import Team
-from footyhints.models.round import Round
 from footyhints.models.game import Game
 
 from footyhints.db import session
@@ -24,12 +23,10 @@ class ParseResults():
         teams = self.create_teams(results)
         decision_maker = DecisionMaker()
         for match in results:
-            round_obj = Round(match['match_day'])
-            session.add(round_obj)
             game = Game(
                 home_team=teams[match['home_team']],
                 away_team=teams[match['away_team']],
-                round=round_obj,
+                match_day=match['match_day'],
                 start_time=match['start_time']
             )
             game.set_score(match['home_score'], match['away_score'])
@@ -38,7 +35,7 @@ class ParseResults():
                 match['away_team'],
                 game.home_team_score,
                 game.away_team_score,
-                round_obj.num
+                game.match_day
             ))
             decision_maker.worth_watching(game)
             session.add(game)
