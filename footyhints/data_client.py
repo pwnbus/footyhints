@@ -29,7 +29,7 @@ class DataClient():
                 continue
             competition_id = competition['id']
 
-        matches_resp = requests.get('{0}/v2/competitions/{1}/matches'.format(self.API_URL, competition_id), headers=headers)
+        matches_resp = requests.get('{0}/v2/competitions/{1}/matches?status=FINISHED'.format(self.API_URL, competition_id), headers=headers)
         if not matches_resp.ok:
             raise Exception('{0}: {1}'.format(matches_resp.status_code, matches_resp.text))
 
