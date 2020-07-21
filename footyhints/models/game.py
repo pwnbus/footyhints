@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from footyhints.db import session
 from footyhints.models.base import Base
 from footyhints.models.team import Team
+from footyhints.models.competition import Competition
 from footyhints.models.attribute import Attribute
 from footyhints.models.score_modification import ScoreModification
 
@@ -11,6 +12,8 @@ from footyhints.models.score_modification import ScoreModification
 class Game(Base):
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
+    competition_id = Column(Integer, ForeignKey('competitions.id'))
+    competition = relationship(Competition, back_populates='games')
     match_day = Column(Integer, nullable=False)
     attributes = relationship(Attribute, back_populates="game")
     score_modifications = relationship(ScoreModification, back_populates="game")

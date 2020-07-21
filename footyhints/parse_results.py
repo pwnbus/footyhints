@@ -1,8 +1,10 @@
 from footyhints.models.team import Team
 from footyhints.models.game import Game
+from footyhints.models.competition import Competition
 
 from footyhints.db import session
 from footyhints.decision_maker import DecisionMaker
+from footyhints.config import config
 
 
 class ParseResults():
@@ -26,9 +28,19 @@ class ParseResults():
         session.commit()
         return teams
 
+    def get_competition(self):
+        competition = Competition(name=config.fetch_league_name)
+        if self.update:
+            competition_db = session.query(Competition).one()
+            if competition_db:
+                competition = competition_db
+        return competition
+
     def parse_results(self, results):
         teams = self.create_teams(results)
         decision_maker = DecisionMaker()
+        competition = self.get_competition()
+
         for match in results:
             if self.update:
                 home_team = session.query(Team).filter(Team.name == match['home_team']).one()
@@ -39,7 +51,8 @@ class ParseResults():
                 home_team=teams[match['home_team']],
                 away_team=teams[match['away_team']],
                 match_day=match['match_day'],
-                start_time=match['start_time']
+                start_time=match['start_time'],
+                competition=competition,
             )
             game.set_score(match['home_score'], match['away_score'])
             print("Creating game\t{0} | {1}\t{2}-{3} ({4})".format(
@@ -51,5 +64,7 @@ class ParseResults():
             ))
             decision_maker.worth_watching(game)
             session.add(game)
-            session.commit()
+        competition.update_timestamp()
+        session.add(competition)
+        session.commit()
         session.close()
