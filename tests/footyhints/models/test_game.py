@@ -24,11 +24,11 @@ class TestGameInit(UnitTest):
 
     def test_init_bad_home(self):
         with raises(AttributeError):
-            Game(home_team="garbageteam", away_team=self.away_team, match_day=1, start_time=1594445619)
+            Game(home_team="garbageteam", away_team=self.away_team, match_day=1, start_time=1594445619, competition=self.competition)
 
     def test_init_bad_away(self):
         with raises(AttributeError):
-            Game(home_team=self.home_team, away_team="garbageteam", match_day=1, start_time=1594445619)
+            Game(home_team=self.home_team, away_team="garbageteam", match_day=1, start_time=1594445619, competition=self.competition)
 
 
 class TestGameSave(GameTest):
@@ -65,7 +65,7 @@ class TestGameEquals(GameTest):
         super().setup()
         self.tmp_team1 = Team(name='Chelsea')
         self.tmp_team2 = Team(name='Manchester United')
-        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, match_day=1, start_time=1594445619)
+        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, match_day=1, start_time=1594445619, competition=self.competition)
 
     def test_equal_games(self):
         self.session.add(self.game)
