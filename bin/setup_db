@@ -4,7 +4,7 @@ import optparse
 
 from footyhints.config import config
 
-from footyhints.db import create_db, delete_db
+from footyhints.db_utils import create_db, delete_db
 
 from footyhints.data_client import DataClient
 from footyhints.sample_data_client import SampleDataClient
