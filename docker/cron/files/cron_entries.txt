@@ -1,1 +1,4 @@
-*/5 * * * * source /opt/footyhints/envs/python/bin/activate && /opt/footyhints/envs/footyhints/bin/setup_db --update
+SHELL=/usr/bin/bash
+BASH_ENV=/env
+
+*/30 * * * * source /opt/footyhints/envs/python/bin/activate && /opt/footyhints/envs/footyhints/bin/setup_db --update
