@@ -70,3 +70,7 @@ push-release-images: ## Push release images with latest and newest tag
 		docker push ${REGISTRY}footyhints_$$image:latest; \
 		docker push ${REGISTRY}footyhints_$$image:${VERSION}; \
 	done
+
+.PHONY: release
+release: ## Tag and push a new release
+	./.do-release.sh
