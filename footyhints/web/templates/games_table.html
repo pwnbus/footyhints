@@ -15,6 +15,7 @@
             {% include 'game_modal.html' %}
             {% include 'severity_badge.html' %}
           </td>
+          <td>{{ game.date_from_start_time }}</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -42,11 +43,18 @@
                 month: "2-digit",
                 day: "numeric",
               };
-              $(td).html(start_time.toLocaleDateString(locale, options) + " " + start_time.toLocaleTimeString())
+              $(td).html(start_time.toLocaleTimeString())
             }
           }
+        },
+        {
+          "bVisible": false,
+          "aTargets": [4]
         }
       ],
+      "rowGroup": {
+        "dataSrc": 4
+      },
     });
   });
 </script>

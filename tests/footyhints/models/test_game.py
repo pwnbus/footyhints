@@ -21,6 +21,7 @@ class TestGameInit(UnitTest):
         assert self.game.match_day == 1
         assert self.game.start_time == 1594445619
         assert self.game.attributes == [self.attribute]
+        assert self.game.date_from_start_time == 'Saturday 11 July 2020'
 
     def test_init_bad_home(self):
         with raises(AttributeError):

@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import Column, Integer, Float, ForeignKey, Text
 from sqlalchemy.orm import relationship
 
@@ -42,6 +43,10 @@ class Game(Base):
     @property
     def away_team_score(self):
         return self.get_attribute_by_name('away_score')
+
+    @property
+    def date_from_start_time(self):
+        return datetime.fromtimestamp(self.start_time).strftime("%A %d %B %Y")
 
     def set_score(self, home_team_score, away_team_score):
         if type(home_team_score) is not int and type(away_team_score) is not int:
