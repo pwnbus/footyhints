@@ -1,10 +1,4 @@
 <table id='game_list_new' class="table table-striped table-bordered table-compact" style="clear: both;margin-top: 20px;">
-    <thead>
-      <th>Home Team</th>
-      <th>Away Team</th>
-      <th>Start Time</th>
-      <th>Interest Level</th>
-    </thead>
     <tbody>
       {% for game in games %}
         <tr>
@@ -30,6 +24,9 @@
       "bLengthChange": false,
       "bPaginate": true,
       "iDisplayLength": 15,
+      "fnDrawCallback": function() {
+        $("#game_list_new thead").remove();
+      },
       "columnDefs": [
         {
           "targets": [0,1,2,3],
