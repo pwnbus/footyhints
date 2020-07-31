@@ -17,6 +17,12 @@
     </tbody>
 </table>
 
+{% if request.path.startswith('/team/') %}
+  {% set displayLength = 9 %}
+{% else %}
+  {% set displayLength = 15 %}
+{% endif %}
+
 <script>
   $(document).ready( function () {
     $('#game_list_new').DataTable({
@@ -26,11 +32,7 @@
       "bInfo": false,
       "bLengthChange": false,
       "bPaginate": true,
-    {% if request.path.startswith('/team/') %}
-      "iDisplayLength": 9,
-    {% else %}
-      "iDisplayLength": 15,
-    {% endif %}
+      "iDisplayLength": "{{ displayLength }}",
       "fnDrawCallback": function() {
         $("#game_list_header").remove();
       },
