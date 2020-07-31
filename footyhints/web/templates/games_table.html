@@ -4,10 +4,10 @@
     <tbody>
       {% for game in games %}
         <tr>
-          <td align="right"><a href="/team/{{ game.home_team_id }}">{{ game.home_team.name }}</a></td>
-          <td align="left"><a href="/team/{{ game.away_team_id }}">{{ game.away_team.name }}</a></td>
-          <td class="start_time">{{ game.start_time }}</td>
-          <td align="center">
+          <td align="right" width="30%"><a href="/team/{{ game.home_team_id }}">{{ game.home_team.name }}</a></td>
+          <td align="left" width="30%"><a href="/team/{{ game.away_team_id }}">{{ game.away_team.name }}</a></td>
+          <td align="center" class="start_time" width="20%">{{ game.start_time }}</td>
+          <td align="center" width="20%">
             {% include 'game_modal.html' %}
             {% include 'severity_badge.html' %}
           </td>
