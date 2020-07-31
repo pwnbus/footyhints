@@ -1,5 +1,0 @@
-<div class="list-group">
-  {% for team in teams %}
-      <a href="/team/{{ team.id }}" class="list-group-item list-group-item-action {% if request.path == '/team/{0}'.format(team.id) %}active{% endif %}">{{ team.name }}</a>
-  {% endfor %}
-</div>
