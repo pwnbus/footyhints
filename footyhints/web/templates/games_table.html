@@ -1,27 +1,21 @@
-<table id='game_list_new' class="table table-striped table-bordered table-compact" style="clear: both;margin-top: 20px;">
-    <thead id="game_list_header">
-    <thead/>
-    <tbody>
-      {% for game in games %}
-        <tr>
-          <td align="right" width="30%"><a href="/team/{{ game.home_team_id }}">{{ game.home_team.name }}</a></td>
-          <td align="left" width="30%"><a href="/team/{{ game.away_team_id }}">{{ game.away_team.name }}</a></td>
-          <td align="center" class="start_time" width="20%">{{ game.start_time }}</td>
-          <td align="center" width="20%">
-            {% include 'game_modal.html' %}
-            {% include 'severity_badge.html' %}
-          </td>
-          <td>{{ game.date_from_start_time }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
+<table id="game_list_new" class="table table-striped table-bordered table-compact" style="clear: both;margin-top: 20px;">
+  <thead id="game_list_header"/>
+  <thead/>
+  <tbody>
+    {% for game in games %}
+      <tr>
+        <td align="right" width="30%"><a href="/team/{{ game.home_team_id }}">{{ game.home_team.name }}</a></td>
+        <td align="left" width="30%"><a href="/team/{{ game.away_team_id }}">{{ game.away_team.name }}</a></td>
+        <td align="center" class="start_time" width="20%">{{ game.start_time }}</td>
+        <td align="center" width="20%">
+          {% include 'game_modal.html' %}
+          {% include 'severity_badge.html' %}
+        </td>
+        <td>{{ game.date_from_start_time }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
 </table>
-
-{% if request.path.startswith('/team/') %}
-  {% set displayLength = 9 %}
-{% else %}
-  {% set displayLength = 15 %}
-{% endif %}
 
 <script>
   $(document).ready( function () {
@@ -32,7 +26,11 @@
       "bInfo": false,
       "bLengthChange": false,
       "bPaginate": true,
-      "iDisplayLength": "{{ displayLength }}",
+      {% if request.path.startswith('/team/') %}
+      "iDisplayLength": 9,
+      {% else %}
+      "iDisplayLength": 15,
+      {% endif %}
       "fnDrawCallback": function() {
         $("#game_list_header").remove();
       },

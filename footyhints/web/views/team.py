@@ -16,4 +16,5 @@ def team(id):
     return render_view(
         'team.html',
         team=team,
+        games=team.games,
     )
