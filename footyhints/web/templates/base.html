@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     {% block head %}
       <title>Footyhints - {% block title %}{% endblock %}</title>
     {% endblock %}
@@ -13,13 +13,13 @@
     <script src="{{ url_for('static', filename='js/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/dataTables.rowGroup.min.js') }}"></script>
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}"/>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dataTables.bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-glyphicons.css') }}" >
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/rowGroup.dataTables.min.css') }}" >
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-glyphicons.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rowGroup.dataTables.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
   </head>
   <body>
     <div class="container md-page" style="padding-top: 20px;">

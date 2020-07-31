@@ -2,16 +2,20 @@ FROM footyhints/footyhints_base
 
 USER root
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN \
   apt-get update && \
-  apt-get install -y curl && \
+  apt-get install -y curl nodejs npm && \
   rm -rf /var/lib/apt/lists/* && \
   curl -s -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 -o /usr/bin/cc-test-reporter && \
   chmod +x /usr/bin/cc-test-reporter && \
   mkdir /opt/footyhints/envs/artifacts && \
-  chown footyhints:footyhints /opt/footyhints/envs/artifacts
+  chown footyhints:footyhints /opt/footyhints/envs/artifacts && \
+  npm install htmlhint
 
 COPY --chown=footyhints:footyhints .flake8 .flake8
+COPY --chown=footyhints:footyhints .htmlhint .htmlhint
 
 USER footyhints
 
