@@ -7,9 +7,7 @@
 
 {% set games = team.games %}
 
-<ul class="breadcrumb">
-  <li><a href="/">{{ league_country }} - {{ league_name }}</a></li>
-</ul>
+<a href="/">{{ league_country }} - {{ league_name }}</a>
 <h3>{{team.name}}</h3>
 {% include 'games_table.html' %}
 
