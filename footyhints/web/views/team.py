@@ -1,8 +1,7 @@
-from flask import Blueprint, render_template, redirect
+from flask import Blueprint, redirect
 
+from footyhints.web.render_view import render_view
 from footyhints.db import session
-from footyhints.web.utilities.footer import version
-from footyhints.config import config
 from footyhints.models.team import Team
 
 mod = Blueprint('team', __name__)
@@ -14,10 +13,8 @@ def team(id):
     if team is None:
         return redirect("/"), 404
 
-    return render_template(
+    return render_view(
         'team.html',
         team=team,
-        league_country=config.fetch_league_country,
-        league_name=config.fetch_league_name,
-        version=version
+        games=team.games,
     )

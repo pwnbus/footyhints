@@ -7,15 +7,43 @@
     {% block head %}
       <title>Footyhints - {% block title %}{% endblock %}</title>
     {% endblock %}
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.rowGroup.min.js') }}"></script>
+
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dataTables.bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-glyphicons.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rowGroup.dataTables.min.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" >
   </head>
   <body>
-    <div class="container md-page">
-      {% block content %}
-      {% endblock %}
+    <div class="container md-page" style="padding-top: 20px;">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-title">
+                <a href="/"><span>{{ league_country }} - {{ league_name }}</span></a>
+              </div>
+            </div>
+            <div class="list-group">
+              {% for team in teams %}
+                <a href="/team/{{ team.id }}" class="list-group-item list-group-item-action {% if request.path == '/team/{0}'.format(team.id) %}active{% endif %}">{{ team.name }}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+      {% include 'footer.html' %}
     </div>
   </body>
 </html>

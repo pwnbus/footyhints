@@ -17,8 +17,8 @@ class WebTest(UnitTest):
         self.client = self.app.test_client()
         view_name = self.__class__.__name__[4:]
         self.view_module = importlib.import_module('footyhints.web.views.' + view_name.lower(), '*')
-        self.view_module.render_template = MagicMock()
-        self.mock_obj = self.view_module.render_template
+        self.view_module.render_view = MagicMock()
+        self.mock_obj = self.view_module.render_view
         self.mock_obj.side_effect = lambda *args, **kwargs: render_template_orig(*args, **kwargs)
 
         self.session.add(self.home_team)

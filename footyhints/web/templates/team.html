@@ -2,25 +2,10 @@
 {% block title %}{{team.name}}{% endblock %}
 {% block head %}
   {{ super() }}
-  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/dataTables.bootstrap.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/dataTables.rowGroup.min.js') }}"></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/dataTables.bootstrap.min.css') }}" />
-  <link href="{{ url_for('static', filename='css/bootstrap-glyphicons.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/rowGroup.dataTables.min.css') }}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
-<ul class="breadcrumb">
-  <li><a href="/">{{ league_country }} - {{ league_name }}</a></li>
-</ul>
-
 <h3>{{team.name}}</h3>
-<h4>Points: {{team.points}}</h4>
-
-{% set games = team.games %}
 {% include 'games_table.html' %}
-{% include 'footer.html' %}
 
 {% endblock %}
