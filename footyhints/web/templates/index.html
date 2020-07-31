@@ -11,9 +11,12 @@
   <link href="{{ url_for('static', filename='css/rowGroup.dataTables.min.css') }}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<h3>{{ league_country }} - {{ league_name }}</h3>
 
-{% include 'games_table.html' %}
+<div class="row">
+  <div class="col-sm-3">{% include 'teams_list.html' %}</div>
+  <div class="col-sm-8"><h3>{{ league_country }} - {{ league_name }}</h3>{% include 'games_table.html' %}</div>
+</div>
+
 {% include 'footer.html' %}
 
 {% endblock %}

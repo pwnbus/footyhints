@@ -4,10 +4,10 @@
     <tbody>
       {% for game in games %}
         <tr>
-          <td width="35%" align="right"><a href="/team/{{ game.home_team_id }}">{{ game.home_team.name }}</a></td>
-          <td width="35%" align="left"><a href="/team/{{ game.away_team_id }}">{{ game.away_team.name }}</a></td>
-          <td width="15%" class="start_time">{{ game.start_time }}</td>
-          <td width="15%" align="center">
+          <td align="right"><a href="/team/{{ game.home_team_id }}">{{ game.home_team.name }}</a></td>
+          <td align="left"><a href="/team/{{ game.away_team_id }}">{{ game.away_team.name }}</a></td>
+          <td class="start_time">{{ game.start_time }}</td>
+          <td align="center">
             {% include 'game_modal.html' %}
             {% include 'severity_badge.html' %}
           </td>
@@ -26,7 +26,11 @@
       "bInfo": false,
       "bLengthChange": false,
       "bPaginate": true,
+    {% if request.path.startswith('/team/') %}
+      "iDisplayLength": 7,
+    {% else %}
       "iDisplayLength": 15,
+    {% endif %}
       "fnDrawCallback": function() {
         $("#game_list_header").remove();
       },

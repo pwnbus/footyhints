@@ -14,9 +14,11 @@ def team(id):
     if team is None:
         return redirect("/"), 404
 
+    teams = session.query(Team).order_by(Team.name.asc()).all()
     return render_template(
         'team.html',
         team=team,
+        teams=teams,
         league_country=config.fetch_league_country,
         league_name=config.fetch_league_name,
         version=version

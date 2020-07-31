@@ -12,15 +12,19 @@
 {% endblock %}
 {% block content %}
 
-<ul class="breadcrumb">
-  <li><a href="/">{{ league_country }} - {{ league_name }}</a></li>
-</ul>
-
-<h3>{{team.name}}</h3>
-<h4>Points: {{team.points}}</h4>
-
 {% set games = team.games %}
-{% include 'games_table.html' %}
+
+<div class="row">
+  <div class="col-sm-3">{% include 'teams_list.html' %}</div>
+  <div class="col-sm-8">
+    <ul class="breadcrumb">
+      <li><a href="/">{{ league_country }} - {{ league_name }}</a></li>
+    </ul>
+    <h3>{{team.name}}</h3>
+    {% include 'games_table.html' %}
+  </div>
+</div>
+
 {% include 'footer.html' %}
 
 {% endblock %}
