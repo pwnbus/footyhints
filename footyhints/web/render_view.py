@@ -3,7 +3,6 @@ from os import environ
 from flask import render_template
 
 from footyhints.db import session
-from footyhints.models.game import Game
 from footyhints.models.team import Team
 from footyhints.models.competition import Competition
 
@@ -19,7 +18,7 @@ def render_view(template_name, **kwargs):
 
     competition = session.query(Competition).one()
 
-    global_args = {
+    final_args = {
         "template_name_or_list": template_name,
         "teams": teams,
         "league_country": config.fetch_league_country,
@@ -27,5 +26,5 @@ def render_view(template_name, **kwargs):
         "version": version,
         "last_updated": competition.last_updated,
     }
-    final_args = {**kwargs, **global_args}
+    final_args.update(kwargs)
     return render_template(**final_args)
