@@ -41,10 +41,10 @@
             Level: {% include 'severity_badge.html' %}
           </div>
           <div class="col-sm-6">
-            Score: <div class="blur-content blurred-content blur-content{{ game.id }}" style="display:inline;">{{ game.interest_score }}</div>
+            Score: <div class="blur-content blurred-content blur-content{{ game.id }}" id="game-modal-score">{{ game.interest_score }}</div>
           </div>
         </div>
-        <table class="table table-striped table-bordered table-compact" id="game_table" style="clear: both;margin-top: 20px;">
+        <table class="table table-striped table-bordered table-compact" id="game-table">
           <thead>
             <th>Points</th>
             <th>Priority</th>
@@ -63,7 +63,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button class="blur-button blur-button{{ game.id }} reveal btn btn-secondary" style="float:left;" onclick="blur_button_click('{{ game.id }}')">Reveal
+        <button class="blur-button blur-button{{ game.id }} reveal btn btn-secondary" id="blur-toggle-button" onclick="blur_button_click('{{ game.id }}')">Reveal
         </button>
       </div>
     </div>

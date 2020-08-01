@@ -1,3 +1,25 @@
 .blurred-content{
-    filter: blur(10px);
+  filter: blur(10px);
+}
+
+#main-container {
+  padding-top: 20px;
+}
+
+#game-list-new {
+  clear: both;
+  margin-top: 20px;
+}
+
+#game-modal-score {
+  display:inline;
+}
+
+#game-table {
+  clear: both;
+  margin-top: 20px;
+}
+
+#blur-toggle-button {
+  float:left;
 }
