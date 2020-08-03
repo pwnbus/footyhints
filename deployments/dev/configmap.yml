@@ -8,6 +8,8 @@ data:
   FOOTYHINTS_MODE: "development"
   FOOTYHINTS_WEB_DEBUG: "False"
   FOOTYHINTS_DB_URI: "mysql://footyhints_user:MYSQL_PASSWORD_PLACEHOLDER@mysql/footyhints"
+  FOOTYHINTS_FETCH_LEAGUE_COUNTRY: "England"
+  FOOTYHINTS_FETCH_LEAGUE_NAME: "Premier League"
   MYSQL_DATABASE: "footyhints"
   MYSQL_USER: "footyhints_user"
   MYSQL_ROOT_PASSWORD: "MYSQL_ROOT_PASSWORD_PLACEHOLDER"
