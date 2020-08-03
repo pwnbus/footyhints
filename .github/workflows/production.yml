@@ -8,7 +8,7 @@ on:
 # Environment variables available to all jobs and steps in this workflow
 env:
   GKE_PROJECT: footyhints-com
-  GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
+  GKE_EMAIL: ${{ secrets.GKE_EMAIL_PROD }}
   GITHUB_SHA: ${{ github.sha }}
   GKE_ZONE: us-central1-c
   GKE_CLUSTER: footyhints
@@ -59,8 +59,8 @@ jobs:
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '270.0.0'
-        service_account_email: ${{ secrets.GKE_EMAIL }}
-        service_account_key: ${{ secrets.GKE_KEY }}
+        service_account_email: ${{ secrets.GKE_EMAIL_PROD }}
+        service_account_key: ${{ secrets.GKE_KEY_PROD }}
 
     # Configure docker to use the gcloud command-line tool as a credential helper
     - name: Setup docker to authenticate to gcloud
