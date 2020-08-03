@@ -1,0 +1,18 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: footyhints-configmap
+  namespace: footyhints
+data:
+  FOOTYHINTS_MODE: "production"
+  FOOTYHINTS_WEB_DEBUG: "False"
+  FOOTYHINTS_API_KEY: "FOOTYHINTS_API_KEY_PLACEHOLDER"
+  FOOTYHINTS_VERSION: "FOOTYHINTS_VERSION_PLACEHOLDER"
+  FOOTYHINTS_DB_URI: "mysql://footyhints_user:MYSQL_PASSWORD_PLACEHOLDER@mysql/footyhints"
+  FOOTYHINTS_FETCH_LEAGUE_COUNTRY: "England"
+  FOOTYHINTS_FETCH_LEAGUE_NAME: "Premier League"
+  MYSQL_DATABASE: "footyhints"
+  MYSQL_USER: "footyhints_user"
+  MYSQL_ROOT_PASSWORD: "MYSQL_ROOT_PASSWORD_PLACEHOLDER"
+  MYSQL_PASSWORD: "MYSQL_PASSWORD_PLACEHOLDER"

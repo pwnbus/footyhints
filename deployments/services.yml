@@ -1,29 +1,4 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: footyhints
-
----
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: footyhints-configmap
-  namespace: footyhints
-data:
-  FOOTYHINTS_MODE: "production"
-  FOOTYHINTS_WEB_DEBUG: "False"
-  FOOTYHINTS_API_KEY: "FOOTYHINTS_API_KEY_PLACEHOLDER"
-  FOOTYHINTS_VERSION: "FOOTYHINTS_VERSION_PLACEHOLDER"
-  FOOTYHINTS_DB_URI: "mysql://footyhints_user:MYSQL_PASSWORD_PLACEHOLDER@mysql/footyhints"
-  FOOTYHINTS_FETCH_LEAGUE_COUNTRY: "England"
-  FOOTYHINTS_FETCH_LEAGUE_NAME: "Premier League"
-  MYSQL_DATABASE: "footyhints"
-  MYSQL_USER: "footyhints_user"
-  MYSQL_ROOT_PASSWORD: "MYSQL_ROOT_PASSWORD_PLACEHOLDER"
-  MYSQL_PASSWORD: "MYSQL_PASSWORD_PLACEHOLDER"
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -40,7 +15,7 @@ spec:
     spec:
       containers:
         - name: flask
-          image: footyhints/footyhints_flask:latest
+          image: footyhints/footyhints_flask:CONTAINERS_VERSION
           imagePullPolicy: Always
           ports:
           - name: http
@@ -66,7 +41,7 @@ spec:
     spec:
       containers:
         - name: cron
-          image: footyhints/footyhints_cron:latest
+          image: footyhints/footyhints_cron:CONTAINERS_VERSION
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
@@ -84,7 +59,7 @@ spec:
     spec:
       containers:
         - name: bootstrap
-          image: footyhints/footyhints_bootstrap:latest
+          image: footyhints/footyhints_bootstrap:CONTAINERS_VERSION
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
@@ -135,7 +110,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: footyhints/footyhints_nginx:latest
+          image: footyhints/footyhints_nginx:CONTAINERS_VERSION
           imagePullPolicy: Always
           ports:
           - name: http
@@ -198,11 +173,11 @@ spec:
 apiVersion: networking.gke.io/v1beta2
 kind: ManagedCertificate
 metadata:
-  name: footyhints-com-cert
+  name: footyhints-cert
   namespace: footyhints
 spec:
   domains:
-    - footyhints.com
+    - CERTIFICATE_DOMAIN
 
 ---
 apiVersion: networking.k8s.io/v1beta1
@@ -211,8 +186,8 @@ metadata:
   name: nginx-ingress
   namespace: footyhints
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "footyhints-com-ip"
-    networking.gke.io/managed-certificates: "footyhints-com-cert"
+    kubernetes.io/ingress.global-static-ip-name: "footyhints-ip"
+    networking.gke.io/managed-certificates: "footyhints-cert"
 spec:
   backend:
     serviceName: nginx
