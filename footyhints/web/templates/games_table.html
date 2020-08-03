@@ -27,9 +27,9 @@
       "bLengthChange": false,
       "bPaginate": true,
       {% if request.path.startswith('/team/') %}
-      "iDisplayLength": 9,
+      "iDisplayLength": 12,
       {% else %}
-      "iDisplayLength": 15,
+      "iDisplayLength": 18,
       {% endif %}
       "fnDrawCallback": function() {
         $("#game-list-header").remove();
