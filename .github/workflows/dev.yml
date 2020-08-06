@@ -43,6 +43,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Set VERSION env
+      run: echo ::set-env name=VERSION::$(git log -1 --pretty=%h)
+
     # Setup gcloud CLI
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
@@ -62,7 +65,7 @@ jobs:
         sed -i'' -e "s/MYSQL_ROOT_PASSWORD_PLACEHOLDER/${{ secrets.MYSQL_ROOT_PASSWORD_DEV }}/g" $GITHUB_WORKSPACE/deployments/dev/configmap.yml
         sed -i'' -e "s/MYSQL_PASSWORD_PLACEHOLDER/${{ secrets.MYSQL_PASSWORD_DEV }}/g" $GITHUB_WORKSPACE/deployments/dev/configmap.yml
         sed -i'' -e "s/CERTIFICATE_DOMAIN/footyhints.dev/g" $GITHUB_WORKSPACE/deployments/services.yml
-        sed -i'' -e "s/CONTAINERS_VERSION/dev/g" $GITHUB_WORKSPACE/deployments/services.yml
+        sed -i'' -e "s/CONTAINERS_VERSION/$VERSION/g" $GITHUB_WORKSPACE/deployments/services.yml
 
     - name: Remove existing deployment
       run: kubectl delete namespace footyhints || true
