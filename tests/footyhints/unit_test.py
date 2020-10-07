@@ -1,22 +1,34 @@
-from footyhints.db import session
-from footyhints.db_utils import create_db, delete_db
-from footyhints.models.team import Team
-from footyhints.models.competition import Competition
-from footyhints.models.game import Game
-from footyhints.models.attribute import Attribute
+import pytest
+from web.models import Team, Competition, Game
+
+pytestmark = pytest.mark.django_db
 
 
+@pytest.mark.django_db
 class UnitTest(object):
     def setup(self):
-        self.session = session
-        delete_db()
-        create_db()
-        self.competition = Competition(name='Premier League')
-        self.home_team = Team(name='Chelsea')
-        self.away_team = Team(name='Manchester United')
-        self.game = Game(home_team=self.home_team, away_team=self.away_team, match_day=1, start_time=1594445619, competition=self.competition)
-        self.attribute = Attribute(name='example', value='test', description='temp example value', game=self.game)
+        self.competition = Competition(name="English Premier League")
+        self.competition.save()
+        self.home_team = Team(name="Team #1")
+        self.home_team.save()
+        self.away_team = Team(name="Team #2")
+        self.away_team.save()
+        self.game = Game(
+            home_team=self.home_team,
+            away_team=self.away_team,
+            competition=self.competition,
+            start_time=123456789,
+            match_day=1
+        )
+        self.game.save()
+        self.home_team.games.add(self.game)
+        self.home_team.save()
+        self.away_team.games.add(self.game)
+        self.away_team.save()
 
-    def teardown(self):
-        self.session.close()
-        delete_db()
+        # Wish this was dynamic and based on Team initializer
+        # self.game.attributes.add(self.attribute)
+        # self.game.score_modifications.add(self.score_modification)
+        self.competition.teams.add(self.home_team)
+        self.competition.teams.add(self.away_team)
+        self.competition.games.add(self.game)

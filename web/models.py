@@ -19,7 +19,6 @@ class Team(models.Model):
     games = models.ManyToManyField('Game')
 
 
-
 class Game(models.Model):
     match_day = models.IntegerField()
     start_time = models.IntegerField(null=False)

@@ -63,8 +63,13 @@ WSGI_APPLICATION = 'footyhints.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+database_options = dj_database_url.parse(config.db_uri)
+database_options['TEST'] = {
+    'NAME': 'footyhints'
+}
+
 DATABASES = {
-    'default': dj_database_url.parse(config.db_uri)
+    'default': database_options
 }
 
 

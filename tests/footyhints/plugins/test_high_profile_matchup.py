@@ -1,8 +1,7 @@
 from footyhints.plugins.high_profile_matchup import HighProfileMatchup
 
 from tests.footyhints.unit_test import UnitTest
-from footyhints.models.team import Team
-from footyhints.models.game import Game
+from web.models import Team, Game
 
 
 class TestHighProfileMatchup(UnitTest):

@@ -29,8 +29,6 @@ class DecisionMaker():
             score_modification.delete()
 
     def worth_watching(self, game):
-        if game.home_team_score is None and game.away_team_score is None:
-            raise TypeError('Home and away scores must be set')
         self.delete_score_modifications(game)
         # Main decision logic
         total_earned_score = 0

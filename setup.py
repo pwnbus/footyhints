@@ -14,7 +14,7 @@ config = {
     'version': version,
     'install_requires': [
         'requests',
-        'pynsive',
+        'pynsive===0.2.7',
         'mysqlclient',
         'python-dateutil',
         'pyyaml',
@@ -22,7 +22,7 @@ config = {
         'django-extensions===3.0.9',
         'dj-database-url===0.5.0',
     ],
-    'packages': ['web','footyhints'],
+    'packages': ['web', 'footyhints'],
     'scripts': [],
     'name': 'footyhints'
 }

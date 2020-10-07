@@ -30,7 +30,7 @@ class ConfigParser(object):
             if type(value) == bool:
                 return value
             else:
-                return bool(value=='True')
+                return bool(value == 'True')
 
     def parse_key(self, keyname, objtype=str):
         environment_key = "FOOTYHINTS_{}".format(keyname.upper())

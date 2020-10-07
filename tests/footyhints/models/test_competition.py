@@ -1,18 +1,21 @@
-from footyhints.models.competition import Competition
-
 from tests.footyhints.unit_test import UnitTest
 
 
 class TestCompetitionInit(UnitTest):
-    def test_normal_init(self):
-        competition = Competition(name='Premier League')
-        assert competition.name == 'Premier League'
-        assert competition.games == []
 
+    def test_name(self):
+        assert self.competition.name == "English Premier League"
 
-class TestCompetitionLastUpdated(UnitTest):
+    def test_id(self):
+        assert self.competition.id is not None
+
     def test_last_updated(self):
-        competition = Competition(name='Premier League')
-        assert competition.last_updated is None
-        competition.update_timestamp()
-        assert competition.last_updated is not None
+        assert self.competition.last_updated is None
+        self.competition.update_timestamp()
+        assert self.competition.last_updated is not None
+
+    def test_teams(self):
+        assert self.competition.teams.count() == 2
+
+    def test_games(self):
+        assert self.competition.games.count() == 1

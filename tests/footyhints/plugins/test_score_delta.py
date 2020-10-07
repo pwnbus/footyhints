@@ -6,9 +6,6 @@ from tests.footyhints.unit_test import UnitTest
 class TestScoreDelta(UnitTest):
     def setup(self):
         super().setup()
-        self.session.add(self.home_team)
-        self.session.add(self.away_team)
-        self.session.commit()
         self.score_delta = ScoreDelta()
 
     def test_nil_nil(self):

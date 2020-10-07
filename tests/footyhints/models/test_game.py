@@ -1,7 +1,6 @@
 from pytest import raises
 
-from footyhints.models.game import Game
-from footyhints.models.team import Team
+from web.models import Game, Team
 
 from footyhints.decision_maker import DecisionMaker
 
@@ -14,34 +13,45 @@ class GameTest(UnitTest):
         self.decision = DecisionMaker
 
 
-class TestGameInit(UnitTest):
-    def test_init(self):
-        assert self.game.home_team is self.home_team
-        assert self.game.away_team is self.away_team
+class TestGameModelInit(UnitTest):
+
+    def test_competition(self):
+        assert self.game.competition.name == 'English Premier League'
+
+    def test_match_day(self):
         assert self.game.match_day == 1
-        assert self.game.start_time == 1594445619
-        assert self.game.attributes == [self.attribute]
-        assert self.game.date_from_start_time == 'Saturday 11 July 2020'
+
+    def test_start_time(self):
+        assert self.game.start_time == 123456789
+
+    def test_home_team(self):
+        assert self.game.home_team.name == 'Team #1'
+
+    def test_away_team(self):
+        assert self.game.away_team.name == 'Team #2'
+
+    def test_interest_score(self):
+        assert self.game.interest_score is None
+
+    def test_interest_level(self):
+        assert self.game.interest_level is None
+
+    def test_date_from_start_time(self):
+        assert self.game.date_from_start_time == 'Thursday 29 November 1973'
+
+    # def test_attributes(self):
+    #     assert self.game.attributes.count() == 1
+
+    # def test_score_modifications(self):
+    #     assert self.game.score_modifications.count() == 1
 
     def test_init_bad_home(self):
-        with raises(AttributeError):
+        with raises(ValueError):
             Game(home_team="garbageteam", away_team=self.away_team, match_day=1, start_time=1594445619, competition=self.competition)
 
     def test_init_bad_away(self):
-        with raises(AttributeError):
+        with raises(ValueError):
             Game(home_team=self.home_team, away_team="garbageteam", match_day=1, start_time=1594445619, competition=self.competition)
-
-
-class TestGameSave(GameTest):
-    def test_basic_save(self):
-        assert self.game.id is None
-        assert self.home_team.id is None
-        assert self.away_team.id is None
-        self.session.add(self.game)
-        self.session.commit()
-        assert self.game.id == 1
-        assert self.home_team.id == 1
-        assert self.away_team.id == 2
 
 
 class TestGameSetScore(GameTest):
@@ -64,25 +74,35 @@ class TestGameSetScore(GameTest):
 class TestGameEquals(GameTest):
     def setup(self):
         super().setup()
-        self.tmp_team1 = Team(name='Chelsea')
-        self.tmp_team2 = Team(name='Manchester United')
-        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, match_day=1, start_time=1594445619, competition=self.competition)
+        self.tmp_team1 = Team(name='Team #1')
+        self.tmp_team1.save()
+        self.tmp_team2 = Team(name='Team #2')
+        self.tmp_team2.save()
+        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, match_day=1, start_time=123456789, competition=self.competition)
 
     def test_equal_games(self):
-        self.session.add(self.game)
-        self.session.add(self.tmp_game)
-        self.session.commit()
+        self.game.save()
+        self.tmp_game.save()
         self.tmp_game.id = self.game.id
         assert self.game == self.tmp_game
 
     def test_nonequal_games(self):
-        self.session.add(self.game)
-        self.session.add(self.tmp_game)
-        self.session.commit()
+        self.game.save()
+        self.tmp_game.save()
         self.tmp_game.id = self.game.id + 1
         assert self.game != self.tmp_game
 
     def test_nonequal_objects(self):
-        self.session.add(self.game)
-        self.session.commit()
+        self.game.save()
         assert self.game != 'abcd'
+
+
+class GameModelSetScoreTest(GameTest):
+
+    def test_score(self):
+        self.game.set_score(2, 1)
+        self.game.save()
+        assert self.team_1.points == 3
+        assert self.team_2.points == 0
+        assert self.game.home_team_score == 2
+        assert self.game.away_team_score == 1
