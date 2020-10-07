@@ -1,0 +1,11 @@
+mode: production
+api_key: 12345678
+
+web_debug: False
+
+secret_key: 123457890
+
+db_uri: "mysql://user:pass@127.0.0.1/footyhints"
+
+fetch_league_country: United States
+fetch_league_name: MLS

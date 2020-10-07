@@ -1,0 +1,9 @@
+mode: development
+web_debug: True
+
+db_uri: "sqlite:///:memory:"
+
+secret_key: 123457890
+
+fetch_league_country: United States
+fetch_league_name: Premier League

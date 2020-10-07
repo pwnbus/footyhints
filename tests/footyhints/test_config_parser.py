@@ -26,7 +26,7 @@ class NoEnvironment():
 class TestSample1Config(NoEnvironment):
     def setup(self):
         super().setup()
-        self.config = ConfigParser(location="../tests/footyhints/example_configs/config1.txt")
+        self.config = ConfigParser(location="../tests/footyhints/example_configs/config1.yml")
 
     def test_mode(self):
         assert self.config.mode == "development"
@@ -50,7 +50,7 @@ class TestSample1Config(NoEnvironment):
 class TestSample2Config(NoEnvironment):
     def setup(self):
         super().setup()
-        self.config = ConfigParser(location="../tests/footyhints/example_configs/config2.txt")
+        self.config = ConfigParser(location="../tests/footyhints/example_configs/config2.yml")
 
     def test_mode(self):
         assert self.config.mode == "production"
