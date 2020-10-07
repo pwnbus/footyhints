@@ -1,7 +1,7 @@
 /.cache
 /footyhints.egg-info/
 /.coverage
-/config.txt
+/config.yml
 /docs/_build
 .DS_Store
 .python-version

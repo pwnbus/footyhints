@@ -7,7 +7,7 @@ PARALLEL	:= --parallel
 VERSION    := $$(git log -1 --pretty=%h)
 REGISTRY := ""
 
-IMAGES := nginx bootstrap flask cron
+IMAGES := nginx bootstrap web cron
 
 .PHONY:all
 all:

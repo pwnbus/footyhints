@@ -1,20 +1,16 @@
-from footyhints.models.team import Team
-from footyhints.models.game import Game
-from footyhints.models.competition import Competition
-
-from footyhints.db import session
+from web.models import Competition, Team, Game
 from footyhints.decision_maker import DecisionMaker
-from footyhints.config import config
 
 
 class ParseResults():
-    def __init__(self, update=False):
+    def __init__(self, league_country, league_name, update):
+        self.league = league_country + " " + league_name
         self.update = update
 
     def create_teams(self, results):
         teams = {}
         if self.update:
-            db_teams = session.query(Team).all()
+            db_teams = Team.objects.all()
             for team in db_teams:
                 teams[team.name] = team
             return teams
@@ -24,29 +20,34 @@ class ParseResults():
         for team_name in team_names:
             team = Team(name=team_name)
             teams[team_name] = team
-            session.add(team)
-        session.commit()
+            team.save()
         return teams
 
-    def get_competition(self):
-        competition = Competition(name=config.fetch_league_name)
+    def get_competition(self, league_name):
+        competition = Competition(name=league_name)
         if self.update:
-            competition_db = session.query(Competition).one()
+            competition_db = Competition.objects.filter(name__contains=league_name)[0]
             if competition_db:
                 competition = competition_db
+        competition.save()
         return competition
 
     def parse_results(self, results):
         teams = self.create_teams(results)
         decision_maker = DecisionMaker()
-        competition = self.get_competition()
+        competition = self.get_competition(self.league)
 
         for match in results:
             if self.update:
-                home_team = session.query(Team).filter(Team.name == match['home_team']).one()
-                game_found = session.query(Game).filter(Game.match_day == match['match_day']).filter(Game.home_team == home_team).all()
-                if game_found:
-                    continue
+                home_teams_queryset = Team.objects.filter(name__contains=match['home_team'])
+                if home_teams_queryset.count() > 0:
+                    home_team = home_teams_queryset[0]
+                    game_found = Game.objects.filter(team__name=home_team.name).filter(match_day=match['match_day'])[0]
+                    if game_found:
+                        continue
+
+            home_team = teams[match['home_team']]
+            away_team = teams[match['away_team']]
             game = Game(
                 home_team=teams[match['home_team']],
                 away_team=teams[match['away_team']],
@@ -54,6 +55,11 @@ class ParseResults():
                 start_time=match['start_time'],
                 competition=competition,
             )
+            game.save()
+            home_team.games.add(game)
+            home_team.save()
+            away_team.games.add(game)
+            away_team.save()
             game.set_score(match['home_score'], match['away_score'])
             print("Creating game\t{0} | {1}\t{2}-{3} ({4})".format(
                 match['home_team'],
@@ -63,8 +69,6 @@ class ParseResults():
                 game.match_day
             ))
             decision_maker.worth_watching(game)
-            session.add(game)
+            game.save()
         competition.update_timestamp()
-        session.add(competition)
-        session.commit()
-        session.close()
+        competition.save()

@@ -15,13 +15,14 @@ config = {
     'install_requires': [
         'requests',
         'pynsive',
-        'sqlalchemy',
-        'Flask',
-        'Flask-SQLAlchemy',
         'mysqlclient',
         'python-dateutil',
+        'pyyaml',
+        'django===3.1.1',
+        'django-extensions===3.0.9',
+        'dj-database-url===0.5.0',
     ],
-    'packages': ['footyhints'],
+    'packages': ['web','footyhints'],
     'scripts': [],
     'name': 'footyhints'
 }

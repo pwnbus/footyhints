@@ -7,6 +7,7 @@ RUN \
     python3 \
     python3-pip \
     libssl-dev \
+    iputils-ping \
     libmysqlclient-dev && \
   apt-get clean all && \
   rm -rf /var/lib/apt/lists/* && \
@@ -26,7 +27,9 @@ RUN virtualenv -p `which python3` /opt/footyhints/envs/python
 ENV PATH=/opt/footyhints/envs/python/bin:$PATH
 
 COPY --chown=footyhints:footyhints setup.py /opt/footyhints/envs/footyhints/setup.py
+COPY --chown=footyhints:footyhints manage.py /opt/footyhints/envs/footyhints/manage.py
 COPY --chown=footyhints:footyhints footyhints /opt/footyhints/envs/footyhints/footyhints
+COPY --chown=footyhints:footyhints web /opt/footyhints/envs/footyhints/web
 
 RUN pip install -e /opt/footyhints/envs/footyhints
 

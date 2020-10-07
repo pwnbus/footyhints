@@ -1,15 +1,18 @@
 from pynsive import rlist_classes
 
 from footyhints.plugin import Plugin, LOWEST_PRIORITY
-from footyhints.levels import LOW, MEDIUM, HIGH
+from web.models import ScoreModification
 
-from footyhints.db import session
-from footyhints.models.score_modification import ScoreModification
+
+HIGH = 'High'
+MEDIUM = 'Medium'
+LOW = 'Low'
 
 
 class DecisionMaker():
     def __init__(self):
         self.decision_plugins = []
+        self.load_decision_plugins()
 
     def load_decision_plugins(self):
         # wipe plugin list so we can 'refresh'
@@ -22,16 +25,14 @@ class DecisionMaker():
             self.decision_plugins.append(decision_class())
 
     def delete_score_modifications(self, game):
-        for score_modification in game.score_modifications:
-            session.delete(score_modification)
-        session.commit()
+        for score_modification in game.score_modifications.all():
+            score_modification.delete()
 
     def worth_watching(self, game):
         if game.home_team_score is None and game.away_team_score is None:
             raise TypeError('Home and away scores must be set')
         self.delete_score_modifications(game)
         # Main decision logic
-        self.load_decision_plugins()
         total_earned_score = 0
         total_potential_points = 0
         for decision_plugin in self.decision_plugins:
@@ -44,11 +45,11 @@ class DecisionMaker():
                 score_modification = ScoreModification(
                     value=score,
                     reason=reason,
-                    priority=decision_plugin.priority
+                    priority=decision_plugin.priority,
+                    game=game
                 )
-                game.score_modifications.append(score_modification)
-                session.add(score_modification)
-        session.commit()
+                score_modification.save()
+                game.score_modifications.add(score_modification)
 
         score_earned_percent = (total_earned_score / total_potential_points) * 100
         game.interest_score = float("{0:.2f}".format(score_earned_percent))
@@ -64,3 +65,5 @@ class DecisionMaker():
             game.interest_level = MEDIUM
         else:
             game.interest_level = LOW
+
+        game.save()
