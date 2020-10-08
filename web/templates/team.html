@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}{{ team.name }}{% endblock %}
+
+{% block content %}
+<h3 class="table-name-header">{{ team.name }}</h3>
+{% include 'games_table.html' %}
+{% endblock %}

@@ -2,25 +2,25 @@ from footyhints.plugins.similar_points import SimilarPoints
 
 from tests.footyhints.unit_test import UnitTest
 
-from footyhints.models.game import Game
+from web.models import Game
 
 
 class TestSimilarPoints(UnitTest):
     def setup(self):
         super().setup()
-        self.session.add(self.home_team)
-        self.session.add(self.away_team)
-        self.session.commit()
         self.similar_points = SimilarPoints()
 
     def create_match_day(self, match_day, winner="Home"):
         game = Game(home_team=self.home_team, away_team=self.away_team, match_day=match_day, start_time=1594445619)
+        game.save()
         if winner == "Home":
             game.set_score(1, 0)
         else:
             game.set_score(0, 1)
-        self.session.add(game)
-        self.session.commit()
+        self.home_team.games.add(game)
+        self.home_team.save()
+        self.away_team.games.add(game)
+        self.away_team.save()
         return game
 
     def test_over_max_score(self):
@@ -33,8 +33,6 @@ class TestSimilarPoints(UnitTest):
 
     def test_middle_score(self):
         self.game.set_score(2, 2)
-        self.session.add(self.game)
-        self.session.commit()
         self.create_match_day(2)
         game = self.create_match_day(3)
         similar_points = SimilarPoints()
@@ -44,8 +42,9 @@ class TestSimilarPoints(UnitTest):
 
     def test_two_games_diff(self):
         self.game.set_score(2, 2)
-        self.session.add(self.game)
-        self.session.commit()
+        self.game.save()
+        # self.session.add(self.game)
+        # self.session.commit()
         self.create_match_day(2)
         self.create_match_day(3)
         self.create_match_day(4)

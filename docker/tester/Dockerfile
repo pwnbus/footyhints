@@ -16,6 +16,7 @@ RUN \
 
 COPY --chown=footyhints:footyhints .flake8 .flake8
 COPY --chown=footyhints:footyhints .htmlhint .htmlhint
+COPY --chown=footyhints:footyhints pytest.ini pytest.ini
 
 USER footyhints
 

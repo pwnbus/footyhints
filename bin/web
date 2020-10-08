@@ -1,10 +1,20 @@
 #!/usr/bin/env python
 
+import os
+import sys
+import django
+
+from django.core.management import call_command
 from footyhints.config import config
-from footyhints.web import app as application
+
 
 if __name__ == '__main__':
-    if config.web_debug:
-        application.run()
-    else:
-        application.run(host='0.0.0.0')
+    footyhints_path = os.path.join(os.path.dirname(__file__), "../")
+    sys.path.insert(0, footyhints_path)
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'footyhints.settings')
+    django.setup()
+    listen_host = "127.0.0.1:8000"
+    if not config.web_debug:
+        listen_host = "0.0.0.0:8000"
+    call_command("runserver", listen_host)

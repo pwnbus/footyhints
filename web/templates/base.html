@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    {% block head %}
+      <title>Footyhints - {% block title %}{% endblock %}</title>
+    {% endblock %}
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico'%}"/>
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'js/jquery.dataTables.min.js'%}"></script>
+    <script src="{% static 'js/dataTables.bootstrap.min.js'%}"></script>
+    <script src="{% static 'js/dataTables.rowGroup.min.js'%}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}"/>
+    <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap.min.css'%}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-glyphicons.css'%}"/>
+    <link rel="stylesheet" href="{% static 'css/rowGroup.dataTables.min.css'%}"/>
+
+    <link rel="stylesheet" href="{% static 'css/main.css'%}" type="text/css">
+  </head>
+  <body>
+    <div class="container md-page" id="main-container">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-title">
+                <a href="/"><span>{{ league }}</span></a>
+              </div>
+            </div>
+            <div class="list-group">
+              {% for team in teams %}
+                <a href="/team/{{ team.id }}" class="list-group-item list-group-item-action {% if request.resolver_match.kwargs.team_id == team.id %}active{% endif %}">{{ team.name }}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+      {% include 'footer.html' %}
+    </div>
+  </body>
+</html>

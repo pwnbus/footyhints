@@ -1,9 +1,7 @@
 from glob import glob
 from os.path import join, dirname, abspath
 
-from pytest import raises
-
-from footyhints.models.score_modification import ScoreModification
+from web.models import ScoreModification
 from footyhints.decision_maker import DecisionMaker
 
 from tests.footyhints.unit_test import UnitTest
@@ -18,22 +16,13 @@ class DecisionMakerTest(UnitTest):
 class TestDecisionMakerLoadDecisionPlugins(DecisionMakerTest):
     def test_plugins(self):
         plugins_path = join(dirname(abspath(__file__)), '../../footyhints/plugins')
-        assert len(self.decision.decision_plugins) == 0
-        self.decision.load_decision_plugins()
         expected_plugin_num = len(glob(plugins_path + "/*.py")) - 1
         assert len(self.decision.decision_plugins) == expected_plugin_num
 
 
 class TestDecisionMakerWorthWatching(DecisionMakerTest):
-    def test_no_scores(self):
-        with raises(TypeError) as exception_obj:
-            self.decision.worth_watching(self.game)
-        assert str(exception_obj.value) == 'Home and away scores must be set'
 
     def test_before_method_call(self):
-        self.session.add(self.home_team)
-        self.session.add(self.away_team)
-        self.session.commit()
         self.game.set_score(1, 1)
         assert self.game.interest_score is None
         assert self.game.interest_level is None
@@ -44,23 +33,24 @@ class TestDecisionMakerWorthWatching(DecisionMakerTest):
 
 class TestDecisionMakerDeleteScoreModifications(DecisionMakerTest):
     def test_delete_scores(self):
-        assert len(self.game.score_modifications) == 0
+        assert self.game.score_modifications.count() == 0
         modification1 = ScoreModification(
             value=100,
             game=self.game,
             reason="Example reason",
             priority=1
         )
-        self.session.add(modification1)
+        modification1.save()
+        self.game.score_modifications.add(modification1)
         modification2 = ScoreModification(
             value=10,
             game=self.game,
             reason="Example reason",
             priority=1
         )
-        self.session.add(modification2)
-        self.session.commit()
-
-        assert len(self.game.score_modifications) == 2
+        modification2.save()
+        self.game.score_modifications.add(modification2)
+        self.game.save()
+        assert self.game.score_modifications.count() == 2
         self.decision.delete_score_modifications(self.game)
-        assert len(self.game.score_modifications) == 0
+        assert self.game.score_modifications.count() == 0

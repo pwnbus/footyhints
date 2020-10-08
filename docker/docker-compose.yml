@@ -4,7 +4,9 @@ services:
   nginx:
     image: footyhints/footyhints_nginx:latest
     depends_on:
-      - flask
+      - web
+    volumes:
+      - web_static:/web_static
     networks:
       - default
     ports:
@@ -27,10 +29,12 @@ services:
       - default
     restart: on-failure
     env_file: footyhints.env
-  flask:
-    image: footyhints/footyhints_flask:latest
+  web:
+    image: footyhints/footyhints_web:latest
     depends_on:
       - bootstrap
+    volumes:
+      - web_static:/opt/footyhints/envs/footyhints/web/static
     networks:
       - default
     restart: always
@@ -46,6 +50,7 @@ services:
 
 volumes:
   mysql:
+  web_static:
 
 networks:
   default:

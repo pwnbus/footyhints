@@ -1,9 +1,9 @@
-from footyhints.models.score_modification import ScoreModification
+from web.models import ScoreModification
 
 from tests.footyhints.unit_test import UnitTest
 
 
-class TestScoreModificationInit(UnitTest):
+class TestScoreModificationModel(UnitTest):
     def test_init_positive_value(self):
         score_modification = ScoreModification(
             value=100,
@@ -26,8 +26,6 @@ class TestScoreModificationInit(UnitTest):
         assert score_modification.reason == 'Example reason'
         assert score_modification.game == self.game
 
-
-class TestScoreModificationSave(UnitTest):
     def test_basic_save(self):
         score_modification = ScoreModification(
             value=100,
@@ -36,6 +34,5 @@ class TestScoreModificationSave(UnitTest):
             priority=1
         )
         assert score_modification.id is None
-        self.session.add(score_modification)
-        self.session.commit()
+        score_modification.save()
         assert score_modification.id is not None

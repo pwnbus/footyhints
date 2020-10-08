@@ -1,8 +1,7 @@
 from footyhints.plugins.rivalry_matchup import RivalryMatchup
 
 from tests.footyhints.unit_test import UnitTest
-from footyhints.models.team import Team
-from footyhints.models.game import Game
+from web.models import Team, Game
 
 
 class TestRivalryMatchup(UnitTest):

@@ -5,26 +5,26 @@ import datetime
 class SampleDataClient():
     def get_results(self):
         teams = [
-            'AFC Bournemouth',
             'Arsenal FC',
             'Aston Villa FC',
-            'Brighton & Hove Albion FC',
             'Burnley FC',
+            'Brighton & Hove Albion FC',
             'Chelsea FC',
             'Crystal Palace FC',
             'Everton FC',
+            'Fulham FC',
             'Leicester City FC',
+            'Leeds United FC',
             'Liverpool FC',
             'Manchester City FC',
             'Manchester United FC',
             'Newcastle United FC',
-            'Norwich City FC',
             'Sheffield United FC',
             'Southampton FC',
             'Tottenham Hotspur FC',
-            'Watford FC',
+            'West Bromwich Albion FC',
             'West Ham United FC',
-            'Wolverhampton Wanderers FC'
+            'Wolverhampton Wanderers FC',
         ]
         results = []
         num_match_days = randint(5, 38)
