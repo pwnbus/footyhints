@@ -10,7 +10,7 @@ RUN \
   echo "daemon off;" >> /etc/nginx/nginx.conf && \
   rm /etc/nginx/sites-enabled/*
 
-COPY docker/nginx/files/flask.conf /etc/nginx/sites-enabled/flask.conf
+COPY docker/nginx/files/web.conf /etc/nginx/sites-enabled/web.conf
 
 EXPOSE 80
 
