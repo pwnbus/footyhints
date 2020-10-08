@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask
+  name: web
   namespace: footyhints
 spec:
   selector:
     matchLabels:
-      app: flask
+      app: web
   template:
     metadata:
       labels:
-        app: flask
+        app: web
     spec:
       containers:
-        - name: flask
-          image: footyhints/footyhints_flask:CONTAINERS_VERSION
+        - name: web
+          image: footyhints/footyhints_web:CONTAINERS_VERSION
           imagePullPolicy: Always
           ports:
           - name: http
@@ -140,17 +140,17 @@ apiVersion: v1
 kind: Service
 apiVersion: v1
 metadata:
-  name: flask
+  name: web
   namespace: footyhints
   labels:
-    app: flask
+    app: web
 spec:
   ports:
     - port: 5000
       targetPort: 5000
       protocol: TCP
   selector:
-    app: flask
+    app: web
 
 ---
 apiVersion: v1
