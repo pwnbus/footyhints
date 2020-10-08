@@ -25,10 +25,13 @@ build: ## Build the full docker stack
 stop: ## Stop the full docker stack
 	docker-compose -f docker/docker-compose.yml -p $(NAME) stop
 
-rebuild: build stop run
+rebuild: build stop run ## Rebuild, stop and run
 
 .PHONY: tests
 tests: build-tests run-tests  ## Run all tests (getting/building images as needed)
+
+.PHONY: test ## Alias for "Run all tests"
+test: tests
 
 .PHONY: build-tests
 build-tests:  ## Build end-to-end test environment only
@@ -46,7 +49,7 @@ run-tests-resources:  ## Just run the external resources required for tests
 .PHONY: run-tests
 run-tests: run-tests-resources ## Run testing suite
 	docker run --rm footyhints/footyhints_tester bash -c "flake8 --config .flake8 ./"
-	docker run --rm footyhints/footyhints_tester bash -c "./node_modules/.bin/htmlhint --config .htmlhint footyhints/**/*.html"
+	docker run --rm footyhints/footyhints_tester bash -c "./node_modules/.bin/htmlhint --config .htmlhint web/templates/*.html"
 	docker run --rm --env-file=docker/tests.env -v artifacts:/opt/footyhints/envs/artifacts/ --network=footyhints_default footyhints/footyhints_tester
 
 ## RELEASES ##
