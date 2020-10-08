@@ -64,6 +64,7 @@ jobs:
       run: |
         sed -i'' -e "s/MYSQL_ROOT_PASSWORD_PLACEHOLDER/${{ secrets.MYSQL_ROOT_PASSWORD_DEV }}/g" $GITHUB_WORKSPACE/deployments/dev/configmap.yml
         sed -i'' -e "s/MYSQL_PASSWORD_PLACEHOLDER/${{ secrets.MYSQL_PASSWORD_DEV }}/g" $GITHUB_WORKSPACE/deployments/dev/configmap.yml
+        sed -i'' -e "s/FOOTYHINTS_SECRET_KEY_PLACEHOLDER/${{ secrets.FOOTYHINTS_SECRET_KEY_DEV }}/g" $GITHUB_WORKSPACE/deployments/dev/configmap.yml
         sed -i'' -e "s/CERTIFICATE_DOMAIN/footyhints.dev/g" $GITHUB_WORKSPACE/deployments/services.yml
         sed -i'' -e "s/CONTAINERS_VERSION/$VERSION/g" $GITHUB_WORKSPACE/deployments/services.yml
 

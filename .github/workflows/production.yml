@@ -73,6 +73,7 @@ jobs:
       run: |
         sed -i'' -e "s/FOOTYHINTS_VERSION_PLACEHOLDER/$TAG_VERSION/g" $GITHUB_WORKSPACE/deployments/prod/configmap.yml
         sed -i'' -e "s/FOOTYHINTS_API_KEY_PLACEHOLDER/${{ secrets.FOOTYHINTS_API_KEY }}/g" $GITHUB_WORKSPACE/deployments/prod/configmap.yml
+        sed -i'' -e "s/FOOTYHINTS_SECRET_KEY_PLACEHOLDER/${{ secrets.FOOTYHINTS_SECRET_KEY_PROD }}/g" $GITHUB_WORKSPACE/deployments/prod/configmap.yml
         sed -i'' -e "s/MYSQL_ROOT_PASSWORD_PLACEHOLDER/${{ secrets.MYSQL_ROOT_PASSWORD_PROD }}/g" $GITHUB_WORKSPACE/deployments/prod/configmap.yml
         sed -i'' -e "s/MYSQL_PASSWORD_PLACEHOLDER/${{ secrets.MYSQL_PASSWORD_PROD }}/g" $GITHUB_WORKSPACE/deployments/prod/configmap.yml
         sed -i'' -e "s/CERTIFICATE_DOMAIN/footyhints.com/g" $GITHUB_WORKSPACE/deployments/services.yml
