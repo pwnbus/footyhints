@@ -37,7 +37,7 @@ jobs:
           # Overwrite specific environment vars
           echo \"\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_MODE=development\" >> /footyhints/docker/footyhints.env
-          echo \"FOOTYHINTS_WEB_DEBUG=True\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_WEB_DEBUG=False\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_SECRET_KEY=${{ secrets.FOOTYHINTS_SECRET_KEY_DEV }}\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_FETCH_LEAGUE_COUNTRY=England\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_FETCH_LEAGUE_NAME=Premier League\" >> /footyhints/docker/footyhints.env
