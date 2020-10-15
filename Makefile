@@ -27,6 +27,11 @@ stop: ## Stop the full docker stack
 
 rebuild: build stop run ## Rebuild, stop and run
 
+.PHONY: clean
+clean: ## Cleanup all docker volumes and shutdown all related services
+	-docker-compose -f docker/compose/docker-compose.yml -p $(NAME) down -v --remove-orphans
+	-docker-compose -f docker/compose/docker-compose-tests.yml -p test-$(NAME) down -v --remove-orphans
+
 .PHONY: tests
 tests: build-tests run-tests  ## Run all tests (getting/building images as needed)
 
