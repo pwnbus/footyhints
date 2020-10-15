@@ -1,17 +1,6 @@
 ---
 version: '3.7'
 services:
-  nginx:
-    image: footyhints/footyhints_nginx:latest
-    depends_on:
-      - web
-    volumes:
-      - web_static:/web_static
-    networks:
-      - default
-    ports:
-      - 80:80
-    restart: always
   mysql:
     image: mysql:8
     restart: on-failure
@@ -29,6 +18,25 @@ services:
       - default
     restart: on-failure
     env_file: footyhints.env
+  cron:
+    image: footyhints/footyhints_cron:latest
+    depends_on:
+      - bootstrap
+    networks:
+      - default
+    restart: always
+    env_file: footyhints.env
+  nginx:
+    image: footyhints/footyhints_nginx:latest
+    depends_on:
+      - web
+    volumes:
+      - web_static:/web_static
+    networks:
+      - default
+    ports:
+      - 80:80
+    restart: always
   web:
     image: footyhints/footyhints_web:latest
     depends_on:
@@ -39,14 +47,7 @@ services:
       - default
     restart: always
     env_file: footyhints.env
-  cron:
-    image: footyhints/footyhints_cron:latest
-    depends_on:
-      - bootstrap
-    networks:
-      - default
-    restart: always
-    env_file: footyhints.env
+
 
 volumes:
   mysql:

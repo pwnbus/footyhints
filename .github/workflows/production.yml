@@ -5,85 +5,56 @@ on:
     tags:
       - 'v*.*.*'
 
-# Environment variables available to all jobs and steps in this workflow
-env:
-  GKE_PROJECT: footyhints-com
-  GKE_EMAIL: ${{ secrets.GKE_EMAIL_PROD }}
-  GITHUB_SHA: ${{ github.sha }}
-  GKE_ZONE: us-central1-c
-  GKE_CLUSTER: footyhints
-  REGISTRY_HOSTNAME: gcr.io
-
 jobs:
-  dockerhub:
-    name: Push to Dockerhub
+  deploy-prod:
+    name: Deploy Production Environment
     runs-on: ubuntu-latest
     steps:
 
     - name: Checkout
       uses: actions/checkout@v2
 
-    # Set release information from the tag
-    - name: Set TAG_VERSION env
-      run: echo ::set-env name=TAG_VERSION::${GITHUB_REF#refs/*/}
-    - name: Set RELEASE_VERSION env
-      run: echo ::set-env name=RELEASE_VERSION::$(echo $TAG_VERSION | cut -c 2-)
+    # Set version to latest tag
+    - name: Set VERSION env
+      run: echo ::set-env name=VERSION::${GITHUB_REF#refs/*/}
 
-    - name: Login to DockerHub
-      run: make login-dockerhub
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Build images
-      run: make build-release-images REGISTRY=footyhints/ VERSION=$RELEASE_VERSION
-
-    - name: Push images to DockerHub
-      run: make push-release-images REGISTRY=footyhints/ VERSION=$RELEASE_VERSION
-
-
-  gke:
-    name: Deploy to GKE
-    needs: dockerhub
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    # Set release information from the tag
-    - name: Set TAG_VERSION env
-      run: echo ::set-env name=TAG_VERSION::${GITHUB_REF#refs/*/}
-
-    # Setup gcloud CLI
-    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-      with:
-        version: '270.0.0'
-        service_account_email: ${{ secrets.GKE_EMAIL_PROD }}
-        service_account_key: ${{ secrets.GKE_KEY_PROD }}
-
-    # Configure docker to use the gcloud command-line tool as a credential helper
-    - name: Setup docker to authenticate to gcloud
-      run: gcloud auth configure-docker
-
-    - name: Auth to gcloud
-      run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
-
-    - name: Replace placeholder variables in deployment
+    - name: Write ssh key
       run: |
-        sed -i'' -e "s/FOOTYHINTS_VERSION_PLACEHOLDER/$TAG_VERSION/g" $GITHUB_WORKSPACE/deployments/prod/configmap.yml
-        sed -i'' -e "s/FOOTYHINTS_API_KEY_PLACEHOLDER/${{ secrets.FOOTYHINTS_API_KEY }}/g" $GITHUB_WORKSPACE/deployments/prod/configmap.yml
-        sed -i'' -e "s/FOOTYHINTS_SECRET_KEY_PLACEHOLDER/${{ secrets.FOOTYHINTS_SECRET_KEY_PROD }}/g" $GITHUB_WORKSPACE/deployments/prod/configmap.yml
-        sed -i'' -e "s/MYSQL_ROOT_PASSWORD_PLACEHOLDER/${{ secrets.MYSQL_ROOT_PASSWORD_PROD }}/g" $GITHUB_WORKSPACE/deployments/prod/configmap.yml
-        sed -i'' -e "s/MYSQL_PASSWORD_PLACEHOLDER/${{ secrets.MYSQL_PASSWORD_PROD }}/g" $GITHUB_WORKSPACE/deployments/prod/configmap.yml
-        sed -i'' -e "s/CERTIFICATE_DOMAIN/footyhints.com/g" $GITHUB_WORKSPACE/deployments/services.yml
-        sed -i'' -e "s/CONTAINERS_VERSION/latest/g" $GITHUB_WORKSPACE/deployments/services.yml
+        echo -e "${{ secrets.FOOTYHINTS_SSH_KEY }}" >> ~/footyhints
+        chmod 600 ~/footyhints
 
-    - name: Remove existing deployment
-      run: kubectl delete namespace footyhints || true
-
-    - name: Create deployment
+    - name: Run setup and install commands
       run: |
-        kubectl apply -f $GITHUB_WORKSPACE/deployments/namespace.yml
-        kubectl apply -f $GITHUB_WORKSPACE/deployments/prod/configmap.yml
-        kubectl apply -f $GITHUB_WORKSPACE/deployments/services.yml
+        ssh -i ~/footyhints -o "StrictHostKeyChecking=no" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
+
+          # Remove previous environment
+          rm -rf /footyhints || true
+
+          # Setup new environment
+          git clone https://github.com/pwnbus/footyhints /footyhints
+          cd /footyhints
+          git checkout $VERSION
+
+          # Overwrite specific environment vars
+          echo \"\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_MODE=production\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_WEB_DEBUG=False\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_API_KEY=${{ secrets.FOOTYHINTS_API_KEY }}\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_SECRET_KEY=${{ secrets.FOOTYHINTS_SECRET_KEY_PROD }}\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_FETCH_LEAGUE_COUNTRY=England\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_FETCH_LEAGUE_NAME=Premier League\" >> /footyhints/docker/footyhints.env
+          echo \"MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD_PROD }}\" >> /footyhints/docker/footyhints.env
+          echo \"MYSQL_DATABASE=footyhints\" >> /footyhints/docker/footyhints.env
+          echo \"MYSQL_USER=${{ secrets.MYSQL_USER_PROD }}\" >> /footyhints/docker/footyhints.env
+          echo \"MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD_PROD }}\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_DB_URI=mysql://${{ secrets.MYSQL_USER_PROD }}:${{ secrets.MYSQL_PASSWORD_PROD }}@mysql/footyhints\" >> /footyhints/docker/footyhints.env
+
+          # Build and run
+          make build clean run
+
+          # Cleanup
+          rm -rf /footyhints
+        "
+
+    - name: Cleanup
+      run: rm -rf ~/footyhints
