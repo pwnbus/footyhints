@@ -46,6 +46,7 @@ jobs:
           echo \"MYSQL_USER=${{ secrets.MYSQL_USER_DEV }}\" >> /footyhints/docker/footyhints.env
           echo \"MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD_DEV }}\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_DB_URI=mysql://${{ secrets.MYSQL_USER_DEV }}:${{ secrets.MYSQL_PASSWORD_DEV }}@mysql/footyhints\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_VERSION=$VERSION\" >> /footyhints/docker/footyhints.env
 
           # Build and run
           make build clean run
