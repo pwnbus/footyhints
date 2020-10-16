@@ -1,5 +1,5 @@
 flake8
-coverage==4.3.4
+coverage
 pytest-cov
 pytest
 pytest-django==3.10.0
