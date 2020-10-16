@@ -48,7 +48,11 @@
       "bLengthChange": false,
       "bPaginate": true,
 
-      "iDisplayLength": 18,
+      {% if request.path == '/' %}
+      "iDisplayLength": 17,
+      {% else %}
+      "iDisplayLength": 10,
+      {% endif %}
 
       "fnDrawCallback": function() {
         $("#game-list-header").remove();
