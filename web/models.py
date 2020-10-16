@@ -29,6 +29,10 @@ class Game(models.Model):
     attributes = models.ManyToManyField('Attribute')
     score_modifications = models.ManyToManyField('ScoreModification')
 
+    @property
+    def sorted_score_modifications(self):
+        return self.score_modifications.all().order_by('priority')
+
     def get_attribute_by_name(self, name):
         for attribute in self.attributes.all():
             if attribute.name == name:
