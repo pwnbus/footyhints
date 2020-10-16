@@ -121,7 +121,7 @@
                     <th>Reason</th>
                   </thead>
                   <tbody>
-                    {% for score_modification in game.score_modifications.all %}
+                    {% for score_modification in game.sorted_score_modifications %}
                       <tr>
                         <td><div class="blur-content blurred-content blur-content{{ game.id }}">{{ score_modification.value }}</div></td>
                         <td><div class="blur-content blurred-content blur-content{{ game.id }}">{{ score_modification.priority }}</div></td>
