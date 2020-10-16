@@ -1,6 +1,3 @@
-from glob import glob
-from os.path import join, dirname, abspath
-
 from web.models import ScoreModification
 from footyhints.decision_maker import DecisionMaker
 
@@ -11,13 +8,6 @@ class DecisionMakerTest(UnitTest):
     def setup(self):
         super().setup()
         self.decision = DecisionMaker()
-
-
-class TestDecisionMakerLoadDecisionPlugins(DecisionMakerTest):
-    def test_plugins(self):
-        plugins_path = join(dirname(abspath(__file__)), '../../footyhints/plugins')
-        expected_plugin_num = len(glob(plugins_path + "/*.py")) - 1
-        assert len(self.decision.decision_plugins) == expected_plugin_num
 
 
 class TestDecisionMakerWorthWatching(DecisionMakerTest):

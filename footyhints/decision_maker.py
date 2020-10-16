@@ -1,7 +1,6 @@
-from pynsive import rlist_classes
-
-from footyhints.plugin import Plugin, LOWEST_PRIORITY
+from footyhints.plugin import LOWEST_PRIORITY
 from web.models import ScoreModification
+from footyhints.plugin_collection import PluginCollection
 
 
 HIGH = 'High'
@@ -11,18 +10,8 @@ LOW = 'Low'
 
 class DecisionMaker():
     def __init__(self):
-        self.decision_plugins = []
-        self.load_decision_plugins()
-
-    def load_decision_plugins(self):
-        # wipe plugin list so we can 'refresh'
-        self.decision_plugins = []
-        decision_classes = rlist_classes('footyhints.plugins')
-        for decision_class in decision_classes:
-            # Exclude root Plugin class
-            if decision_class == Plugin:
-                continue
-            self.decision_plugins.append(decision_class())
+        plugin_collection = PluginCollection('footyhints.plugins')
+        self.decision_plugins = plugin_collection.plugins
 
     def delete_score_modifications(self, game):
         for score_modification in game.score_modifications.all():

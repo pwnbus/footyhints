@@ -14,7 +14,6 @@ config = {
     'version': version,
     'install_requires': [
         'requests',
-        'pynsive===0.2.7',
         'mysqlclient',
         'python-dateutil',
         'pyyaml',
