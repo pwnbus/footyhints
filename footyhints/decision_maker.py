@@ -1,6 +1,7 @@
 from footyhints.plugin import LOWEST_PRIORITY
 from web.models import ScoreModification
 from footyhints.plugin_collection import PluginCollection
+from footyhints.logger import logger
 
 
 HIGH = 'High'
@@ -12,12 +13,15 @@ class DecisionMaker():
     def __init__(self):
         plugin_collection = PluginCollection('footyhints.plugins')
         self.decision_plugins = plugin_collection.plugins
+        for plugin in self.decision_plugins:
+            logger.debug("Loaded plugin: {}".format(plugin.__class__.__name__))
 
     def delete_score_modifications(self, game):
         for score_modification in game.score_modifications.all():
             score_modification.delete()
 
     def worth_watching(self, game):
+        logger.debug("Deciding interest level for game: {}".format(game))
         self.delete_score_modifications(game)
         # Main decision logic
         total_earned_score = 0

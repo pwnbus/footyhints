@@ -6,11 +6,13 @@ import django
 import optparse
 
 from django.core.management import call_command
+from footyhints.logger import logger, set_logger_debug
 
 
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option('--update', action="store_true", default=False)
+    parser.add_option('-v', '--verbosity', action="store_true", default=False)
     options, arguments = parser.parse_args()
 
     footyhints_path = os.path.join(os.path.dirname(__file__), "../")
@@ -20,7 +22,12 @@ if __name__ == '__main__':
     django.setup()
 
     if not options.update:
+        logger.info("Deleting existing database")
         call_command("flush", "--no-input")
         call_command("migrate", "--no-input")
 
+    if options.verbosity:
+        set_logger_debug()
+
+    logger.info("Setting up database")
     call_command("setupdb", update=options.update)
