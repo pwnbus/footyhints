@@ -39,11 +39,13 @@ class ParseResults():
 
         for match in results:
             if self.update:
+                # Look if game already exists
                 home_teams_queryset = Team.objects.filter(name__contains=match['home_team'])
                 if home_teams_queryset.count() > 0:
                     home_team = home_teams_queryset[0]
-                    game_found = Game.objects.filter(team__name=home_team.name).filter(match_day=match['match_day'])[0]
-                    if game_found:
+                    games_queryset = Game.objects.filter(team__name=home_team.name).filter(match_day=match['match_day'])
+                    if games_queryset.count() > 0:
+                        # Existing game found (based on home_team and match_day) so skip over
                         continue
 
             home_team = teams[match['home_team']]
