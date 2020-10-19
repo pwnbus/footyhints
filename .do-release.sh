@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Get the highest tag number
 VERSION=`git tag -l --sort=v:refname | tail -n1 | head -n1`
 
