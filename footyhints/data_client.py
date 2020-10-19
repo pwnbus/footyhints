@@ -1,19 +1,24 @@
-from footyhints.config import config
-
 import requests
 import json
 from dateutil.parser import parse
+
+from footyhints.config import config
+from footyhints.logger import logger
 
 
 class DataClient():
 
     API_URL = "https://api.football-data.org"
 
+    def __init__(self):
+        logger.debug("Using api.football-data.org data client")
+
     def get_results(self):
         headers = {
             'X-Auth-Token': config.api_key,
             'X-Response-Control': 'minified'
         }
+        logger.debug("Querying for competitions")
         competition_resp = requests.get('{0}/v2/competitions/'.format(self.API_URL), headers=headers)
         if not competition_resp.ok:
             raise Exception('{0}: {1}'.format(competition_resp.status_code, competition_resp.text))
@@ -29,6 +34,7 @@ class DataClient():
                 continue
             competition_id = competition['id']
 
+        logger.debug("Querying for matches for {}".format(competition_id))
         matches_resp = requests.get('{0}/v2/competitions/{1}/matches?status=FINISHED'.format(self.API_URL, competition_id), headers=headers)
         if not matches_resp.ok:
             raise Exception('{0}: {1}'.format(matches_resp.status_code, matches_resp.text))

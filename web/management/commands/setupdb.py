@@ -18,9 +18,10 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        client = SampleDataClient()
         if config.mode == 'production':
             client = DataClient()
+        else:
+            client = SampleDataClient()
 
         results = client.get_results()
         parser = ParseResults(config.fetch_league_country, config.fetch_league_name, options['update'])

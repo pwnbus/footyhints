@@ -1,8 +1,12 @@
 from random import randint, shuffle
 import datetime
+from footyhints.logger import logger
 
 
 class SampleDataClient():
+    def __init__(self):
+        logger.debug("Using sample data client")
+
     def get_results(self):
         teams = [
             'Arsenal FC',
