@@ -15,7 +15,12 @@
   display: inline;
 }
 
-#game-table {
+#game-attributes-table {
+  clear: both;
+  margin-top: 20px;
+}
+
+#game-score-modifications-table {
   clear: both;
   margin-top: 20px;
 }
