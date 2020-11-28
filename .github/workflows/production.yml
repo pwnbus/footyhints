@@ -16,7 +16,7 @@ jobs:
 
     # Set version to latest tag
     - name: Set VERSION env
-      run: echo ::set-env name=VERSION::${GITHUB_REF#refs/*/}
+      run: echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
     - name: Write ssh key
       run: |
