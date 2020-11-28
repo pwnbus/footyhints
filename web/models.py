@@ -31,7 +31,7 @@ class Game(models.Model):
 
     @property
     def sorted_attributes(self):
-        return self.attributes.all().order_by('name')
+        return self.attributes.all()
 
     @property
     def sorted_score_modifications(self):
