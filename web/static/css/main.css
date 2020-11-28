@@ -25,6 +25,10 @@
   margin-top: 20px;
 }
 
+#game-summary {
+  margin-bottom: 20px;
+}
+
 #blur-toggle-button {
   float: left;
 }
