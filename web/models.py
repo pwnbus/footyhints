@@ -30,10 +30,6 @@ class Game(models.Model):
     score_modifications = models.ManyToManyField('ScoreModification')
 
     @property
-    def sorted_attributes(self):
-        return self.attributes.all()
-
-    @property
     def sorted_score_modifications(self):
         return self.score_modifications.all().order_by('priority')
 
