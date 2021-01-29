@@ -35,15 +35,19 @@ class DataClient():
             competition_id = competition['id']
 
         logger.debug("Querying for matches for {}".format(competition_id))
-        matches_resp = requests.get('{0}/v2/competitions/{1}/matches?status=FINISHED'.format(self.API_URL, competition_id), headers=headers)
+        matches_resp = requests.get('{0}/v2/competitions/{1}/matches'.format(self.API_URL, competition_id), headers=headers)
         if not matches_resp.ok:
             raise Exception('{0}: {1}'.format(matches_resp.status_code, matches_resp.text))
 
         response = json.loads(matches_resp.text)
 
         results = []
+        unfinished_matches = []
         for match in response['matches']:
-            if not match['status'] == 'FINISHED':
+            if match['status'] == 'SCHEDULED':
+                unfinished_matches.append(match)
+                continue
+            elif not match['status'] == 'FINISHED':
                 continue
 
             match_day = match['matchday']
@@ -53,6 +57,18 @@ class DataClient():
                 "home_score": match['score']['fullTime']['homeTeam'],
                 "away_score": match['score']['fullTime']['awayTeam'],
                 "match_day": match_day,
-                "start_time": parse(match['utcDate']).timestamp()
+                "start_time": parse(match['utcDate']).timestamp(),
+                "finished": True,
+            })
+
+        # Add next 10 games as upcoming
+        # sorted_matches = sorted
+        for match in sorted(unfinished_matches, key=lambda match: match['utcDate']):
+            results.append({
+                "home_team": match['homeTeam']['name'],
+                "away_team": match['awayTeam']['name'],
+                "match_day": match_day,
+                "start_time": parse(match['utcDate']).timestamp(),
+                "finished": False,
             })
         return results

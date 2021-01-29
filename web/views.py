@@ -19,7 +19,8 @@ def load_defaults():
 
 def index(request):
     context = load_defaults()
-    context['games'] = Game.objects.all()
+    context['finished_games'] = Game.objects.filter(finished=True)
+    context['upcoming_games'] = Game.objects.filter(finished=False).order_by('start_time')[:10]
     return render(request, 'index.html', context)
 
 
@@ -30,5 +31,6 @@ def team(request, team_id):
         return redirect('/')
     context = load_defaults()
     context['team'] = team
-    context['games'] = team.games.all()
+    context['finished_games'] = team.games.filter(finished=True)
+    context['upcoming_games'] = team.games.filter(finished=False).order_by('start_time')[:3]
     return render(request, 'team.html', context)

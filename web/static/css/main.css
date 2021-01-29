@@ -11,6 +11,11 @@
   margin-top: 20px;
 }
 
+#game-list-upcoming {
+  clear: both;
+  margin-top: 20px;
+}
+
 #game-modal-score {
   display: inline;
 }

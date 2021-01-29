@@ -47,7 +47,8 @@ class SampleDataClient():
                     "home_score": randint(0, randint(0, 7)),
                     "away_score": randint(0, randint(0, 7)),
                     "match_day": match_day,
-                    "start_time": start_time.timestamp()
+                    "start_time": start_time.timestamp(),
+                    "finished": True
                 })
 
         return results
