@@ -22,6 +22,7 @@ class Team(models.Model):
 class Game(models.Model):
     match_day = models.IntegerField()
     start_time = models.IntegerField(null=False)
+    finished = models.BooleanField(default=False)
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="home_team_games")
     away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="away_team_games")
     interest_score = models.FloatField(null=True)

@@ -71,15 +71,24 @@ class ParseResults():
             home_team.save()
             away_team.games.add(game)
             away_team.save()
-            game.set_score(match['home_score'], match['away_score'])
-            logger.info("Creating game\t{0} | {1}\t{2}-{3} ({4})".format(
-                match['home_team'],
-                match['away_team'],
-                game.home_team_score,
-                game.away_team_score,
-                game.match_day
-            ))
-            decision_maker.worth_watching(game)
+            if match['finished']:
+                game.finished = True
+                game.set_score(match['home_score'], match['away_score'])
+                logger.info("Creating finished game\t{0} | {1}\t{2}-{3} ({4})".format(
+                    match['home_team'],
+                    match['away_team'],
+                    game.home_team_score,
+                    game.away_team_score,
+                    game.match_day
+                ))
+                decision_maker.worth_watching(game)
+            else:
+                logger.info("Creating upcoming game\t{0} | {1}\t ({2})".format(
+                    match['home_team'],
+                    match['away_team'],
+                    game.match_day
+                ))
+                game.finished = False
             game.save()
         competition.update_timestamp()
         competition.save()
