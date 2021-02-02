@@ -87,6 +87,7 @@ class Game(models.Model):
         away_score = Attribute(name='away_score', value=str(away_team_score), description='Away Team Score', game=self)
         away_score.save()
         self.attributes.add(away_score)
+        self.finished = True
         self.save()
 
     def __eq__(self, other):

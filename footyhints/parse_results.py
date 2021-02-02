@@ -17,7 +17,7 @@ class ParseResults():
             return teams
         home_teams = [result['home_team'] for result in results]
         away_teams = [result['away_team'] for result in results]
-        team_names = set(home_teams + away_teams)
+        team_names = sorted(set(home_teams + away_teams))
         for team_name in team_names:
             logger.debug("Creating team: {}".format(team_name))
             team = Team(name=team_name)
@@ -41,6 +41,7 @@ class ParseResults():
         competition = self.get_competition(self.league)
 
         for match in results:
+            found_game = None
             if self.update:
                 # Look if game already exists
                 home_teams_queryset = Team.objects.filter(name__contains=match['home_team'])
@@ -55,24 +56,28 @@ class ParseResults():
                             found_game.away_team.name,
                             found_game.match_day
                         ))
-                        continue
+                        if found_game.finished:
+                            continue
 
-            home_team = teams[match['home_team']]
-            away_team = teams[match['away_team']]
-            game = Game(
-                home_team=teams[match['home_team']],
-                away_team=teams[match['away_team']],
-                match_day=match['match_day'],
-                start_time=match['start_time'],
-                competition=competition,
-            )
-            game.save()
-            home_team.games.add(game)
-            home_team.save()
-            away_team.games.add(game)
-            away_team.save()
+            if found_game is None:
+                home_team = teams[match['home_team']]
+                away_team = teams[match['away_team']]
+                game = Game(
+                    home_team=teams[match['home_team']],
+                    away_team=teams[match['away_team']],
+                    match_day=match['match_day'],
+                    start_time=match['start_time'],
+                    competition=competition,
+                )
+                game.save()
+                home_team.games.add(game)
+                home_team.save()
+                away_team.games.add(game)
+                away_team.save()
+            else:
+                game = found_game
+
             if match['finished']:
-                game.finished = True
                 game.set_score(match['home_score'], match['away_score'])
                 logger.info("Creating finished game\t{0} | {1}\t{2}-{3} ({4})".format(
                     match['home_team'],
@@ -88,7 +93,6 @@ class ParseResults():
                     match['away_team'],
                     game.match_day
                 ))
-                game.finished = False
             game.save()
         competition.update_timestamp()
         competition.save()
