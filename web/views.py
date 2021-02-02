@@ -32,5 +32,5 @@ def team(request, team_id):
     context = load_defaults()
     context['team'] = team
     context['finished_games'] = team.games.filter(finished=True)
-    context['upcoming_games'] = team.games.filter(finished=False).order_by('start_time')[:3]
+    context['upcoming_games'] = team.games.filter(finished=False).order_by('start_time')[:6]
     return render(request, 'team.html', context)
