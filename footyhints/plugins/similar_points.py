@@ -1,10 +1,10 @@
 from footyhints.plugin import Plugin
 
 
-def points_at_matchday(team, matchday):
+def points_at_time(team, start_time):
     total_points = 0
     for game in team.games.filter(finished=True).all():
-        if game.match_day < matchday:
+        if game.start_time < start_time:
             if game.home_team == team:
                 if game.home_team_score > game.away_team_score:
                     total_points += 3
@@ -22,8 +22,8 @@ class SimilarPoints(Plugin):
     priority = 2
 
     def score(self, game):
-        home_points = points_at_matchday(game.home_team, game.match_day)
-        away_points = points_at_matchday(game.away_team, game.match_day)
+        home_points = points_at_time(game.home_team, game.start_time)
+        away_points = points_at_time(game.away_team, game.start_time)
         difference = abs(home_points - away_points)
         if difference == 0:
             return 100, "Proximity in points (0)"

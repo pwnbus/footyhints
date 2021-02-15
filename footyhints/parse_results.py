@@ -47,14 +47,14 @@ class ParseResults():
                 home_teams_queryset = Team.objects.filter(name__contains=match['home_team'])
                 if home_teams_queryset.count() > 0:
                     home_team = home_teams_queryset[0]
-                    games_queryset = Game.objects.filter(team__name=home_team.name).filter(match_day=match['match_day'])
+                    games_queryset = Game.objects.filter(team__name=home_team.name).filter(start_time=match['start_time'])
                     if games_queryset.count() > 0:
                         found_game = games_queryset[0]
-                        # Existing game found (based on home_team and match_day) so skip over
+                        # Existing game found (based on home_team and start_time) so skip over
                         logger.debug("Existing game found {} vs {} ({})".format(
                             found_game.home_team.name,
                             found_game.away_team.name,
-                            found_game.match_day
+                            found_game.start_time
                         ))
                         if found_game.finished:
                             continue
@@ -65,7 +65,6 @@ class ParseResults():
                 game = Game(
                     home_team=teams[match['home_team']],
                     away_team=teams[match['away_team']],
-                    match_day=match['match_day'],
                     start_time=match['start_time'],
                     competition=competition,
                 )
@@ -84,14 +83,14 @@ class ParseResults():
                     match['away_team'],
                     game.home_team_score,
                     game.away_team_score,
-                    game.match_day
+                    game.start_time,
                 ))
                 decision_maker.worth_watching(game)
             else:
                 logger.info("Creating upcoming game\t{0} | {1}\t ({2})".format(
                     match['home_team'],
                     match['away_team'],
-                    game.match_day
+                    game.start_times
                 ))
             game.save()
         competition.update_timestamp()

@@ -8,67 +8,47 @@ from footyhints.logger import logger
 
 class DataClient():
 
-    API_URL = "https://api.football-data.org"
+    API_URL = "https://v3.football.api-sports.io"
 
     def __init__(self):
-        logger.debug("Using api.football-data.org data client")
+        logger.debug("Using football.api-sports.io data client")
 
     def get_results(self):
         headers = {
-            'X-Auth-Token': config.api_key,
-            'X-Response-Control': 'minified'
+            'x-rapidapi-host': 'v3.football.api-sports.io',
+            'x-rapidapi-key': config.api_key,
         }
-        logger.debug("Querying for competitions")
-        competition_resp = requests.get('{0}/v2/competitions/'.format(self.API_URL), headers=headers)
-        if not competition_resp.ok:
-            raise Exception('{0}: {1}'.format(competition_resp.status_code, competition_resp.text))
-
-        response = json.loads(competition_resp.text)
-
-        if 'error' in response:
-            raise Exception(response['error'])
-
-        competition_id = ""
-        for competition in response['competitions']:
-            if not competition['name'] == config.fetch_league_name or not competition['area']['name'] == config.fetch_league_country:
-                continue
-            competition_id = competition['id']
-
-        logger.debug("Querying for matches for {}".format(competition_id))
-        matches_resp = requests.get('{0}/v2/competitions/{1}/matches'.format(self.API_URL, competition_id), headers=headers)
-        if not matches_resp.ok:
-            raise Exception('{0}: {1}'.format(matches_resp.status_code, matches_resp.text))
-
-        response = json.loads(matches_resp.text)
+        logger.debug("Querying for fixtures")
+        fixtures_resp = requests.get('{0}/fixtures?league=39&season=2020'.format(self.API_URL), headers=headers)
+        if not fixtures_resp.ok:
+            raise Exception('{0}: {1}'.format(fixtures_resp.status_code, fixtures_resp.text))
+        fixtures_data = json.loads(fixtures_resp.text)
+        if 'errors' in fixtures_data and fixtures_data['errors']:
+            raise Exception(fixtures_data['errors'])
 
         results = []
         unfinished_matches = []
-        for match in response['matches']:
-            if match['status'] == 'SCHEDULED':
-                unfinished_matches.append(match)
-                continue
-            elif not match['status'] == 'FINISHED':
+        for match in fixtures_data['response']:
+            if match['fixture']['status']['short'] != 'FT':
+                if match['fixture']['status']['short'] != 'PST':
+                    unfinished_matches.append(match)
                 continue
 
-            match_day = match['matchday']
             results.append({
-                "home_team": match['homeTeam']['name'],
-                "away_team": match['awayTeam']['name'],
-                "home_score": match['score']['fullTime']['homeTeam'],
-                "away_score": match['score']['fullTime']['awayTeam'],
-                "match_day": match_day,
-                "start_time": parse(match['utcDate']).timestamp(),
+                "home_team": match['teams']['home']['name'],
+                "away_team": match['teams']['away']['name'],
+                "home_score": match['goals']['home'],
+                "away_score": match['goals']['away'],
+                "start_time": parse(match['fixture']['date']).timestamp(),
                 "finished": True,
             })
 
         # Add next 10 games as upcoming
-        # sorted_matches = sorted
-        for match in sorted(unfinished_matches, key=lambda match: match['utcDate']):
+        for match in sorted(unfinished_matches, key=lambda match: match['fixture']['date']):
             results.append({
-                "home_team": match['homeTeam']['name'],
-                "away_team": match['awayTeam']['name'],
-                "match_day": match_day,
-                "start_time": parse(match['utcDate']).timestamp(),
+                "home_team": match['teams']['home']['name'],
+                "away_team": match['teams']['away']['name'],
+                "start_time": parse(match['fixture']['date']).timestamp(),
                 "finished": False,
             })
         return results
