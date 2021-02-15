@@ -90,7 +90,7 @@ class ParseResults():
                 logger.info("Creating upcoming game\t{0} | {1}\t ({2})".format(
                     match['home_team'],
                     match['away_team'],
-                    game.start_times
+                    game.start_time
                 ))
             game.save()
         competition.update_timestamp()
