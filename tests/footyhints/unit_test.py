@@ -18,7 +18,6 @@ class UnitTest(object):
             away_team=self.away_team,
             competition=self.competition,
             start_time=123456789,
-            match_day=1
         )
         self.game.save()
         self.home_team.games.add(self.game)

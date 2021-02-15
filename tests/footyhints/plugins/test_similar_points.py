@@ -10,8 +10,8 @@ class TestSimilarPoints(UnitTest):
         super().setup()
         self.similar_points = SimilarPoints()
 
-    def create_match_day(self, match_day, winner="Home"):
-        game = Game(home_team=self.home_team, away_team=self.away_team, match_day=match_day, start_time=1594445619)
+    def create_game(self, start_time, winner="Home"):
+        game = Game(home_team=self.home_team, away_team=self.away_team, start_time=start_time)
         game.save()
         if winner == "Home":
             game.set_score(1, 0)
@@ -33,8 +33,8 @@ class TestSimilarPoints(UnitTest):
 
     def test_middle_score(self):
         self.game.set_score(2, 2)
-        self.create_match_day(2)
-        game = self.create_match_day(3)
+        self.create_game(1594445619)
+        game = self.create_game(1594445620)
         similar_points = SimilarPoints()
         score, reason = similar_points.score(game)
         assert score == 75
@@ -45,10 +45,10 @@ class TestSimilarPoints(UnitTest):
         self.game.save()
         # self.session.add(self.game)
         # self.session.commit()
-        self.create_match_day(2)
-        self.create_match_day(3)
-        self.create_match_day(4)
-        game = self.create_match_day(5)
+        self.create_game(1594445619)
+        self.create_game(1594445620)
+        self.create_game(1594445621)
+        game = self.create_game(1594445622)
         similar_points = SimilarPoints()
         score, reason = similar_points.score(game)
         assert score == 50

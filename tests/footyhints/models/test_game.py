@@ -18,9 +18,6 @@ class TestGameModelInit(UnitTest):
     def test_competition(self):
         assert self.game.competition.name == 'English Premier League'
 
-    def test_match_day(self):
-        assert self.game.match_day == 1
-
     def test_start_time(self):
         assert self.game.start_time == 123456789
 
@@ -47,11 +44,11 @@ class TestGameModelInit(UnitTest):
 
     def test_init_bad_home(self):
         with raises(ValueError):
-            Game(home_team="garbageteam", away_team=self.away_team, match_day=1, start_time=1594445619, competition=self.competition)
+            Game(home_team="garbageteam", away_team=self.away_team, start_time=1594445619, competition=self.competition)
 
     def test_init_bad_away(self):
         with raises(ValueError):
-            Game(home_team=self.home_team, away_team="garbageteam", match_day=1, start_time=1594445619, competition=self.competition)
+            Game(home_team=self.home_team, away_team="garbageteam", start_time=1594445619, competition=self.competition)
 
 
 class TestGameSetScore(GameTest):
@@ -78,7 +75,7 @@ class TestGameEquals(GameTest):
         self.tmp_team1.save()
         self.tmp_team2 = Team(name='Team #2')
         self.tmp_team2.save()
-        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, match_day=1, start_time=123456789, competition=self.competition)
+        self.tmp_game = Game(home_team=self.tmp_team1, away_team=self.tmp_team2, start_time=123456789, competition=self.competition)
 
     def test_equal_games(self):
         self.game.save()

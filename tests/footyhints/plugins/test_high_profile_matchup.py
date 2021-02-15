@@ -9,7 +9,7 @@ class TestHighProfileMatchup(UnitTest):
     def create_tmp_game(self, home_team_name, away_team_name):
         home_team = Team(name=home_team_name)
         away_team = Team(name=away_team_name)
-        return Game(home_team=home_team, away_team=away_team, match_day=1)
+        return Game(home_team=home_team, away_team=away_team)
 
     def test_high_profile_matchup(self):
         game = self.create_tmp_game('Liverpool FC', 'Manchester United FC')

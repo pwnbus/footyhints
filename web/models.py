@@ -20,7 +20,6 @@ class Team(models.Model):
 
 
 class Game(models.Model):
-    match_day = models.IntegerField()
     start_time = models.IntegerField(null=False)
     finished = models.BooleanField(default=False)
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="home_team_games")
@@ -42,10 +41,10 @@ class Game(models.Model):
                     return attribute_value
 
     def __str__(self):
-        return "{0} vs {1} match_day={2} interest_score={3} interest_level={4}".format(
+        return "{0} vs {1} start_time={2} interest_score={3} interest_level={4}".format(
             self.home_team.name,
             self.away_team.name,
-            self.match_day,
+            self.start_time,
             self.interest_score,
             self.interest_level
         )
@@ -92,7 +91,7 @@ class Game(models.Model):
 
     def __eq__(self, other):
         if isinstance(other, Game):
-            return self.id == other.id and self.match_day == other.match_day and self.home_team.name == other.home_team.name and self.away_team.name == other.away_team.name
+            return self.id == other.id and self.start_time == other.start_time and self.home_team.name == other.home_team.name and self.away_team.name == other.away_team.name
         return False
 
 
