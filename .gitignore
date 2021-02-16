@@ -8,5 +8,4 @@
 coverage.xml
 htmlcov
 __pycache__/
-web/static/images/competitions
-web/static/images/teams
+web/static/images/dynamic
