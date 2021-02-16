@@ -2,6 +2,9 @@
 {% block title %}{{ team.name }}{% endblock %}
 
 {% block content %}
-<h3 class="table-name-header">{{ team.name }}</h3>
+<h3 class="table-name-header">
+    <img src="{{ team.logo }}" alt="" id="team-logo" height="50px" width="50px" />
+    {{ team.name }}
+</h3>
 {% include 'games_table.html' %}
 {% endblock %}

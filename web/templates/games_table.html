@@ -149,6 +149,8 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title">{{ game.home_team.name }} - {{ game.away_team.name }}</h4>
+                    <div class="game-info">{{ game.stadium }}, {{ game.city }}</div>
+                    <div class="game-info">Referee: {{ game.referee }}</div>
                     <div class="blur-content blurred-content blur-content{{ game.id }}"><h4 class="modal-title">{{ game.home_team_score }} - {{ game.away_team_score }}</h4></div>
                   </div>
                   <div class="modal-body">
@@ -157,7 +159,7 @@
                         Level: {% include 'severity_badge.html' %}
                       </div>
                       <div class="col-sm-6">
-                        Score: <div id="game-modal-score">{{ game.interest_score }}</div>
+                        Overall Score: <div id="game-modal-score">{{ game.interest_score }}</div>
                       </div>
                     </div>
                     <div><h5>Score Modifications</h5></div>

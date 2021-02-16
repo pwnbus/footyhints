@@ -49,3 +49,22 @@
 #footer {
   margin-top: 10px;
 }
+
+#competition-logo {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.team-logo {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.team-logo-navbar {
+  float:left;
+  margin-right: 20px;
+}
+
+.game-info {
+  font-size: 12px
+}

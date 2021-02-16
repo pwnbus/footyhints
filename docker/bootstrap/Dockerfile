@@ -1,4 +1,4 @@
-FROM footyhints/footyhints_base
+FROM footyhints/footyhints_base:latest
 
 COPY --chown=footyhints:footyhints bin/setup_db bin/setup_db
 

@@ -20,6 +20,7 @@ config = {
         'django===3.1.1',
         'django-extensions===3.0.9',
         'dj-database-url===0.5.0',
+        'pillow',
     ],
     'packages': ['web', 'footyhints'],
     'scripts': [],

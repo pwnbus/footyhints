@@ -14,6 +14,8 @@ services:
     env_file: footyhints.env
   bootstrap:
     image: footyhints/footyhints_bootstrap:latest
+    volumes:
+      - web_static:/opt/footyhints/envs/footyhints/web/static
     networks:
       - default
     restart: on-failure
