@@ -1,4 +1,4 @@
-FROM footyhints/footyhints_base
+FROM footyhints/footyhints_base:latest
 
 USER root
 

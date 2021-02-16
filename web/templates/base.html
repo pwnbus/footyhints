@@ -46,7 +46,7 @@
             <div class="list-group">
               {% for team in teams %}
                   <a href="/team/{{ team.id }}" class="list-group-item list-group-item-action {% if request.resolver_match.kwargs.team_id == team.id %}active{% endif %}">{{ team.name }}
-                    <img src="{{ team.logo }}" alt="" style="width:25px;height:25px; float:left; margin-right:20px" />
+                    <img src="{{ team.logo }}" alt="" class="team-logo-navbar" width="25px" height="25px" />
                   </a>
               {% endfor %}
             </div>

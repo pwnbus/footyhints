@@ -3,8 +3,7 @@
 
 {% block content %}
 <h3 class="table-name-header">
-    <img src="{{ competition.logo }}" alt="" style="width:50px;height:50px; margin-right: 10px; margin-bottom:10px;"/>
-    {{ competition.name }}
+    <img src="{{ competition.logo }}" alt="" id="competition-logo" width="50px" height="50px" />{{ competition.name }}
 </h3>
 
 {% include 'games_table.html' %}

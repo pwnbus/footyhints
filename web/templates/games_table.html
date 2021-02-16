@@ -149,8 +149,8 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title">{{ game.home_team.name }} - {{ game.away_team.name }}</h4>
-                    <div style="font-size: 12px;">{{ game.stadium }}, {{ game.city }}</div>
-                    <div style="font-size: 12px;">Referee: {{ game.referee }}</div>
+                    <div class="game-info">{{ game.stadium }}, {{ game.city }}</div>
+                    <div class="game-info">Referee: {{ game.referee }}</div>
                     <div class="blur-content blurred-content blur-content{{ game.id }}"><h4 class="modal-title">{{ game.home_team_score }} - {{ game.away_team_score }}</h4></div>
                   </div>
                   <div class="modal-body">
