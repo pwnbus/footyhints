@@ -40,6 +40,7 @@ class Game(models.Model):
     score_modifications = models.ManyToManyField('ScoreModification')
     stadium = models.TextField(null=True)
     city = models.TextField(null=True)
+    referee = models.TextField(null=True)
 
     @property
     def sorted_score_modifications(self):

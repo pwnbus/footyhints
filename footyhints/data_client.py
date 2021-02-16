@@ -60,6 +60,7 @@ class DataClient():
                     "start_time": parse(match['fixture']['date']).timestamp(),
                     "stadium": match['fixture']['venue']['name'],
                     "city": match['fixture']['venue']['city'],
+                    "referee": match['fixture']['referee'],
                 }
                 if match['fixture']['status']['short'] == 'FT':
                     game_result['home_score'] = match['goals']['home']

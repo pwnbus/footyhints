@@ -25,7 +25,7 @@ class ParseResults():
             team_data = teams_data[sorted_name]
             logger.debug("Creating team: {}".format(sorted_name))
             team = Team(name=sorted_name)
-
+            logger.debug("Downloading team logo from {0}".format(team_data['logo_url']))
             resp = requests.get(team_data['logo_url'])
             if resp.ok:
                 fp = BytesIO()
@@ -46,6 +46,7 @@ class ParseResults():
                 competition = competition_queryset[0]
                 logger.debug("Found existing competition: {}".format(competition.name))
         else:
+            logger.debug("Downloading competition logo from {0}".format(logo_url))
             resp = requests.get(logo_url)
             if resp.ok:
                 fp = BytesIO()
@@ -85,6 +86,7 @@ class ParseResults():
                 competition=competition,
                 stadium=game_data['stadium'],
                 city=game_data['city'],
+                referee=game_data['referee'],
             )
             game.save()
             home_team.games.add(game)
