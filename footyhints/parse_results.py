@@ -25,15 +25,16 @@ class ParseResults():
             team_data = teams_data[sorted_name]
             logger.debug("Creating team: {}".format(sorted_name))
             team = Team(name=sorted_name)
-            logger.debug("Downloading team logo from {0}".format(team_data['logo_url']))
-            resp = requests.get(team_data['logo_url'])
-            if resp.ok:
-                fp = BytesIO()
-                fp.write(resp.content)
-                file_name = team_data['logo_url'].split("/")[-1]
-                team.logo_image.save(file_name, files.File(fp))
-            else:
-                logger.error("Received {0} when downloading team image".format(resp.text))
+            if team_data['logo_url']:
+                logger.debug("Downloading team logo from {0}".format(team_data['logo_url']))
+                resp = requests.get(team_data['logo_url'])
+                if resp.ok:
+                    fp = BytesIO()
+                    fp.write(resp.content)
+                    file_name = team_data['logo_url'].split("/")[-1]
+                    team.logo_image.save(file_name, files.File(fp))
+                else:
+                    logger.error("Received {0} when downloading team image".format(resp.text))
             teams[sorted_name] = team
             team.save()
         return teams
@@ -46,15 +47,16 @@ class ParseResults():
                 competition = competition_queryset[0]
                 logger.debug("Found existing competition: {}".format(competition.name))
         else:
-            logger.debug("Downloading competition logo from {0}".format(logo_url))
-            resp = requests.get(logo_url)
-            if resp.ok:
-                fp = BytesIO()
-                fp.write(resp.content)
-                file_name = logo_url.split("/")[-1]
-                competition.logo_image.save(file_name, files.File(fp))
-            else:
-                logger.error("Received {0} when downloading competition image".format(resp.text))
+            if logo_url:
+                logger.debug("Downloading competition logo from {0}".format(logo_url))
+                resp = requests.get(logo_url)
+                if resp.ok:
+                    fp = BytesIO()
+                    fp.write(resp.content)
+                    file_name = logo_url.split("/")[-1]
+                    competition.logo_image.save(file_name, files.File(fp))
+                else:
+                    logger.error("Received {0} when downloading competition image".format(resp.text))
         competition.save()
         return competition
 
