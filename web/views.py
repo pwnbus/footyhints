@@ -11,7 +11,7 @@ def load_defaults():
         version = os.environ['FOOTYHINTS_VERSION']
     return {
         "teams": teams,
-        "league": competition.name,
+        "competition": competition,
         "version": version,
         "last_updated": competition.last_updated,
     }

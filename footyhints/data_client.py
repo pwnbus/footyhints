@@ -26,29 +26,55 @@ class DataClient():
         if 'errors' in fixtures_data and fixtures_data['errors']:
             raise Exception(fixtures_data['errors'])
 
-        results = []
-        unfinished_matches = []
+        all_competitions = {}
         for match in fixtures_data['response']:
-            if match['fixture']['status']['short'] != 'FT':
-                if match['fixture']['status']['short'] != 'PST':
-                    unfinished_matches.append(match)
-                continue
+            if match['league']['name'] not in all_competitions:
+                all_competitions[match['league']['name']] = {
+                    "logo_url": match['league']['logo']
+                }
 
-            results.append({
-                "home_team": match['teams']['home']['name'],
-                "away_team": match['teams']['away']['name'],
-                "home_score": match['goals']['home'],
-                "away_score": match['goals']['away'],
-                "start_time": parse(match['fixture']['date']).timestamp(),
-                "finished": True,
-            })
+        results = {
+            "competitions": {}
+        }
+        for competition_name, competition_data in all_competitions.items():
+            teams = {}
+            finished_games = []
+            upcoming_games = []
+            for match in fixtures_data['response']:
+                if match['league']['name'] != competition_name:
+                    continue
+                home_team_name = match['teams']['home']['name']
+                if home_team_name not in teams:
+                    teams[home_team_name] = {
+                        "logo_url": match['teams']['home']['logo']
+                    }
+                away_team_name = match['teams']['away']['name']
+                if away_team_name not in teams:
+                    teams[away_team_name] = {
+                        "logo_url": match['teams']['away']['logo']
+                    }
 
-        # Add next 10 games as upcoming
-        for match in sorted(unfinished_matches, key=lambda match: match['fixture']['date']):
-            results.append({
-                "home_team": match['teams']['home']['name'],
-                "away_team": match['teams']['away']['name'],
-                "start_time": parse(match['fixture']['date']).timestamp(),
-                "finished": False,
-            })
+                game_result = {
+                    "home_team": match['teams']['home']['name'],
+                    "away_team": match['teams']['away']['name'],
+                    "start_time": parse(match['fixture']['date']).timestamp(),
+                    "stadium": match['fixture']['venue']['name'],
+                    "city": match['fixture']['venue']['city'],
+                }
+                if match['fixture']['status']['short'] == 'FT':
+                    game_result['home_score'] = match['goals']['home']
+                    game_result['away_score'] = match['goals']['away']
+                    finished_games.append(game_result)
+                elif match['fixture']['status']['short'] == 'PST':
+                    continue
+                else:
+                    upcoming_games.append(game_result)
+            if competition_name not in results['competitions']:
+                results['competitions'][competition_name] = {}
+            results['competitions'][competition_name] = {
+                "logo_url": competition_data['logo_url'],
+                "teams": teams,
+                "finished_games": finished_games,
+                "upcoming_games": upcoming_games,
+            }
         return results

@@ -8,6 +8,11 @@ class Competition(models.Model):
     last_updated = models.IntegerField(null=True)
     games = models.ManyToManyField('Game')
     teams = models.ManyToManyField('Team')
+    logo_image = models.ImageField('img', upload_to='web/static/images/competitions', null=True)
+
+    @property
+    def logo(self):
+        return "/" + self.logo_image.name.replace("web/", "")
 
     def update_timestamp(self):
         self.last_updated = int(time())
@@ -17,6 +22,11 @@ class Team(models.Model):
     name = models.TextField(null=False)
     points = models.IntegerField(default=0)
     games = models.ManyToManyField('Game')
+    logo_image = models.ImageField('img', upload_to='web/static/images/teams', null=True)
+
+    @property
+    def logo(self):
+        return "/" + self.logo_image.name.replace("web/", "")
 
 
 class Game(models.Model):
@@ -25,9 +35,11 @@ class Game(models.Model):
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="home_team_games")
     away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="away_team_games")
     interest_score = models.FloatField(null=True)
-    interest_level = models.CharField(max_length=30, null=True)
+    interest_level = models.TextField(null=True)
     attributes = models.ManyToManyField('Attribute')
     score_modifications = models.ManyToManyField('ScoreModification')
+    stadium = models.TextField(null=True)
+    city = models.TextField(null=True)
 
     @property
     def sorted_score_modifications(self):
