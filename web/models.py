@@ -8,7 +8,7 @@ class Competition(models.Model):
     last_updated = models.IntegerField(null=True)
     games = models.ManyToManyField('Game')
     teams = models.ManyToManyField('Team')
-    logo_image = models.ImageField('img', upload_to='web/static/images/dynamic/competitions', null=True)
+    logo_image = models.ImageField('img', upload_to='web/static/images/dynamic/competitions', default='web/static/images/default_competition_logo.png')
 
     @property
     def logo(self):
@@ -22,7 +22,7 @@ class Team(models.Model):
     name = models.TextField(null=False)
     points = models.IntegerField(default=0)
     games = models.ManyToManyField('Game')
-    logo_image = models.ImageField('img', upload_to='web/static/images/dynamic/teams', null=True)
+    logo_image = models.ImageField('img', upload_to='web/static/images/dynamic/teams', default='web/static/images/default_team_logo.png')
 
     @property
     def logo(self):
