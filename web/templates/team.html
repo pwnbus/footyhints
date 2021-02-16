@@ -3,8 +3,7 @@
 
 {% block content %}
 <h3 class="table-name-header">
-    <img src="{{ team.logo }}" alt="" id="team-logo" height="50px" width="50px" />
-    {{ team.name }}
+    <img src="{{ team.logo }}" alt="" id="team-logo" width="50px" height="50px" />{{ team.name }}
 </h3>
 {% include 'games_table.html' %}
 {% endblock %}
