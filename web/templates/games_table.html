@@ -148,7 +148,9 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">{{ game.home_team.name }} - {{ game.away_team.name }}</h4>
+                    <h4 class="modal-title">
+                      <img src="{{ game.home_team.logo }}" alt="" id="team-logo-game-left" width="30px" height="30px" />{{ game.home_team.name }} - {{ game.away_team.name }}<img src="{{ game.away_team.logo }}" alt="" id="team-logo-game-right" width="30px" height="30px" />
+                    </h4>
                     <div class="game-info">{{ game.stadium }}, {{ game.city }}</div>
                     <div class="game-info">Referee: {{ game.referee }}</div>
                     <div class="blur-content blurred-content blur-content{{ game.id }}"><h4 class="modal-title">{{ game.home_team_score }} - {{ game.away_team_score }}</h4></div>
@@ -162,12 +164,12 @@
                         Overall Score: <div id="game-modal-score">{{ game.interest_score }}</div>
                       </div>
                     </div>
-                    <div><h5>Score Modifications</h5></div>
+                    <div><h5>Reasons</h5></div>
                     <table class="table table-striped table-bordered table-compact" id="game-score-modifications-table">
                       <thead>
                         <th>Points</th>
                         <th>Priority</th>
-                        <th>Reason</th>
+                        <th>Description</th>
                       </thead>
                       <tbody>
                         {% for score_modification in game.sorted_score_modifications %}
