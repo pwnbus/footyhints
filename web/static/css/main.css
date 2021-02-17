@@ -27,11 +27,6 @@
 
 #game-score-modifications-table {
   clear: both;
-  margin-top: 20px;
-}
-
-#game-summary {
-  margin-bottom: 20px;
 }
 
 #blur-toggle-button {
@@ -75,4 +70,28 @@
 
 .game-info {
   font-size: 12px
+}
+
+#game-info {
+  padding-bottom: 0px;
+}
+
+#game-modal-left {
+  float: left;
+  padding: 10px;
+  width: 25%;
+  text-align: right;
+}
+
+#game-modal-middle {
+  float: left;
+  padding: 10px;
+  width: 50%;
+}
+
+#game-modal-right {
+  float: right;
+  padding: 10px;
+  width: 25%;
+  text-align: left;
 }
