@@ -2,14 +2,7 @@
   function blur_button_click(game_id) {
     var blur_elements = document.getElementsByClassName("blur-content" + game_id);
     var i;
-    for (i = 0; i < blur_elements.length; i++) {
-      ele = blur_elements[i]
-      if (ele.classList.contains("blurred-content")){
-          ele.classList.remove("blurred-content");
-      } else {
-        ele.classList.add("blurred-content");
-      }
-    }
+    var j;
     var blur_buttons = document.getElementsByClassName("blur-button" + game_id);
     for (i = 0; i < blur_buttons.length; i++) {
       ele = blur_buttons[i];
@@ -17,29 +10,49 @@
         ele.innerHTML = "Reveal";
         ele.classList.remove("blur");
         ele.classList.add("reveal");
+        for (j = 0; j < blur_elements.length; j++) {
+          blur_element = blur_elements[j]
+          if (!blur_element.classList.contains("blurred-content")){
+              blur_element.classList.add("blurred-content");
+          }
+        }
       }
       else {
         ele.innerHTML = "Blur"
         ele.classList.remove("reveal");
         ele.classList.add("blur");
+        for (j = 0; j < blur_elements.length; j++) {
+          blur_element = blur_elements[j]
+          if (blur_element.classList.contains("blurred-content")){
+              blur_element.classList.remove("blurred-content");
+          }
+        }
       }
     }
   }
 
   window.onload = function(){
-    $('#last_updated_timestamp').each(function(){
+    $('.last_updated_timestamp').each(function(){
       var start_time = new Date($(this).html()*1000);
       var locale = document.querySelector('html').getAttribute('lang')
       var options = {
         weekday: "short",
         month: "2-digit",
         day: "numeric",
+        year: "numeric",
       };
       $(this).html(start_time.toLocaleDateString(locale, options) + " " + start_time.toLocaleTimeString())
     })
   };
 
   $(document).ready( function () {
+    $('.blurred-content').click(function() {
+      if (this.classList.contains("blurred-content")){
+          this.classList.remove("blurred-content");
+      } else {
+        this.classList.add("blurred-content");
+      }
+    })
     $('#game-list-new').DataTable({
       "order": [[2, 'desc']],
       "autoWidth": false,

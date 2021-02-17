@@ -13,6 +13,7 @@
             <div class="blur-content blurred-content blur-content{{ game.id }}"><h2>{{ game.home_team_score }}</h2></div>
           </div>
           <div id="game-modal-middle">
+            <div class="game-info last_updated_timestamp">{{ game.start_time }}</div>
             <div class="game-info">{{ game.stadium }}, {{ game.city }}</div>
             <div class="game-info">Referee: {{ game.referee }}</div>
             <div class="row">
