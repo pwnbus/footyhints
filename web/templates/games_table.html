@@ -41,6 +41,13 @@
   };
 
   $(document).ready( function () {
+    $('.blurred-content').click(function() {
+      if (this.classList.contains("blurred-content")){
+          this.classList.remove("blurred-content");
+      } else {
+        this.classList.add("blurred-content");
+      }
+    })
     $('#game-list-new').DataTable({
       "order": [[2, 'desc']],
       "autoWidth": false,
