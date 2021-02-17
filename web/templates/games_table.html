@@ -27,13 +27,14 @@
   }
 
   window.onload = function(){
-    $('#last_updated_timestamp').each(function(){
+    $('.last_updated_timestamp').each(function(){
       var start_time = new Date($(this).html()*1000);
       var locale = document.querySelector('html').getAttribute('lang')
       var options = {
         weekday: "short",
         month: "2-digit",
         day: "numeric",
+        year: "numeric",
       };
       $(this).html(start_time.toLocaleDateString(locale, options) + " " + start_time.toLocaleTimeString())
     })
