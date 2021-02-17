@@ -1,4 +1,4 @@
 SHELL=/usr/bin/bash
 BASH_ENV=/env
 
-*/30 * * * * source /opt/footyhints/envs/python/bin/activate && /opt/footyhints/envs/footyhints/bin/setup_db --update
+*/30 11-23 * * * source /opt/footyhints/envs/python/bin/activate && /opt/footyhints/envs/footyhints/bin/setup_db --update
