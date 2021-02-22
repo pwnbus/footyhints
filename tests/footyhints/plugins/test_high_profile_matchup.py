@@ -12,21 +12,21 @@ class TestHighProfileMatchup(UnitTest):
         return Game(home_team=home_team, away_team=away_team)
 
     def test_high_profile_matchup(self):
-        game = self.create_tmp_game('Liverpool FC', 'Manchester United FC')
+        game = self.create_tmp_game('Liverpool', 'Manchester United')
         matchup = HighProfileMatchup()
         score, reason = matchup.score(game)
         assert score == 100
         assert reason == 'Big matchup'
 
     def test_reverse_high_profile_matchup(self):
-        game = self.create_tmp_game('Manchester United FC', 'Liverpool FC')
+        game = self.create_tmp_game('Manchester United', 'Liverpool')
         matchup = HighProfileMatchup()
         score, reason = matchup.score(game)
         assert score == 100
         assert reason == 'Big matchup'
 
     def test_other_matchup(self):
-        game = self.create_tmp_game('Chelsea FC', 'Everton FC')
+        game = self.create_tmp_game('Chelsea', 'Everton')
         matchup = HighProfileMatchup()
         score, reason = matchup.score(game)
         assert score == 0

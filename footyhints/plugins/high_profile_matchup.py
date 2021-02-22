@@ -2,12 +2,12 @@ from footyhints.plugin import Plugin
 
 
 HIGH_PROFILE_TEAMS = [
-    "Arsenal FC",
-    "Chelsea FC",
-    "Liverpool FC",
-    "Manchester United FC",
-    "Manchester City FC",
-    "Tottenham Hotspur FC",
+    "Arsenal",
+    "Chelsea",
+    "Liverpool",
+    "Manchester United",
+    "Manchester City",
+    "Tottenham",
 ]
 
 

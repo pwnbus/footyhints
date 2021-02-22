@@ -7,18 +7,20 @@ class TotalScore(Plugin):
     def score(self, game):
         total_goals = game.home_team_score + game.away_team_score
         if total_goals == 0:
-            return -50, "Goals (0)"
+            points = -50
         elif total_goals == 1:
-            return -25, "Goals (1)"
+            points = -25
         elif total_goals == 2:
-            return 25, "Goals ({})".format(total_goals)
+            points = 25
         elif total_goals == 3:
-            return 50, "Goals ({})".format(total_goals)
+            points = 50
         elif total_goals == 4:
-            return 75, "Goals ({})".format(total_goals)
+            points = 75
         elif total_goals == 5:
-            return 90, "Goals ({})".format(total_goals)
+            points = 90
         elif total_goals == 6:
-            return 95, "Goals ({})".format(total_goals)
+            points = 95
         else:
-            return 125, "Goals ({})".format(total_goals)
+            points = 125
+
+        return points, "Goals ({})".format(total_goals)

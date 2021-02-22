@@ -2,10 +2,10 @@ from footyhints.plugin import Plugin
 
 
 MATCHUPS = [
-    ["Arsenal", "Tottenham Hotspur"],
+    ["Arsenal", "Tottenham"],
     ["Arsenal", "Chelsea"],
-    ["Chelsea", "Tottenham Hotspur"],
-    ["Chelsea", "West Ham United"],
+    ["Chelsea", "Tottenham"],
+    ["Chelsea", "West Ham"],
     ["Liverpool", "Everton"],
     ["Liverpool", "Manchester United"],
     ["Manchester City", "Manchester United"],
