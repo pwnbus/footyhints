@@ -66,7 +66,7 @@ WSGI_APPLICATION = 'footyhints.wsgi.application'
 
 database_options = dj_database_url.parse(config.db_uri)
 database_options['TEST'] = {
-    'NAME': 'footyhints'
+    'NAME': 'test_footyhints'
 }
 
 DATABASES = {

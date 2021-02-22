@@ -2,5 +2,5 @@ flake8
 coverage
 pytest-cov
 pytest
-pytest-django==3.10.0
+pytest-django
 codeclimate-test-reporter==0.2.1
