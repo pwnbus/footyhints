@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}{{ competition.name }} Table{% endblock %}
+
+{% block content %}
+<h3 class="table-name-header">
+    <img src="{{ competition.logo }}" alt="" id="competition-logo" width="50px" height="50px" />{{ competition.name }}
+</h3>
+
+<script>
+  $(document).ready( function () {
+    $('#points-table').DataTable({
+      "order": [[0, 'asc']],
+      "autoWidth": false,
+      "bFilter": false,
+      "bInfo": false,
+      "bLengthChange": false,
+      "bPaginate": false,
+      "columnDefs": [
+        { targets: "noSort", orderable: false },
+
+        {
+          "targets": [1,2,3,4,5,6,7,8,9],
+          "bSortable": false,
+        },
+        {
+          // "bVisible": false,
+          "aTargets": [0],
+          "bSortable": false,
+        }
+      ],
+      rowCallback: function (row, data, displayNum) {
+        if (displayNum <= 3){
+          $(row).addClass('champions-league-row');
+        }
+        else if (displayNum == 4){
+          $(row).addClass('europa-league-row');
+        }
+        else if (displayNum >= 17){
+          $(row).addClass('relegation-row');
+        }
+      }
+    });
+  });
+</script>
+<!-- <table id="points-table" class="table table-bordered table-compact row-border"> -->
+<table id="points-table" class="table table-hover">
+  <thead id="points-table-header"/>
+    <tr>
+      <th title="Place">#</th>
+      <th title="Name">Name</th>
+      <th title="# of games played">Played</th>
+      <th title="# of Wins">W</th>
+      <th title="# of Draws">D</th>
+      <th title="# of Loses">L</th>
+      <th title="Goals For">GF</th>
+      <th title="Goals Against">GA</th>
+      <th title="Goal Difference">GD</th>
+      <th title="Points">Points</th>
+    </tr>
+  <thead/>
+  <tbody>
+    {% for team in table_data %}
+    <tr>
+      <td>{{ team.place }}</td>
+      <td><img src="{{ team.logo }}" alt="" id="team-logo" width="15px" height="15px" />{{ team.name }}</td>
+      <td>{{ team.played }}</td>
+      <td>{{ team.wins }}</td>
+      <td>{{ team.draws }}</td>
+      <td>{{ team.loses }}</td>
+      <td>{{ team.goals_for }}</td>
+      <td>{{ team.goals_against }}</td>
+      <td>{{ team.goal_difference }}</td>
+      <td>{{ team.points }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

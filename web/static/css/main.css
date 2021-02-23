@@ -95,3 +95,18 @@
   width: 25%;
   text-align: left;
 }
+
+#nav-competition-table {
+  float: right;
+}
+.champions-league-row {
+  background-color: #C8F5B5;
+}
+
+.europa-league-row {
+  background-color: #B5D2F5;
+}
+
+.relegation-row {
+  background-color: #F5B5B5;
+}

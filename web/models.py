@@ -28,6 +28,18 @@ class Team(models.Model):
     def logo(self):
         return "/" + self.logo_image.name.replace("web/", "")
 
+    @property
+    def place(self):
+        sorted_teams = sorted(Team.objects.all(), key=lambda team: team.points, reverse=True)
+        place = 0
+        previous_place = 1
+        for team in sorted_teams:
+            if not self.points == team.points:
+                previous_place += 1
+            if self.id == team.id:
+                place = previous_place
+        return place
+
 
 class Game(models.Model):
     start_time = models.IntegerField(null=False)
