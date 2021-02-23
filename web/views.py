@@ -40,46 +40,21 @@ def table(request):
     context = load_defaults()
     table_data = []
     for team in context['teams']:
-        num_played = 0
-        num_wins = 0
-        num_draws = 0
-        num_loses = 0
-        num_goals_for = 0
-        num_goals_against = 0
-        for game in team.games.filter(finished=True):
-            num_played += 1
-            if game.home_team == team:
-                num_goals_for += game.home_team_score
-                num_goals_against += game.away_team_score
-                if game.home_team_score > game.away_team_score:
-                    num_wins += 1
-                elif game.home_team_score == game.away_team_score:
-                    num_draws += 1
-                else:
-                    num_loses += 1
-            elif game.away_team == team:
-                num_goals_against += game.home_team_score
-                num_goals_for += game.away_team_score
-                if game.away_team_score > game.home_team_score:
-                    num_wins += 1
-                elif game.away_team_score == game.home_team_score:
-                    num_draws += 1
-                else:
-                    num_loses += 1
-
+        games_info = team.games_info
+        goals_info = team.goals_info
         table_data.append(
             {
                 "name": team.name,
                 "logo": team.logo,
                 "place": team.place,
                 "points": team.points,
-                "played": num_played,
-                "wins": num_wins,
-                "draws": num_draws,
-                "loses": num_loses,
-                "goals_for": num_goals_for,
-                "goals_against": num_goals_against,
-                "goal_difference": num_goals_for - num_goals_against,
+                "played": games_info['played'],
+                "wins": games_info['wins'],
+                "draws": games_info['draws'],
+                "loses": games_info['loses'],
+                "goals_for": goals_info['goals_for'],
+                "goals_against": goals_info['goals_against'],
+                "goal_difference": goals_info['goal_difference'],
             }
         )
     context['table_data'] = table_data
