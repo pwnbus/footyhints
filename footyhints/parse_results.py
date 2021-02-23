@@ -134,5 +134,10 @@ class ParseResults():
             for upcoming_game_data in competition_data['upcoming_games']:
                 self.parse_game(competition, teams, upcoming_game_data)
 
+            # Assign place to each team based on current results
+            for index, team in enumerate(sorted(teams.values(), reverse=True)):
+                team.place = index + 1
+                team.save()
+
             competition.update_timestamp()
             competition.save()
