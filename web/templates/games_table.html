@@ -161,7 +161,7 @@
           <td align="center" class="start_time" width="20%">{{ game.start_time }}</td>
           <td align="center" width="20%">
             {% include 'game_modal.html' %}
-            {% include 'severity_badge.html' %}
+            {% include "severity_badge.html" with linkable="true" %}
           </td>
           <td>{{ game.date_from_start_time }}</td>
         </tr>

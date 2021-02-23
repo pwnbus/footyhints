@@ -1,7 +1,18 @@
+{% load set_var %}
+
 {% if game.interest_level == "High" %}
-  <a href="#gameModal{{ game.id }}" class="label label-success" data-toggle="modal">High</a>
+  {% set severity_text = 'High' %}
+  {% set severity_label = 'success' %}
 {% elif game.interest_level == "Medium" %}
-  <a href="#gameModal{{ game.id }}" class="label label-warning" data-toggle="modal">Medium</a>
+  {% set severity_text = 'Medium' %}
+  {% set severity_label = 'warning' %}
 {% elif game.interest_level == "Low" %}
-  <a href="#gameModal{{ game.id }}" class="label label-danger" data-toggle="modal">Low</a>
+  {% set severity_text = 'Low' %}
+  {% set severity_label = 'danger' %}
+{% endif %}
+
+{% if linkable == 'true' %}
+  <a href="#gameModal{{ game.id }}" class="label label-{{ severity_label }}" data-toggle="modal">{{ severity_text }} <span class="glyphicon glyphicon-info-sign"></span></a>
+{% else %}
+  <span class="label label-{{ severity_label }}">{{ severity_text}}</span>
 {% endif %}

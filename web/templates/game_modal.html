@@ -6,7 +6,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h3 class="modal-title">
-          <img src="{{ game.home_team.logo }}" alt="" id="team-logo-game-left" width="30px" height="30px" />{{ game.home_team.name }} - {{ game.away_team.name }}<img src="{{ game.away_team.logo }}" alt="" id="team-logo-game-right" width="30px" height="30px" />
+          <img src="{{ game.home_team.logo }}" alt="" id="team-logo-game-left" width="50px" height="50px" />{{ game.home_team.name }} - {{ game.away_team.name }}<img src="{{ game.away_team.logo }}" alt="" id="team-logo-game-right" width="50px" height="50px" />
         </h3>
         <div class="row">
           <div id="game-modal-left">
@@ -18,7 +18,7 @@
             <div class="game-info">Referee: {{ game.referee }}</div>
             <div class="row">
               <div>
-                  <h4>{% include 'severity_badge.html' %}</h4>
+                  <h4>{% include "severity_badge.html" with linkable="false" %}</h4>
               </div>
               <div>
                 ({{ game.interest_score }} / 100)
