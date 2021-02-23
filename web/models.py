@@ -30,23 +30,55 @@ class Team(models.Model):
         return "/" + self.logo_image.name.replace("web/", "")
 
     @property
-    def goal_difference(self):
+    def goals_info(self):
         num_goals_for = 0
         num_goals_against = 0
         for game in self.games.filter(finished=True):
-            # num_played += 1
             if game.home_team == self:
                 num_goals_for += game.home_team_score
                 num_goals_against += game.away_team_score
             elif game.away_team == self:
                 num_goals_against += game.home_team_score
                 num_goals_for += game.away_team_score
-        return num_goals_for - num_goals_against
+        return {
+            "goals_for": num_goals_for,
+            "goals_against": num_goals_against,
+            "goal_difference": num_goals_for - num_goals_against
+        }
+
+    @property
+    def games_info(self):
+        num_played = 0
+        num_wins = 0
+        num_draws = 0
+        num_loses = 0
+        for game in self.games.filter(finished=True):
+            num_played += 1
+            if game.home_team == self:
+                if game.home_team_score > game.away_team_score:
+                    num_wins += 1
+                elif game.home_team_score == game.away_team_score:
+                    num_draws += 1
+                else:
+                    num_loses += 1
+            elif game.away_team == self:
+                if game.away_team_score > game.home_team_score:
+                    num_wins += 1
+                elif game.away_team_score == game.home_team_score:
+                    num_draws += 1
+                else:
+                    num_loses += 1
+        return {
+            "played": num_played,
+            "wins": num_wins,
+            "draws": num_draws,
+            "loses": num_loses,
+        }
 
     def __lt__(self, other):
         if self.points == other.points:
             # Go to goal difference as tie breaker
-            return self.goal_difference < other.goal_difference
+            return self.goals_info['goal_difference'] < other.goals_info['goal_difference']
         else:
             return self.points < other.points
 
