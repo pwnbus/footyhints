@@ -26,18 +26,20 @@ class SimilarPoints(Plugin):
         away_points = points_at_time(game.away_team, game.start_time)
         difference = abs(home_points - away_points)
         if difference == 0:
-            return 100, "Proximity in points (0)"
+            points = 100
         elif difference <= 6:
-            return 75, "Proximity in points ({})".format(difference)
+            points = 75
         elif difference <= 12:
-            return 50, "Proximity in points ({})".format(difference)
+            points = 50
         elif difference <= 18:
-            return 25, "Proximity in points ({})".format(difference)
+            points = 25
         elif difference <= 24:
-            return 0, "Proximity in points ({})".format(difference)
+            points = 0
         elif difference <= 30:
-            return -25, "Proximity in points ({})".format(difference)
+            points = -25
         elif difference <= 36:
-            return -50, "Proximity in points ({})".format(difference)
+            points = -50
         else:
-            return -10, "Proximity in points ({})".format(difference)
+            points = -10
+
+        return points, "Proximity in points ({})".format(difference)
