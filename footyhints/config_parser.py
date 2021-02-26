@@ -18,8 +18,13 @@ class ConfigParser(object):
             except KeyError as exception:
                 raise exception
 
+        self.cache_enabled = self.parse_key('cache_enabled', bool)
+        if self.cache_enabled:
+            self.cache_uri = self.parse_key('cache_uri')
+        self.cache_expiration = self.parse_key('cache_expiration', int, 900)
+
         try:
-            self.google_analytics_key = self.parse_key('google_analytics_key')
+            self.google_analytics_key = self.parse_key('google_analytics_key', default='None')
         except KeyError:
             self.google_analytics_key = None
 
@@ -32,13 +37,15 @@ class ConfigParser(object):
     def convert_key(self, value, objtype):
         if objtype == str:
             return str(value)
+        elif objtype == int:
+            return int(value)
         elif objtype == bool:
             if type(value) == bool:
                 return value
             else:
                 return bool(value == 'True')
 
-    def parse_key(self, keyname, objtype=str):
+    def parse_key(self, keyname, objtype=str, default=None):
         environment_key = "FOOTYHINTS_{}".format(keyname.upper())
         if environment_key in os.environ:
             return self.convert_key(os.environ[environment_key], objtype)
@@ -47,4 +54,11 @@ class ConfigParser(object):
                 raise KeyError('Unable to find {0} in environment variable or config file at {1}'.format(environment_key, self.config_location))
             with open(self.config_location, 'r') as yaml_stream:
                 self.parser = yaml.safe_load(yaml_stream)
-            return self.convert_key(self.parser[keyname.lower()], objtype)
+            try:
+                result = self.convert_key(self.parser[keyname.lower()], objtype)
+                return result
+            except KeyError as exception:
+                if default is not None:
+                    return default
+                else:
+                    raise exception
