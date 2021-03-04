@@ -22,63 +22,51 @@ class Team(models.Model):
     name = models.TextField(null=False)
     points = models.IntegerField(default=0)
     place = models.IntegerField(default=0)
+    played = models.IntegerField(default=0)
+    wins = models.IntegerField(default=0)
+    draws = models.IntegerField(default=0)
+    loses = models.IntegerField(default=0)
+    goals_for = models.IntegerField(default=0)
+    goals_against = models.IntegerField(default=0)
+    goal_difference = models.IntegerField(default=0)
     games = models.ManyToManyField('Game')
     logo_image = models.ImageField('img', upload_to='web/static/images/dynamic/teams', default='web/static/images/default_team_logo.png')
+
+    def generate_stats(self, game):
+        if game.home_team == self:
+            self.goals_for += game.home_team_score
+            self.goals_against += game.away_team_score
+            if game.home_team_score > game.away_team_score:
+                self.wins += 1
+                self.points += 3
+            elif game.home_team_score == game.away_team_score:
+                self.points += 1
+                self.draws += 1
+            else:
+                self.loses += 1
+        elif game.away_team == self:
+            self.goals_against += game.home_team_score
+            self.goals_for += game.away_team_score
+            if game.away_team_score > game.home_team_score:
+                self.points += 3
+                self.wins += 1
+            elif game.away_team_score == game.home_team_score:
+                self.points += 1
+                self.draws += 1
+            else:
+                self.loses += 1
+        self.played += 1
+        self.goal_difference = self.goals_for - self.goals_against
+        self.save()
 
     @property
     def logo(self):
         return "/" + self.logo_image.name.replace("web/", "")
 
-    @property
-    def goals_info(self):
-        num_goals_for = 0
-        num_goals_against = 0
-        for game in self.games.filter(finished=True):
-            if game.home_team == self:
-                num_goals_for += game.home_team_score
-                num_goals_against += game.away_team_score
-            elif game.away_team == self:
-                num_goals_against += game.home_team_score
-                num_goals_for += game.away_team_score
-        return {
-            "goals_for": num_goals_for,
-            "goals_against": num_goals_against,
-            "goal_difference": num_goals_for - num_goals_against
-        }
-
-    @property
-    def games_info(self):
-        num_played = 0
-        num_wins = 0
-        num_draws = 0
-        num_loses = 0
-        for game in self.games.filter(finished=True):
-            num_played += 1
-            if game.home_team == self:
-                if game.home_team_score > game.away_team_score:
-                    num_wins += 1
-                elif game.home_team_score == game.away_team_score:
-                    num_draws += 1
-                else:
-                    num_loses += 1
-            elif game.away_team == self:
-                if game.away_team_score > game.home_team_score:
-                    num_wins += 1
-                elif game.away_team_score == game.home_team_score:
-                    num_draws += 1
-                else:
-                    num_loses += 1
-        return {
-            "played": num_played,
-            "wins": num_wins,
-            "draws": num_draws,
-            "loses": num_loses,
-        }
-
     def __lt__(self, other):
         if self.points == other.points:
             # Go to goal difference as tie breaker
-            return self.goals_info['goal_difference'] < other.goals_info['goal_difference']
+            return self.goal_difference < other.goal_difference
         else:
             return self.points < other.points
 
@@ -136,17 +124,6 @@ class Game(models.Model):
         elif type(away_team_score) is not int:
             raise TypeError('Away team score must be an integer')
 
-        if home_team_score > away_team_score:
-            self.home_team.points += 3
-        elif home_team_score == away_team_score:
-            self.home_team.points += 1
-            self.away_team.points += 1
-        else:
-            self.away_team.points += 3
-
-        self.home_team.save()
-        self.away_team.save()
-
         home_score = Attribute(name='home_score', value=str(home_team_score), description='Home Team Score', game=self)
         home_score.save()
         self.attributes.add(home_score)
@@ -155,6 +132,14 @@ class Game(models.Model):
         self.attributes.add(away_score)
         self.finished = True
         self.save()
+        self.home_team.generate_stats(self)
+        self.away_team.generate_stats(self)
+        # Assign place to all teams based on current results
+        all_teams = Team.objects.all()
+        sorted_teams = sorted(all_teams, reverse=True)
+        for index, team in enumerate(sorted_teams):
+            team.place = index + 1
+            team.save()
 
     def __eq__(self, other):
         if isinstance(other, Game):
