@@ -1,10 +1,12 @@
-from web.models import Competition, Team, Game
-from footyhints.decision_maker import DecisionMaker
-from footyhints.logger import logger
 import requests
+import datetime
 
 from django.core import files
 from io import BytesIO
+
+from web.models import Competition, Team, Game
+from footyhints.decision_maker import DecisionMaker
+from footyhints.logger import logger
 
 
 class ParseResults():
@@ -77,10 +79,17 @@ class ParseResults():
                 return found_game
         return None
 
+    def localize_timestamp(self, timestamp):
+        time_fmt = "%Y-%m-%d %H:%M:%S"
+        time_obj = datetime.datetime.fromtimestamp(timestamp)
+        return time_obj.strftime(time_fmt)
+
     def parse_game(self, competition, teams, game_data):
         if not self.update:
             home_team = teams[game_data['home_team']]
+            home_team.refresh_from_db()
             away_team = teams[game_data['away_team']]
+            away_team.refresh_from_db()
             game = Game(
                 home_team=teams[game_data['home_team']],
                 away_team=teams[game_data['away_team']],
@@ -113,14 +122,14 @@ class ParseResults():
                 game_data['away_team'],
                 selected_game.home_team_score,
                 selected_game.away_team_score,
-                selected_game.start_time,
+                self.localize_timestamp(selected_game.start_time),
             ))
             self.decision_maker.worth_watching(selected_game)
         else:
             logger.info("Creating upcoming game\t{0} | {1}\t ({2})".format(
                 game_data['home_team'],
                 game_data['away_team'],
-                selected_game.start_time
+                self.localize_timestamp(selected_game.start_time)
             ))
         selected_game.save()
 
@@ -128,16 +137,10 @@ class ParseResults():
         for competition_name, competition_data in results['competitions'].items():
             teams = self.create_teams(competition_data['teams'])
             competition = self.get_competition(competition_name, competition_data['logo_url'])
-
-            for finished_game_data in competition_data['finished_games']:
+            for finished_game_data in sorted(competition_data['finished_games'], key=lambda game: game['start_time']):
                 self.parse_game(competition, teams, finished_game_data)
-            for upcoming_game_data in competition_data['upcoming_games']:
+            for upcoming_game_data in sorted(competition_data['upcoming_games'], key=lambda game: game['start_time']):
                 self.parse_game(competition, teams, upcoming_game_data)
-
-            # Assign place to each team based on current results
-            for index, team in enumerate(sorted(teams.values(), reverse=True)):
-                team.place = index + 1
-                team.save()
 
             competition.update_timestamp()
             competition.save()
