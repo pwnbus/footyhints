@@ -125,6 +125,9 @@ class ParseResults():
                 self.localize_timestamp(selected_game.start_time),
             ))
             self.decision_maker.worth_watching(selected_game)
+            selected_game.home_team.generate_stats(selected_game)
+            selected_game.away_team.generate_stats(selected_game)
+            Team.generate_places()
         else:
             logger.info("Creating upcoming game\t{0} | {1}\t ({2})".format(
                 game_data['home_team'],

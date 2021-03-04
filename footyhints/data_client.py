@@ -18,7 +18,7 @@ class DataClient():
             'x-rapidapi-host': 'v3.football.api-sports.io',
             'x-rapidapi-key': config.api_key,
         }
-        logger.debug("Querying for fixtures")
+        logger.info("Querying for fixtures")
         fixtures_resp = requests.get('{0}/fixtures?league=39&season=2020'.format(self.API_URL), headers=headers)
         if not fixtures_resp.ok:
             raise Exception('{0}: {1}'.format(fixtures_resp.status_code, fixtures_resp.text))

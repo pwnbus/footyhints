@@ -25,9 +25,36 @@ class UnitTest(object):
         self.away_team.games.add(self.game)
         self.away_team.save()
 
-        # Wish this was dynamic and based on Team initializer
-        # self.game.attributes.add(self.attribute)
-        # self.game.score_modifications.add(self.score_modification)
         self.competition.teams.add(self.home_team)
         self.competition.teams.add(self.away_team)
         self.competition.games.add(self.game)
+
+        self.last_created_game_timestamp = 1594445619
+
+    def create_game(self, start_time=None, winner="Home"):
+        if start_time is None:
+            self.last_created_game_timestamp += 1
+            start_time = self.last_created_game_timestamp
+        game = Game(home_team=self.home_team, away_team=self.away_team, start_time=start_time)
+        game.save()
+        if winner == "Home":
+            game.set_score(1, 0)
+        elif winner == "Away":
+            game.set_score(0, 1)
+        else:
+            game.set_score(0, 0)
+        self.home_team.games.add(game)
+        self.home_team.save()
+        self.away_team.games.add(game)
+        self.away_team.save()
+        return game
+
+    def create_previous_game(self, start_time=None, winner="Home"):
+        game = self.create_game(start_time=start_time, winner=winner)
+        game.home_team.generate_stats(game)
+        game.away_team.generate_stats(game)
+        Team.generate_places()
+        return game
+
+    def create_current_game(self, start_time=None, winner="Home"):
+        return self.create_game(start_time=start_time, winner=winner)
