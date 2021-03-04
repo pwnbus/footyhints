@@ -127,12 +127,7 @@ class ParseResults():
             self.decision_maker.worth_watching(selected_game)
             selected_game.home_team.generate_stats(selected_game)
             selected_game.away_team.generate_stats(selected_game)
-            # Assign place to all teams based on current results
-            all_teams = Team.objects.all()
-            sorted_teams = sorted(all_teams, reverse=True)
-            for index, team in enumerate(sorted_teams):
-                team.place = index + 1
-                team.save()
+            Team.generate_places()
         else:
             logger.info("Creating upcoming game\t{0} | {1}\t ({2})".format(
                 game_data['home_team'],
