@@ -50,15 +50,12 @@ class ConfigParser(object):
         if environment_key in os.environ:
             return self.convert_key(os.environ[environment_key], objtype)
         else:
-            if not os.path.isfile(self.config_location):
-                raise KeyError('Unable to find {0} in environment variable or config file at {1}'.format(environment_key, self.config_location))
-            with open(self.config_location, 'r') as yaml_stream:
-                self.parser = yaml.safe_load(yaml_stream)
             try:
-                result = self.convert_key(self.parser[keyname.lower()], objtype)
-                return result
-            except KeyError as exception:
+                with open(self.config_location, 'r') as yaml_stream:
+                    self.parser = yaml.safe_load(yaml_stream)
+                return self.convert_key(self.parser[keyname.lower()], objtype)
+            except (KeyError, FileNotFoundError):
                 if default is not None:
                     return default
                 else:
-                    raise exception
+                    raise KeyError('Unable to find {0} in environment variable or config file at {1}'.format(environment_key, self.config_location))
