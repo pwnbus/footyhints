@@ -18,6 +18,9 @@ class NoEnvironment():
         self.delete_env_key("FOOTYHINTS_DB_URI")
         self.delete_env_key("FOOTYHINTS_FETCH_LEAGUE_COUNTRY")
         self.delete_env_key("FOOTYHINTS_FETCH_LEAGUE_NAME")
+        self.delete_env_key("FOOTYHINTS_CACHE_ENABLED")
+        self.delete_env_key("FOOTYHINTS_CACHE_URI")
+        self.delete_env_key("FOOTYHINTS_CACHE_EXPIRATION")
 
     def teardown(self):
         os.environ = self.old_environ
@@ -46,6 +49,9 @@ class TestSample1Config(NoEnvironment):
     def test_fetch_league_name(self):
         assert self.config.fetch_league_name == 'Premier League'
 
+    def test_cache_enabled(self):
+        assert self.config.cache_enabled is False
+
 
 class TestSample2Config(NoEnvironment):
     def setup(self):
@@ -72,6 +78,15 @@ class TestSample2Config(NoEnvironment):
 
     def test_fetch_league_name(self):
         assert self.config.fetch_league_name == 'MLS'
+
+    def test_cache_enabled(self):
+        assert self.config.cache_enabled is True
+
+    def test_cache_uri(self):
+        assert self.config.cache_uri == 'redis://127.0.0.1:6379/1'
+
+    def test_cache_expiration(self):
+        assert self.config.cache_expiration == 900
 
 
 class TestNonexistentConfig(NoEnvironment):

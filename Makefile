@@ -46,6 +46,7 @@ build-tests:  ## Build end-to-end test environment only
 .PHONY: run-tests-resources-external
 run-tests-resources-external: ## Just spin up external resources for tests and have them listen externally
 	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) run -p 3306:3306 -d mysql
+	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) run -p 6379:6379 -d redis
 
 .PHONY: run-tests-resources
 run-tests-resources:  ## Just run the external resources required for tests

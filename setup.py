@@ -19,6 +19,7 @@ config = {
         'pyyaml',
         'django===3.1.1',
         'django-extensions===3.0.9',
+        'django-redis===4.12.1',
         'dj-database-url===0.5.0',
         'pillow',
     ],
