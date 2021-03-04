@@ -11,23 +11,21 @@ class TestHighProfileMatchup(UnitTest):
         away_team = Team(name=away_team_name)
         return Game(home_team=home_team, away_team=away_team)
 
-    def test_high_profile_matchup(self):
-        game = self.create_tmp_game('Liverpool', 'Manchester United')
-        matchup = HighProfileMatchup()
-        score, reason = matchup.score(game)
-        assert score == 100
-        assert reason == 'Big matchup'
-
-    def test_reverse_high_profile_matchup(self):
-        game = self.create_tmp_game('Manchester United', 'Liverpool')
-        matchup = HighProfileMatchup()
-        score, reason = matchup.score(game)
-        assert score == 100
-        assert reason == 'Big matchup'
-
-    def test_other_matchup(self):
-        game = self.create_tmp_game('Chelsea', 'Everton')
+    def test_not_enough_games_matchup(self):
+        self.create_previous_game(winner="Draw")
+        game = self.create_current_game(winner="Winner")
         matchup = HighProfileMatchup()
         score, reason = matchup.score(game)
         assert score == 0
-        assert reason == 'Not a big matchup'
+        assert reason == 'Too Early in Season'
+
+    def test_high_profile_matchup(self):
+        self.create_previous_game(winner="Draw")
+        self.create_previous_game(winner="Draw")
+        self.create_previous_game(winner="Draw")
+        self.create_previous_game(winner="Draw")
+        game = self.create_current_game(winner="Winner")
+        matchup = HighProfileMatchup()
+        score, reason = matchup.score(game)
+        assert score == 100
+        assert reason == 'Top 6 matchup (1 v 2)'

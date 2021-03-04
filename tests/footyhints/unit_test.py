@@ -54,6 +54,8 @@ class UnitTest(object):
         game.home_team.generate_stats(game)
         game.away_team.generate_stats(game)
         Team.generate_places()
+        self.home_team.refresh_from_db()
+        self.away_team.refresh_from_db()
         return game
 
     def create_current_game(self, start_time=None, winner="Home"):
