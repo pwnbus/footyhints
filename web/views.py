@@ -40,21 +40,19 @@ def table(request):
     context = load_defaults()
     table_data = []
     for team in context['teams']:
-        games_info = team.games_info
-        goals_info = team.goals_info
         table_data.append(
             {
                 "name": team.name,
                 "logo": team.logo,
                 "place": team.place,
                 "points": team.points,
-                "played": games_info['played'],
-                "wins": games_info['wins'],
-                "draws": games_info['draws'],
-                "loses": games_info['loses'],
-                "goals_for": goals_info['goals_for'],
-                "goals_against": goals_info['goals_against'],
-                "goal_difference": goals_info['goal_difference'],
+                "played": team.played,
+                "wins": team.wins,
+                "draws": team.draws,
+                "loses": team.loses,
+                "goals_for": team.goals_for,
+                "goals_against": team.goals_against,
+                "goal_difference": team.goal_difference,
             }
         )
     context['table_data'] = table_data
