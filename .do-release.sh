@@ -2,6 +2,17 @@
 
 set -e
 
+# Check to see if:
+# 1. There are any local modifications
+# 2. Local is not up to date with remote master
+git fetch --all
+if [ -z "$(git diff origin/master)" ]; then
+  continue
+else
+  echo "There are files either local or local is missing commits from remote...you need to manually fix"
+  exit 1
+fi
+
 # Get the highest tag number
 VERSION=`git tag -l --sort=v:refname | tail -n1 | head -n1`
 
@@ -14,16 +25,6 @@ PATCH="${VERSION%%.*}"; VERSION="${VERSION#*.}"
 PATCH=$((PATCH+1))
 
 NEW_TAG="$MAJOR.$MINOR.$PATCH"
-
-# Check to see if:
-# 1. There are any local modifications
-# 2. Local is not up to date with remote master
-if [ -z "$(git diff origin/master)" ]; then
-  continue
-else
-  echo "There are files either local or local is missing commits from remote...you need to manually fix"
-  exit 1
-fi
 
 # Prompt user to create new tag
 while true; do
