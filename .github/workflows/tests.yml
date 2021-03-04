@@ -2,6 +2,11 @@ name: Tests
 on:
   push:
     branches: '*'
+  # Run every night
+  schedule:
+    - cron: '0 0 * * *'
+  # Allow for manual run
+  workflow_dispatch:
 
 jobs:
   tests:
