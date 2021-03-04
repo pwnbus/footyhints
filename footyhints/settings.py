@@ -113,3 +113,17 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "web/static")]
+
+if config.cache_enabled:
+    default_cache = {
+        'BACKEND': "django_redis.cache.RedisCache",
+        'LOCATION': config.cache_uri,
+    }
+else:
+    default_cache = {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+    }
+
+CACHES = {
+    'default': default_cache
+}
