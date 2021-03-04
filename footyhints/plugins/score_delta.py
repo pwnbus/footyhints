@@ -2,7 +2,7 @@ from footyhints.plugin import Plugin
 
 
 class ScoreDelta(Plugin):
-    priority = 2
+    priority = 1
 
     def score(self, game):
         goal_delta = abs(game.home_team_score - game.away_team_score)
