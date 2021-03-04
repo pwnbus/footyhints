@@ -132,14 +132,6 @@ class Game(models.Model):
         self.attributes.add(away_score)
         self.finished = True
         self.save()
-        self.home_team.generate_stats(self)
-        self.away_team.generate_stats(self)
-        # Assign place to all teams based on current results
-        all_teams = Team.objects.all()
-        sorted_teams = sorted(all_teams, reverse=True)
-        for index, team in enumerate(sorted_teams):
-            team.place = index + 1
-            team.save()
 
     def __eq__(self, other):
         if isinstance(other, Game):
