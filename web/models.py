@@ -70,6 +70,14 @@ class Team(models.Model):
         else:
             return self.points < other.points
 
+    def generate_places():
+        # Assign place to all teams based on current results
+        all_teams = Team.objects.all()
+        sorted_teams = sorted(all_teams, reverse=True)
+        for index, team in enumerate(sorted_teams):
+            team.place = index + 1
+            team.save()
+
 
 class Game(models.Model):
     start_time = models.IntegerField(null=False)
