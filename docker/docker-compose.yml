@@ -3,14 +3,18 @@ version: '3.7'
 services:
   mysql:
     image: mysql:8
-    restart: on-failure
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "$$MYSQL_USER", "--password=$$MYSQL_PASSWORD"]
+      interval: 30s
+      timeout: 3s
+      retries: 10
     volumes:
       - mysql:/var/lib/mysql
-    networks:
-      - default
     # ports:
     #   - 3306:3306
-    restart: always
+    networks:
+      - default
+    restart: on-failure
     env_file: footyhints.env
   redis:
     image: redis:latest
@@ -19,13 +23,18 @@ services:
       interval: 30s
       timeout: 3s
       retries: 10
-    networks:
-      - default
     # ports:
     #   - 6379:6379
+    networks:
+      - default
     restart: on-failure
   bootstrap:
     image: footyhints/footyhints_bootstrap:latest
+    healthcheck:
+      test: ["CMD", "pgrep", "python"]
+      interval: 3s
+      timeout: 30s
+      retries: 10
     volumes:
       - web_static:/opt/footyhints/envs/footyhints/web/static
     networks:
@@ -34,25 +43,40 @@ services:
     env_file: footyhints.env
   cron:
     image: footyhints/footyhints_cron:latest
+    healthcheck:
+      test: ["CMD", "pgrep", "/usr/sbin/cron", "-f"]
+      interval: 30s
+      timeout: 30s
+      retries: 10
     depends_on:
       - bootstrap
     networks:
       - default
-    restart: always
+    restart: on-failure
     env_file: footyhints.env
   nginx:
     image: footyhints/footyhints_nginx:latest
+    healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:80"]
+      interval: 30s
+      timeout: 3s
+      retries: 10
     depends_on:
       - web
     volumes:
       - web_static:/web_static
-    networks:
-      - default
     ports:
       - 80:80
+    networks:
+      - default
     restart: always
   web:
     image: footyhints/footyhints_web:latest
+    healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:8000"]
+      interval: 30s
+      timeout: 3s
+      retries: 10
     depends_on:
       - bootstrap
     volumes:

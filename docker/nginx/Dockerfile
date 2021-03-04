@@ -3,7 +3,7 @@ FROM ubuntu:latest
 RUN \
   apt-get update && \
   apt-get upgrade -y && \
-  apt-get install -y nginx && \
+  apt-get install -y nginx curl && \
   rm -rf /var/lib/apt/lists/*
 
 RUN \

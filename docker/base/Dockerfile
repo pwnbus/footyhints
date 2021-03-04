@@ -8,7 +8,8 @@ RUN \
     python3-pip \
     libssl-dev \
     iputils-ping \
-    libmysqlclient-dev && \
+    libmysqlclient-dev \
+    curl && \
   apt-get clean all && \
   rm -rf /var/lib/apt/lists/* && \
   pip3 install virtualenv && \
