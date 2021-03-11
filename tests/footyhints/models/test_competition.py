@@ -19,3 +19,6 @@ class TestCompetitionInit(UnitTest):
 
     def test_games(self):
         assert self.competition.games.count() == 1
+
+    def test_logo(self):
+        assert self.competition.logo == '/static/images/default_competition_logo.png'
