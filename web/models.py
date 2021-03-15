@@ -1,6 +1,7 @@
 from django.db import models
 from time import time
 from datetime import datetime
+from web.logo_storage import LogoStorage
 
 
 class Competition(models.Model):
@@ -8,7 +9,7 @@ class Competition(models.Model):
     last_updated = models.IntegerField(null=True)
     games = models.ManyToManyField('Game')
     teams = models.ManyToManyField('Team')
-    logo_image = models.ImageField('img', upload_to='web/static/images/dynamic/competitions', default='web/static/images/default_competition_logo.png')
+    logo_image = models.ImageField(storage=LogoStorage(), upload_to='web/static/images/dynamic/competitions', default='web/static/images/default_competition_logo.png')
 
     @property
     def logo(self):
@@ -30,7 +31,7 @@ class Team(models.Model):
     goals_against = models.IntegerField(default=0)
     goal_difference = models.IntegerField(default=0)
     games = models.ManyToManyField('Game')
-    logo_image = models.ImageField('img', upload_to='web/static/images/dynamic/teams', default='web/static/images/default_team_logo.png')
+    logo_image = models.ImageField(storage=LogoStorage(), upload_to='web/static/images/dynamic/teams', default='web/static/images/default_team_logo.png')
 
     def generate_stats(self, game):
         if game.home_team == self:
