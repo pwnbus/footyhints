@@ -59,7 +59,7 @@
       "bPaginate": true,
 
       {% if request.path == '/' %}
-      "iDisplayLength": 17,
+      "iDisplayLength": 15,
       {% else %}
       "iDisplayLength": 10,
       {% endif %}
@@ -100,7 +100,13 @@
       "bFilter": false,
       "bInfo": false,
       "bLengthChange": false,
-      "bPaginate": false,
+      "bPaginate": true,
+
+      {% if request.path == '/' %}
+      "iDisplayLength": 15,
+      {% else %}
+      "iDisplayLength": 10,
+      {% endif %}
 
       "fnDrawCallback": function() {
         $("#game-list-upcoming-header").remove();
