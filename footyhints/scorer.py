@@ -1,6 +1,6 @@
-from footyhints.plugin import LOWEST_PRIORITY
+from footyhints.score_plugin import LOWEST_PRIORITY
 from web.models import ScoreModification
-from footyhints.plugin_collection import PluginCollection
+from footyhints.score_collection import ScoreCollection
 from footyhints.logger import logger
 
 
@@ -9,34 +9,34 @@ MEDIUM = 'Medium'
 LOW = 'Low'
 
 
-class DecisionMaker():
+class Scorer():
     def __init__(self):
-        plugin_collection = PluginCollection('footyhints.plugins')
-        self.decision_plugins = plugin_collection.plugins
-        for plugin in self.decision_plugins:
-            logger.debug("Loaded plugin: {}".format(plugin.__class__.__name__))
+        score_collection = ScoreCollection('footyhints.score_plugins')
+        self.score_plugins = score_collection.plugins
+        for plugin in self.score_plugins:
+            logger.debug("Loaded score plugin: {}".format(plugin.__class__.__name__))
 
     def delete_score_modifications(self, game):
         for score_modification in game.score_modifications.all():
             score_modification.delete()
 
-    def worth_watching(self, game):
-        logger.debug("Deciding interest level for game: {}".format(game))
+    def run(self, game):
+        logger.debug("Scoring game: {}".format(game))
         self.delete_score_modifications(game)
         # Main decision logic
         total_earned_score = 0
         total_potential_points = 0
-        for decision_plugin in self.decision_plugins:
-            score, reason = decision_plugin.score(game)
+        for score_plugin in self.score_plugins:
+            score, reason = score_plugin.score(game)
             if score is not None:
-                importance = LOWEST_PRIORITY - decision_plugin.priority
+                importance = LOWEST_PRIORITY - score_plugin.priority
                 total_earned_score += score * importance
                 # Average 75 points for each for high importance
                 total_potential_points += 60 * importance
                 score_modification = ScoreModification(
                     value=score,
                     reason=reason,
-                    priority=decision_plugin.priority,
+                    priority=score_plugin.priority,
                     game=game
                 )
                 score_modification.save()

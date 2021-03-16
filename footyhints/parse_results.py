@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from io import BytesIO
 
 from web.models import Competition, Team, Game
-from footyhints.decision_maker import DecisionMaker
+from footyhints.scorer import Scorer
 from footyhints.logger import logger
 
 
@@ -14,7 +14,7 @@ class ParseResults():
     def __init__(self, league_country, league_name, update):
         self.league = league_country + " " + league_name
         self.update = update
-        self.decision_maker = DecisionMaker()
+        self.scorer = Scorer()
 
     def create_teams(self, teams_data):
         teams = {}
@@ -127,7 +127,7 @@ class ParseResults():
                 selected_game.away_team_score,
                 self.localize_timestamp(selected_game.start_time),
             ))
-            self.decision_maker.worth_watching(selected_game)
+            self.scorer.run(selected_game)
             selected_game.home_team.generate_stats(selected_game)
             selected_game.away_team.generate_stats(selected_game)
             Team.generate_places()

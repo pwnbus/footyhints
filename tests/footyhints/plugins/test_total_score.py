@@ -1,4 +1,4 @@
-from footyhints.plugins.total_score import TotalScore
+from footyhints.score_plugins.total_score import TotalScore
 
 from tests.footyhints.unit_test import UnitTest
 
