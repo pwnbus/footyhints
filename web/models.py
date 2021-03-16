@@ -89,6 +89,7 @@ class Game(models.Model):
     interest_level = models.TextField(null=True)
     attributes = models.ManyToManyField('Attribute')
     score_modifications = models.ManyToManyField('ScoreModification')
+    questions = models.ManyToManyField('Question')
     stadium = models.TextField(null=True)
     city = models.TextField(null=True)
     referee = models.TextField(null=True)
@@ -96,6 +97,10 @@ class Game(models.Model):
     @property
     def sorted_score_modifications(self):
         return self.score_modifications.all().order_by('priority')
+
+    @property
+    def sorted_questions(self):
+        return self.questions.all()
 
     def get_attribute_by_name(self, name):
         for attribute in self.attributes.all():
@@ -158,3 +163,8 @@ class ScoreModification(models.Model):
     value = models.IntegerField()
     priority = models.IntegerField()
     reason = models.TextField()
+
+
+class Question(models.Model):
+    description = models.TextField()
+    answer = models.TextField()

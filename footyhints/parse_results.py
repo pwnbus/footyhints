@@ -7,6 +7,7 @@ from io import BytesIO
 
 from web.models import Competition, Team, Game
 from footyhints.scorer import Scorer
+from footyhints.questioner import Questioner
 from footyhints.logger import logger
 
 
@@ -15,6 +16,7 @@ class ParseResults():
         self.league = league_country + " " + league_name
         self.update = update
         self.scorer = Scorer()
+        self.questioner = Questioner()
 
     def create_teams(self, teams_data):
         teams = {}
@@ -128,6 +130,7 @@ class ParseResults():
                 self.localize_timestamp(selected_game.start_time),
             ))
             self.scorer.run(selected_game)
+            self.questioner.run(selected_game)
             selected_game.home_team.generate_stats(selected_game)
             selected_game.away_team.generate_stats(selected_game)
             Team.generate_places()

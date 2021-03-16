@@ -31,6 +31,20 @@
         </div>
       </div>
       <div class="modal-body">
+        <table class="table table-striped table-bordered table-compact" id="game-questions-table">
+          <thead>
+            <th>Question</th>
+            <th>Answer</th>
+          </thead>
+          <tbody>
+            {% for question in game.sorted_questions %}
+              <tr>
+                <td><div>{{ question.description }}</div></td>
+                <td><div class="blur-content blurred-content blur-content{{ game.id }}">{{ question.answer }}</div></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
         <table class="table table-striped table-bordered table-compact" id="game-score-modifications-table">
           <thead>
             <th>Points</th>
