@@ -2,15 +2,12 @@ from pytest import raises
 
 from web.models import Game, Team
 
-from footyhints.decision_maker import DecisionMaker
-
 from tests.footyhints.unit_test import UnitTest
 
 
 class GameTest(UnitTest):
     def setup(self):
         super().setup()
-        self.decision = DecisionMaker
 
 
 class TestGameModelInit(UnitTest):
@@ -35,12 +32,6 @@ class TestGameModelInit(UnitTest):
 
     def test_date_from_start_time(self):
         assert self.game.date_from_start_time == 'Thursday 29 November 1973'
-
-    # def test_attributes(self):
-    #     assert self.game.attributes.count() == 1
-
-    # def test_score_modifications(self):
-    #     assert self.game.score_modifications.count() == 1
 
     def test_init_bad_home(self):
         with raises(ValueError):

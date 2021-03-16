@@ -1,4 +1,4 @@
-from footyhints.plugins.score_delta import ScoreDelta
+from footyhints.score_plugins.score_delta import ScoreDelta
 
 from tests.footyhints.unit_test import UnitTest
 

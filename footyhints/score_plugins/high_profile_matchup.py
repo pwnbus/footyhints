@@ -1,7 +1,7 @@
-from footyhints.plugin import Plugin
+from footyhints.score_plugin import ScorePlugin
 
 
-class HighProfileMatchup(Plugin):
+class HighProfileMatchup(ScorePlugin):
     priority = 1
     required_num_games = 3
 

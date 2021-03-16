@@ -1,7 +1,7 @@
-from footyhints.plugin import Plugin
+from footyhints.score_plugin import ScorePlugin
 
 
-class SimilarPoints(Plugin):
+class SimilarPoints(ScorePlugin):
     priority = 2
 
     def score(self, game):

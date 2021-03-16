@@ -1,4 +1,4 @@
-from footyhints.plugins.similar_points import SimilarPoints
+from footyhints.score_plugins.similar_points import SimilarPoints
 
 from tests.footyhints.unit_test import UnitTest
 

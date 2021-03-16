@@ -1,4 +1,4 @@
-from footyhints.plugins.high_profile_matchup import HighProfileMatchup
+from footyhints.score_plugins.high_profile_matchup import HighProfileMatchup
 
 from tests.footyhints.unit_test import UnitTest
 from web.models import Team, Game

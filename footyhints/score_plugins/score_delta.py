@@ -1,7 +1,7 @@
-from footyhints.plugin import Plugin
+from footyhints.score_plugin import ScorePlugin
 
 
-class ScoreDelta(Plugin):
+class ScoreDelta(ScorePlugin):
     priority = 1
 
     def score(self, game):
