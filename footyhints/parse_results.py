@@ -2,6 +2,7 @@ import requests
 import datetime
 
 from django.core import files
+from django.utils.text import slugify
 from io import BytesIO
 
 from web.models import Competition, Team, Game
@@ -33,7 +34,8 @@ class ParseResults():
                 if resp.ok:
                     fp = BytesIO()
                     fp.write(resp.content)
-                    file_name = team_data['logo_url'].split("/")[-1]
+                    file_type = team_data['logo_url'].split(".")[-1]
+                    file_name = "{}.{}".format(slugify(team.name), file_type)
                     team.logo_image.save(file_name, files.File(fp))
                 else:
                     logger.error("Received {0} when downloading team image".format(resp.text))
@@ -55,7 +57,8 @@ class ParseResults():
                 if resp.ok:
                     fp = BytesIO()
                     fp.write(resp.content)
-                    file_name = logo_url.split("/")[-1]
+                    file_type = logo_url.split(".")[-1]
+                    file_name = "{}.{}".format(slugify(competition.name), file_type)
                     competition.logo_image.save(file_name, files.File(fp))
                 else:
                     logger.error("Received {0} when downloading competition image".format(resp.text))
