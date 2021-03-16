@@ -2,6 +2,7 @@ from footyhints.question import Question
 
 
 class CloseGame(Question):
+    position = 4
     description = "Is it a close game?"
 
     def answer(self, game):

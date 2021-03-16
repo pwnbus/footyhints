@@ -21,6 +21,7 @@ class Questioner():
             question = Question(
                 description=question_plugin.description,
                 answer=question_plugin.answer(game),
+                position=question_plugin.position,
                 game=game
             )
             question.save()

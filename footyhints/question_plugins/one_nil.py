@@ -2,6 +2,7 @@ from footyhints.question import Question
 
 
 class OneNil(Question):
+    position = 3
     description = "Is there only 1 goal scored?"
 
     def answer(self, game):

@@ -100,7 +100,7 @@ class Game(models.Model):
 
     @property
     def sorted_questions(self):
-        return self.questions.all()
+        return self.questions.all().order_by('position')
 
     def get_attribute_by_name(self, name):
         for attribute in self.attributes.all():
@@ -167,4 +167,5 @@ class ScoreModification(models.Model):
 
 class Question(models.Model):
     description = models.TextField()
+    position = models.IntegerField()
     answer = models.TextField()
