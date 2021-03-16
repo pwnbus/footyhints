@@ -1,7 +1,7 @@
 from footyhints.question import Question
 
 
-class NilNil(Question):
+class CloseGame(Question):
     description = "Is it a close game?"
 
     def answer(self, game):
