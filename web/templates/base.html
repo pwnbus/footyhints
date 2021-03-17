@@ -21,7 +21,7 @@
 
     <link rel="stylesheet" href="{% static 'css/main.css'%}" type="text/css"/>
 
-    {% if GOOGLE_ANALYTICS_KEY %}
+    {% if GOOGLE_ANALYTICS_KEY != 'None' %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_KEY }}"></script>
     <script>
