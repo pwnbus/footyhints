@@ -41,7 +41,9 @@
               <tr>
                 <td><div>{{ question.description }}</div></td>
                 <td>
-                  <div class="blur-content blurred-content blur-content{{ game.id }}">
+                  <div class="blur-content blurred-content blur-content{{ game.id }} mask_character_length">
+                    <span class="mask_character_output"></span>
+                    <span class="mask_character_original_value">
                     {% if question.answer == "Yes" %}
                       <span class="glyphicon glyphicon-thumbs-up" id="question-answer-thumbs-up"></span>
                     {% elif question.answer == "No" %}
@@ -49,6 +51,7 @@
                     {% else %}
                       {{ question.answer }}
                     {% endif %}
+                    </span>
                   </div>
                 </td>
               </tr>

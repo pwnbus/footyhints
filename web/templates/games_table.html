@@ -13,7 +13,11 @@
         for (j = 0; j < blur_elements.length; j++) {
           blur_element = blur_elements[j]
           if (!blur_element.classList.contains("blurred-content")){
-              blur_element.classList.add("blurred-content");
+            blur_element.classList.add("blurred-content");
+            var mask_container = $(blur_element).closest('.mask_character_length')
+            if (mask_container.length){
+              $(blur_element).children('.mask_character_output').html('BLANK');
+            }
           }
         }
       }
@@ -24,7 +28,11 @@
         for (j = 0; j < blur_elements.length; j++) {
           blur_element = blur_elements[j]
           if (blur_element.classList.contains("blurred-content")){
-              blur_element.classList.remove("blurred-content");
+            blur_element.classList.remove("blurred-content");
+            var mask_container = $(blur_element).closest('.mask_character_length')
+            if (mask_container.length){
+              $(blur_element).children('.mask_character_output').html($(blur_element).children('.mask_character_original_value').html());
+            }
           }
         }
       }
@@ -32,6 +40,12 @@
   }
 
   $(document).ready( function () {
+    $('.mask_character_length').each(function(){
+      if (this.classList.contains("blurred-content")){
+        $(this).find('.mask_character_output').html('BLANK');
+      }
+    })
+
     $('.last_updated_timestamp').each(function(){
       var start_time = new Date($(this).html()*1000);
       var locale = document.querySelector('html').getAttribute('lang')
@@ -43,11 +57,17 @@
       };
       $(this).html(start_time.toLocaleDateString(locale, options) + " " + start_time.toLocaleTimeString())
     })
+
     $('.blurred-content').click(function() {
       if (this.classList.contains("blurred-content")){
           this.classList.remove("blurred-content");
+          var mask_container = $(this).closest('.mask_character_length')
+          if (mask_container.length){
+            $(this).children('.mask_character_output').html($(this).children('.mask_character_original_value').html());
+          }
       } else {
         this.classList.add("blurred-content");
+        $(this).find('.mask_character_output').html('BLANK');
       }
     })
     $('#game-list-new').DataTable({
@@ -93,6 +113,7 @@
         "dataSrc": 4
       },
     });
+
     $('#game-list-upcoming').DataTable({
       "order": [[2, 'asc']],
       "ordering": false,
@@ -137,6 +158,7 @@
         "dataSrc": 3
       },
     });
+
   });
 </script>
 
