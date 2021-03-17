@@ -2,7 +2,7 @@ from footyhints.question import Question
 
 
 class AnyGoalsScored(Question):
-    position = 2
+    position = 1
     description = "Are goals scored?"
 
     def answer(self, game):
