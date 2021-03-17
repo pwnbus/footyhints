@@ -12,16 +12,22 @@ class TestOneNil(UnitTest):
         self.game.set_score(0, 0)
         answer = self.plugin.answer(self.game)
         assert answer == 'No'
-        assert self.plugin.description == 'Is there only 1 goal scored?'
+        assert self.plugin.description == 'Is there more than 1 goal scored?'
 
     def test_one_nil(self):
         self.game.set_score(1, 0)
         answer = self.plugin.answer(self.game)
-        assert answer == 'Yes'
-        assert self.plugin.description == 'Is there only 1 goal scored?'
+        assert answer == 'No'
+        assert self.plugin.description == 'Is there more than 1 goal scored?'
 
     def test_two_nil(self):
         self.game.set_score(2, 0)
         answer = self.plugin.answer(self.game)
-        assert answer == 'No'
-        assert self.plugin.description == 'Is there only 1 goal scored?'
+        assert answer == 'Yes'
+        assert self.plugin.description == 'Is there more than 1 goal scored?'
+
+    def test_one_one(self):
+        self.game.set_score(1, 1)
+        answer = self.plugin.answer(self.game)
+        assert answer == 'Yes'
+        assert self.plugin.description == 'Is there more than 1 goal scored?'
