@@ -112,3 +112,11 @@
 .relegation-row {
   background-color: #F5B5B5;
 }
+
+#question-answer-thumbs-up {
+  color:green;
+}
+
+#question-answer-thumbs-down {
+  color:red;
+}

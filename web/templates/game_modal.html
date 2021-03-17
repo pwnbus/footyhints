@@ -40,7 +40,17 @@
             {% for question in game.sorted_questions %}
               <tr>
                 <td><div>{{ question.description }}</div></td>
-                <td><div class="blur-content blurred-content blur-content{{ game.id }}">{{ question.answer }}</div></td>
+                <td>
+                  <div class="blur-content blurred-content blur-content{{ game.id }}">
+                    {% if question.answer == "Yes" %}
+                      <span class="glyphicon glyphicon-thumbs-up" id="question-answer-thumbs-up"></span>
+                    {% elif question.answer == "No" %}
+                      <span class="glyphicon glyphicon-thumbs-down" id="question-answer-thumbs-down"></span>
+                    {% else %}
+                      {{ question.answer }}
+                    {% endif %}
+                  </div>
+                </td>
               </tr>
             {% endfor %}
           </tbody>
