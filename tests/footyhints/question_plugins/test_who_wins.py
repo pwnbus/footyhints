@@ -16,9 +16,9 @@ class TestWhoWins(UnitTest):
     def test_home_team_winner(self):
         self.game.set_score(1, 0)
         answer = self.who_wins.answer(self.game)
-        assert answer == 'Home Team'
+        assert answer == 'Team #1'
 
     def test_away_team_winner(self):
         self.game.set_score(0, 1)
         answer = self.who_wins.answer(self.game)
-        assert answer == 'Away Team'
+        assert answer == 'Team #2'
