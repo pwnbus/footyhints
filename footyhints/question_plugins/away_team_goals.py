@@ -2,7 +2,7 @@ from footyhints.question import Question
 
 
 class AwayTeamGoals(Question):
-    position = 6
+    position = 5
     description = "Does the away team score more than 1 goal?"
 
     def answer(self, game):

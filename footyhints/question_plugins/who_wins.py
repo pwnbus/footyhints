@@ -2,7 +2,7 @@ from footyhints.question import Question
 
 
 class WhoWins(Question):
-    position = 1
+    position = 6
     description = "Who wins?"
 
     def answer(self, game):
