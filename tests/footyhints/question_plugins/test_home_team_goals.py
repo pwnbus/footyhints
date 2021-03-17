@@ -6,24 +6,28 @@ from tests.footyhints.unit_test import UnitTest
 class TestHomeTeamGoals(UnitTest):
     def setup(self):
         super().setup()
-        self.home_team_goals = HomeTeamGoals()
+        self.plugin = HomeTeamGoals()
 
     def test_nil_nil(self):
         self.game.set_score(0, 0)
-        answer = self.home_team_goals.answer(self.game)
+        answer = self.plugin.answer(self.game)
         assert answer == 'No'
+        assert self.plugin.description == 'Does Team #1 score more than 1 goal?'
 
     def test_one_nil(self):
         self.game.set_score(1, 0)
-        answer = self.home_team_goals.answer(self.game)
+        answer = self.plugin.answer(self.game)
         assert answer == 'No'
+        assert self.plugin.description == 'Does Team #1 score more than 1 goal?'
 
     def test_two_nil(self):
         self.game.set_score(2, 0)
-        answer = self.home_team_goals.answer(self.game)
+        answer = self.plugin.answer(self.game)
         assert answer == 'Yes'
+        assert self.plugin.description == 'Does Team #1 score more than 1 goal?'
 
     def test_three_nil(self):
         self.game.set_score(3, 0)
-        answer = self.home_team_goals.answer(self.game)
+        answer = self.plugin.answer(self.game)
         assert answer == 'Yes'
+        assert self.plugin.description == 'Does Team #1 score more than 1 goal?'
