@@ -6,24 +6,28 @@ from tests.footyhints.unit_test import UnitTest
 class TestCloseGame(UnitTest):
     def setup(self):
         super().setup()
-        self.close_game = CloseGame()
+        self.plugin = CloseGame()
 
     def test_nil_nil(self):
         self.game.set_score(0, 0)
-        answer = self.close_game.answer(self.game)
+        answer = self.plugin.answer(self.game)
         assert answer == 'Yes'
+        assert self.plugin.description == 'Is it a close game?'
 
     def test_one_nil(self):
         self.game.set_score(1, 0)
-        answer = self.close_game.answer(self.game)
+        answer = self.plugin.answer(self.game)
         assert answer == 'Yes'
+        assert self.plugin.description == 'Is it a close game?'
 
     def test_two_nil(self):
         self.game.set_score(2, 0)
-        answer = self.close_game.answer(self.game)
+        answer = self.plugin.answer(self.game)
         assert answer == 'Yes'
+        assert self.plugin.description == 'Is it a close game?'
 
     def test_three_nil(self):
         self.game.set_score(3, 0)
-        answer = self.close_game.answer(self.game)
+        answer = self.plugin.answer(self.game)
         assert answer == 'No'
+        assert self.plugin.description == 'Is it a close game?'

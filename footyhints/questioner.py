@@ -18,9 +18,10 @@ class Questioner():
         logger.debug("Filling in questions for game: {}".format(game))
         self.delete_questions(game)
         for question_plugin in self.question_plugins:
+            answer = question_plugin.answer(game)
             question = Question(
                 description=question_plugin.description,
-                answer=question_plugin.answer(game),
+                answer=answer,
                 position=question_plugin.position,
                 game=game
             )
