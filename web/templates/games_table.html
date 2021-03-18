@@ -7,7 +7,7 @@
     for (i = 0; i < blur_buttons.length; i++) {
       ele = blur_buttons[i];
       if (ele.classList.contains("blur")){
-        ele.innerHTML = "Reveal";
+        ele.innerHTML = "Reveal All";
         ele.classList.remove("blur");
         ele.classList.add("reveal");
         for (j = 0; j < blur_elements.length; j++) {
@@ -22,7 +22,7 @@
         }
       }
       else {
-        ele.innerHTML = "Blur"
+        ele.innerHTML = "Blur All"
         ele.classList.remove("reveal");
         ele.classList.add("blur");
         for (j = 0; j < blur_elements.length; j++) {
