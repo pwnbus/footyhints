@@ -1,5 +1,10 @@
 .blurred-content{
   filter: blur(10px);
+  cursor: help !important;
+}
+
+.blur-content {
+  cursor: pointer;
 }
 
 #main-container {
