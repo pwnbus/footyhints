@@ -2,7 +2,7 @@
 {% block title %}{{ competition.name }} Table{% endblock %}
 
 {% block content %}
-<h3 class="table-name-header">
+<h3 class="table-name-header" id="table-competition-name">
     <img src="{{ competition.logo }}" alt="" id="competition-logo" width="50px" height="50px" />{{ competition.name }}
 </h3>
 
@@ -42,7 +42,6 @@
     });
   });
 </script>
-<!-- <table id="points-table" class="table table-bordered table-compact row-border"> -->
 <table id="points-table" class="table table-hover">
   <thead id="points-table-header"/>
     <tr>
