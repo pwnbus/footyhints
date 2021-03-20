@@ -129,3 +129,7 @@
 .mask_character_original_value {
   display: none;
 }
+
+#table-competition-name {
+  margin-bottom: -7px;
+}
