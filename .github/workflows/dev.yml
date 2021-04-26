@@ -3,6 +3,8 @@ name: Dev
 on:
   push:
     branches: 'master'
+  # Allow for manual run via github
+  workflow_dispatch:
 
 jobs:
   deploy-dev:
