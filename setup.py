@@ -17,6 +17,7 @@ config = {
         'mysqlclient',
         'python-dateutil',
         'pyyaml',
+        'youtube-search-python',
         'django===3.1.6',
         'django-extensions===3.1.1',
         'django-redis===4.12.1',
