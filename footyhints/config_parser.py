@@ -15,6 +15,7 @@ class ConfigParser(object):
         if self.mode.lower() == 'production':
             try:
                 self.api_key = self.parse_key('api_key')
+                self.google_api_key = self.parse_key('google_api_key')
             except KeyError as exception:
                 raise exception
 

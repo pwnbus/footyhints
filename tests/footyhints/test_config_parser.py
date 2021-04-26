@@ -67,6 +67,9 @@ class TestSample2Config(NoEnvironment):
     def test_google_analytics_api_key(self):
         assert self.config.google_analytics_key == 'test'
 
+    def test_google_api_key(self):
+        assert self.config.google_api_key == 'googleapikeytest'
+
     def test_db_uri(self):
         assert self.config.db_uri == "mysql://user:pass@127.0.0.1/footyhints"
 

@@ -1,6 +1,7 @@
 mode: production
 api_key: 12345678
 google_analytics_key: test
+google_api_key: googleapikeytest
 
 web_debug: False
 
