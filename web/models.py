@@ -93,6 +93,7 @@ class Game(models.Model):
     stadium = models.TextField(null=True)
     city = models.TextField(null=True)
     referee = models.TextField(null=True)
+    highlights_url = models.TextField(null=True)
 
     @property
     def sorted_score_modifications(self):

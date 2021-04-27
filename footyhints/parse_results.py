@@ -9,6 +9,7 @@ from web.models import Competition, Team, Game
 from footyhints.scorer import Scorer
 from footyhints.questioner import Questioner
 from footyhints.logger import logger
+from footyhints.highlights import get_highlights_url
 
 
 class ParseResults():
@@ -129,6 +130,7 @@ class ParseResults():
                 selected_game.away_team_score,
                 self.localize_timestamp(selected_game.start_time),
             ))
+            selected_game.highlights_url = get_highlights_url(game_data)
             self.scorer.run(selected_game)
             self.questioner.run(selected_game)
             selected_game.home_team.generate_stats(selected_game)

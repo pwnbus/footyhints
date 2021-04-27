@@ -31,49 +31,66 @@
         </div>
       </div>
       <div class="modal-body">
-        <table class="table table-striped table-bordered table-compact" id="game-questions-table">
-          <thead>
-            <th>Question</th>
-            <th>Answer</th>
-          </thead>
-          <tbody>
-            {% for question in game.sorted_questions %}
-              <tr>
-                <td width="70%"><div>{{ question.description }}</div></td>
-                <td width="30%">
-                  <div class="blur-content blurred-content blur-content{{ game.id }} mask_character_length">
-                    <span class="mask_character_output"></span>
-                    <span class="mask_character_original_value">
-                    {% if question.answer == "Yes" %}
-                      <span class="glyphicon glyphicon-thumbs-up" id="question-answer-thumbs-up"></span>
-                    {% elif question.answer == "No" %}
-                      <span class="glyphicon glyphicon-thumbs-down" id="question-answer-thumbs-down"></span>
-                    {% else %}
-                      {{ question.answer }}
-                    {% endif %}
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <table class="table table-striped table-bordered table-compact" id="game-score-modifications-table">
-          <thead>
-            <th>Points</th>
-            <th>Priority</th>
-            <th>Description</th>
-          </thead>
-          <tbody>
-            {% for score_modification in game.sorted_score_modifications %}
-              <tr>
-                <td><div class="blur-content blurred-content blur-content{{ game.id }}">{{ score_modification.value }}</div></td>
-                <td><div class="blur-content blurred-content blur-content{{ game.id }}">{{ score_modification.priority }}</div></td>
-                <td><div class="blur-content blurred-content blur-content{{ game.id }}">{{ score_modification.reason }}</div></td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#game-{{ game.id }}-questions">Questions</a></li>
+          <li><a data-toggle="tab" href="#game-{{ game.id }}-score-modifications">Score Modifications</a></li>
+          {% if game.highlights_url %}
+          <li><a data-toggle="tab" href="#game-{{ game.id }}-highlights">Highlights</a></li>
+          {% endif %}
+        </ul>
+
+        <div class="tab-content">
+          <div id="game-{{ game.id }}-questions" class="tab-pane fade in active">
+            <table class="table table-striped table-bordered table-compact" id="game-questions-table">
+              <thead>
+                <th>Question</th>
+                <th>Answer</th>
+              </thead>
+              <tbody>
+                {% for question in game.sorted_questions %}
+                  <tr>
+                    <td width="70%"><div>{{ question.description }}</div></td>
+                    <td width="30%">
+                      <div class="blur-content blurred-content blur-content{{ game.id }} mask_character_length">
+                        <span class="mask_character_output"></span>
+                        <span class="mask_character_original_value">
+                        {% if question.answer == "Yes" %}
+                          <span class="glyphicon glyphicon-thumbs-up" id="question-answer-thumbs-up"></span>
+                        {% elif question.answer == "No" %}
+                          <span class="glyphicon glyphicon-thumbs-down" id="question-answer-thumbs-down"></span>
+                        {% else %}
+                          {{ question.answer }}
+                        {% endif %}
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div id="game-{{ game.id }}-score-modifications" class="tab-pane fade">
+            <table class="table table-striped table-bordered table-compact" id="game-score-modifications-table">
+              <thead>
+                <th>Points</th>
+                <th>Priority</th>
+                <th>Description</th>
+              </thead>
+              <tbody>
+                {% for score_modification in game.sorted_score_modifications %}
+                  <tr>
+                    <td><div class="blur-content blurred-content blur-content{{ game.id }}">{{ score_modification.value }}</div></td>
+                    <td><div class="blur-content blurred-content blur-content{{ game.id }}">{{ score_modification.priority }}</div></td>
+                    <td><div class="blur-content blurred-content blur-content{{ game.id }}">{{ score_modification.reason }}</div></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div id="game-{{ game.id }}-highlights" class="tab-pane fade">
+            <iframe width="450" height="350" src="{{ game.highlights_url }}" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
