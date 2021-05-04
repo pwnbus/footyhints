@@ -19,6 +19,7 @@ config = {
         'pyyaml',
         'youtube-search-python',
         'django===3.2.1',
+        'django-redis===4.12.1',
         'dj-database-url===0.5.0',
     ],
     'packages': ['web', 'footyhints'],
