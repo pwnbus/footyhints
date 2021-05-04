@@ -5,6 +5,7 @@ from web.logo_storage import LogoStorage
 
 
 class Competition(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.TextField(null=False)
     last_updated = models.IntegerField(null=True)
     games = models.ManyToManyField('Game')
@@ -20,6 +21,7 @@ class Competition(models.Model):
 
 
 class Team(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.TextField(null=False)
     points = models.IntegerField(default=0)
     place = models.IntegerField(default=0)
@@ -81,6 +83,7 @@ class Team(models.Model):
 
 
 class Game(models.Model):
+    id = models.AutoField(primary_key=True)
     start_time = models.IntegerField(null=False)
     finished = models.BooleanField(default=False)
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="home_team_games")
@@ -155,18 +158,21 @@ class Game(models.Model):
 
 
 class Attribute(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.TextField()
     value = models.TextField()
     description = models.TextField()
 
 
 class ScoreModification(models.Model):
+    id = models.AutoField(primary_key=True)
     value = models.IntegerField()
     priority = models.IntegerField()
     reason = models.TextField()
 
 
 class Question(models.Model):
+    id = models.AutoField(primary_key=True)
     description = models.TextField()
     position = models.IntegerField()
     answer = models.TextField()
