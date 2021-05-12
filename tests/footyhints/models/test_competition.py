@@ -1,3 +1,4 @@
+from datetime import datetime
 from tests.footyhints.unit_test import UnitTest
 
 
@@ -13,6 +14,7 @@ class TestCompetitionInit(UnitTest):
         assert self.competition.last_updated is None
         self.competition.update_timestamp()
         assert self.competition.last_updated is not None
+        assert type(self.competition.last_updated is datetime)
 
     def test_teams(self):
         assert self.competition.teams.count() == 2

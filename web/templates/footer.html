@@ -1,21 +1,6 @@
-
-<script>
-  $(document).ready( function () {
-    $('.last_sync_timestamp').each(function(){
-      var start_time = new Date($(this).html()*1000);
-      var locale = document.querySelector('html').getAttribute('lang')
-      var options = {
-        month: "2-digit",
-        day: "numeric",
-      };
-      $(this).html(start_time.toLocaleDateString(locale, options) + " " + start_time.toLocaleTimeString())
-    })
-  });
-</script>
-
 <div class="row">
   <footer class="my-5 pt-5 text-muted text-center text-small" id="footer">
-    <p class="mb-1" id="last-sync-footer">Last Sync: <span class="last_sync_timestamp">{{ last_updated }}</span></p>
+    <p class="mb-1" id="last-sync-footer">Last Sync: <span class="last_sync_timestamp">{{ last_updated|date:"M j - g:i:s A" }}</span></p>
     <p class="mb-1">{{ version }} | <a href="https://github.com/pwnbus/footyhints/issues/new">Report Bug</a></p>
   </footer>
 </div>

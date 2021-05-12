@@ -1,13 +1,13 @@
 from django.db import models
-from time import time
-from datetime import datetime
+from datetime import datetime, timezone
+
 from web.logo_storage import LogoStorage
 
 
 class Competition(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(null=False)
-    last_updated = models.IntegerField(null=True)
+    last_updated = models.DateTimeField(null=True)
     games = models.ManyToManyField('Game')
     teams = models.ManyToManyField('Team')
     logo_image = models.ImageField(storage=LogoStorage(), upload_to='web/static/images/dynamic/competitions', default='web/static/images/default_competition_logo.png')
@@ -17,7 +17,7 @@ class Competition(models.Model):
         return "/" + self.logo_image.name.replace("web/", "")
 
     def update_timestamp(self):
-        self.last_updated = int(time())
+        self.last_updated = datetime.utcnow().replace(tzinfo=timezone.utc)
 
 
 class Team(models.Model):
