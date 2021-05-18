@@ -15,16 +15,41 @@
       "bInfo": false,
       "bLengthChange": false,
       "bPaginate": false,
+
+      "deferRender": true,
+      "processing": true,
+      "ajax": {
+        "url": '/api/table',
+        "dataSrc": 'data'
+      },
+      "columns": [
+        { data: 'place' },
+        { data: 'logo' },
+        { data: 'played'},
+        { data: 'wins'},
+        { data: 'draws'},
+        { data: 'loses'},
+        { data: 'goals_for'},
+        { data: 'goals_against'},
+        { data: 'goal_difference'},
+        { data: 'points'},
+      ],
+
       "columnDefs": [
         { targets: "noSort", orderable: false },
-
         {
-          "targets": [1,2,3,4,5,6,7,8,9],
+          "aTargets": [0],
           "bSortable": false,
         },
         {
-          // "bVisible": false,
-          "aTargets": [0],
+          "targets": 1,
+          "bSortable": false,
+          "render": function ( data, type, row, meta ) {
+            return '<img src="' + row.logo + '" alt="" id="team-logo" width="15px" height="15px" />' + row.name;
+          }
+        },
+        {
+          "targets": [2,3,4,5,6,7,8,9],
           "bSortable": false,
         }
       ],
@@ -60,22 +85,6 @@
       <th title="Points">Points</th>
     </tr>
   <thead/>
-  <tbody>
-    {% for team in table_data %}
-    <tr>
-      <td>{{ team.place }}</td>
-      <td><img src="{{ team.logo }}" alt="" id="team-logo" width="15px" height="15px" />{{ team.name }}</td>
-      <td>{{ team.played }}</td>
-      <td>{{ team.wins }}</td>
-      <td>{{ team.draws }}</td>
-      <td>{{ team.loses }}</td>
-      <td>{{ team.goals_for }}</td>
-      <td>{{ team.goals_against }}</td>
-      <td>{{ team.goal_difference }}</td>
-      <td>{{ team.points }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
 </table>
 
 {% endblock %}

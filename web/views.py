@@ -43,22 +43,4 @@ def team(request, team_id):
 @cache_page(config.cache_expiration)
 def table(request):
     context = load_defaults()
-    table_data = []
-    for team in context['teams']:
-        table_data.append(
-            {
-                "name": team.name,
-                "logo": team.logo,
-                "place": team.place,
-                "points": team.points,
-                "played": team.played,
-                "wins": team.wins,
-                "draws": team.draws,
-                "loses": team.loses,
-                "goals_for": team.goals_for,
-                "goals_against": team.goals_against,
-                "goal_difference": team.goal_difference,
-            }
-        )
-    context['table_data'] = table_data
     return render(request, 'table.html', context)
