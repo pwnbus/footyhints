@@ -70,6 +70,7 @@
         $(this).find('.mask_character_output').html('BLANK');
       }
     })
+
     $('#game-list-new').DataTable({
       "order": [[2, 'desc']],
       "autoWidth": false,
@@ -77,6 +78,7 @@
       "bInfo": false,
       "bLengthChange": false,
       "bPaginate": true,
+      "deferRender": true,
 
       {% if request.path == '/' %}
       "iDisplayLength": 15,
@@ -122,6 +124,7 @@
       "bInfo": false,
       "bLengthChange": false,
       "bPaginate": true,
+      "deferRender": true,
 
       {% if request.path == '/' %}
       "iDisplayLength": 15,
