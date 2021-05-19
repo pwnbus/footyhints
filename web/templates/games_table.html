@@ -135,7 +135,7 @@
           "targets": [3],
           "bSortable": false,
           "createdCell": function (td, cellData, rowData, row, col) {
-            $(td).width("20%").css("text-align", "center");;
+            $(td).width("20%").css("text-align", "center");
 
             // interest score/label
             if (rowData.interest_level == 'High'){
@@ -176,7 +176,7 @@
                 question_value_output = question.answer
               }
               questions_body += `
-                <tr>
+                <tr class="questions-table-row">
                   <td width="70%"><div>${ question.description }</div></td>
                   <td width="30%">
                     <div class="blur-content blurred-content blur-content${ rowData.id } mask_character_length">
@@ -195,7 +195,7 @@
             for (let i in rowData.score_modifications) {
               score_modification = rowData.score_modifications[i]
               score_modifications_body += `
-              <tr>
+              <tr class="score-modifications-table-row">
                 <td><div class="blur-content blurred-content blur-content${ rowData.id }">${ score_modification.value }</div></td>
                 <td><div class="blur-content blurred-content blur-content${ rowData.id }">${ score_modification.priority }</div></td>
                 <td><div class="blur-content blurred-content blur-content${ rowData.id }">${ score_modification.reason }</div></td>
