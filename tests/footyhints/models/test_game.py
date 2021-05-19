@@ -83,14 +83,3 @@ class TestGameEquals(GameTest):
     def test_nonequal_objects(self):
         self.game.save()
         assert self.game != 'abcd'
-
-
-class GameModelSetScoreTest(GameTest):
-
-    def test_score(self):
-        self.game.set_score(2, 1)
-        self.game.save()
-        assert self.team_1.points == 3
-        assert self.team_2.points == 0
-        assert self.game.home_team_score == 2
-        assert self.game.away_team_score == 1
