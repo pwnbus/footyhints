@@ -138,3 +138,11 @@
 #table-competition-name {
   margin-bottom: -7px;
 }
+
+.questions-table-row {
+  text-align: left;
+}
+
+.score-modifications-table-row {
+  text-align: left;
+}
