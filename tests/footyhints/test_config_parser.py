@@ -16,8 +16,6 @@ class NoEnvironment():
         self.delete_env_key("FOOTYHINTS_API_KEY")
         self.delete_env_key("FOOTYHINTS_WEB_DEBUG")
         self.delete_env_key("FOOTYHINTS_DB_URI")
-        self.delete_env_key("FOOTYHINTS_FETCH_LEAGUE_COUNTRY")
-        self.delete_env_key("FOOTYHINTS_FETCH_LEAGUE_NAME")
         self.delete_env_key("FOOTYHINTS_CACHE_ENABLED")
         self.delete_env_key("FOOTYHINTS_CACHE_URI")
         self.delete_env_key("FOOTYHINTS_CACHE_EXPIRATION")
@@ -43,12 +41,6 @@ class TestSample1Config(NoEnvironment):
     def test_web_debug(self):
         assert self.config.web_debug is True
 
-    def test_fetch_league_country(self):
-        assert self.config.fetch_league_country == 'United States'
-
-    def test_fetch_league_name(self):
-        assert self.config.fetch_league_name == 'Premier League'
-
     def test_cache_enabled(self):
         assert self.config.cache_enabled is False
 
@@ -73,12 +65,6 @@ class TestSample2Config(NoEnvironment):
     def test_web_debug(self):
         assert self.config.web_debug is False
 
-    def test_fetch_league_country(self):
-        assert self.config.fetch_league_country == 'United States'
-
-    def test_fetch_league_name(self):
-        assert self.config.fetch_league_name == 'MLS'
-
     def test_cache_enabled(self):
         assert self.config.cache_enabled is True
 
@@ -102,8 +88,6 @@ class TestSampleEnvironmentConfig():
         os.environ["FOOTYHINTS_API_KEY"] = "12345678"
         os.environ["FOOTYHINTS_WEB_DEBUG"] = "False"
         os.environ["FOOTYHINTS_DB_URI"] = "sqlite:///:memory:"
-        os.environ["FOOTYHINTS_FETCH_LEAGUE_COUNTRY"] = "United States"
-        os.environ["FOOTYHINTS_FETCH_LEAGUE_NAME"] = "Premier League"
         self.config = ConfigParser()
 
     def test_mode(self):
@@ -117,9 +101,3 @@ class TestSampleEnvironmentConfig():
 
     def test_web_debug(self):
         assert self.config.web_debug is False
-
-    def test_fetch_league_country(self):
-        assert self.config.fetch_league_country == "United States"
-
-    def test_fetch_league_name(self):
-        assert self.config.fetch_league_name == "Premier League"

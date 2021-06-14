@@ -31,8 +31,6 @@ class ConfigParser(object):
         self.db_uri = self.parse_key('db_uri')
         self.secret_key = self.parse_key('secret_key')
         self.web_debug = self.parse_key('web_debug', bool)
-        self.fetch_league_country = self.parse_key('fetch_league_country')
-        self.fetch_league_name = self.parse_key('fetch_league_name')
 
     def convert_key(self, value, objtype):
         if objtype == str:
