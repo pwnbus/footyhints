@@ -13,8 +13,7 @@ from footyhints.highlights import get_highlights_url
 
 
 class ParseResults():
-    def __init__(self, league_country, league_name, update):
-        self.league = league_country + " " + league_name
+    def __init__(self, update):
         self.update = update
         self.scorer = Scorer()
         self.questioner = Questioner()

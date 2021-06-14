@@ -27,5 +27,5 @@ class Command(BaseCommand):
             client = SampleDataClient()
 
         results = client.get_results()
-        parser = ParseResults(config.fetch_league_country, config.fetch_league_name, options['update'])
+        parser = ParseResults(options['update'])
         parser.parse_results(results)

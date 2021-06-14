@@ -15,7 +15,3 @@ cache_enabled: False
 # cache_expiration: 900
 
 secret_key: 1234567890
-
-# League to fetch for
-fetch_league_country: England
-fetch_league_name: Premier League
