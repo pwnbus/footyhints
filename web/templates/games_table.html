@@ -61,6 +61,9 @@
         }
       })
     }).DataTable({
+      "language": {
+        "emptyTable": "No games have been played."
+      },
       "order": [[2, 'desc']],
       "autoWidth": false,
       "bFilter": false,
@@ -296,6 +299,9 @@
     });
 
     $('#game-list-upcoming').DataTable({
+      "language": {
+        "emptyTable": "No upcoming games available."
+      },
       "order": [[2, 'asc']],
       "ordering": false,
       "autoWidth": false,
