@@ -9,6 +9,9 @@
 <script>
   $(document).ready( function () {
     $('#points-table').DataTable({
+      "language": {
+        "emptyTable": "No games have been played."
+      },
       "order": [[0, 'asc']],
       "autoWidth": false,
       "bFilter": false,
