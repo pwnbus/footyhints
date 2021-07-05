@@ -1,6 +1,7 @@
 .blurred-content{
   filter: blur(10px);
   cursor: help !important;
+  background-color: white;
 }
 
 .blur-content {
@@ -145,4 +146,10 @@
 
 .score-modifications-table-row {
   text-align: left;
+}
+
+.info-icon {
+  font-size:  18px;
+  margin-top:  0px;
+  margin-bottom:  0px;
 }

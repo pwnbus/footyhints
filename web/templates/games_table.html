@@ -229,7 +229,7 @@
                           <div class="game-info">Referee: ${ rowData.referee }</div>
                           <div class="row">
                             <div>
-                              <h4><span class="label label-${ severity_label }">${ severity_text}</span></h4>
+                              <h4><span class="label label-${ severity_label } blur-content blurred-content blur-content${ rowData.id }">${ severity_text}</span></h4>
                             </div>
                             <div class="blur-content blurred-content blur-content${ rowData.id }">(${ rowData.interest_score } / 100)</div>
                           </div>
@@ -279,7 +279,11 @@
                   </div>
                 </div>
               </div>
-              <a href="#gameModal${ rowData.id }" class="label label-${severity_label}" data-toggle="modal">${severity_text} <span class="glyphicon glyphicon-info-sign"></span></a>
+              <div class="info-icon">
+                <a href="#gameModal${ rowData.id }" data-toggle="modal">
+                  <span class="glyphicon glyphicon-info-sign"></span>
+                </a>
+              </div>
             `;
 
             $(td).html(div_modal);
