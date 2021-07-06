@@ -6,7 +6,6 @@ web_debug: True
 # # Production
 # mode: production
 # api_key: <insert_api_key>
-# google_analytics_key: <insert_google_analytics_key>
 # db_uri: mysql://user:pass@127.0.0.1/footyhints
 # web_debug: False
 

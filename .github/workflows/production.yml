@@ -43,7 +43,6 @@ jobs:
           echo \"FOOTYHINTS_WEB_DEBUG=False\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_API_KEY=${{ secrets.FOOTYHINTS_API_KEY }}\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_SECRET_KEY=${{ secrets.FOOTYHINTS_SECRET_KEY_PROD }}\" >> /footyhints/docker/footyhints.env
-          echo \"FOOTYHINTS_GOOGLE_ANALYTICS_KEY=${{ secrets.FOOTYHINTS_GOOGLE_ANALYTICS_KEY }}\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_FETCH_LEAGUE_COUNTRY=England\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_FETCH_LEAGUE_NAME=Premier League\" >> /footyhints/docker/footyhints.env
           echo \"MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD_PROD }}\" >> /footyhints/docker/footyhints.env
