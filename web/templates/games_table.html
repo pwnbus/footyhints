@@ -1,4 +1,13 @@
 <script>
+  function determine_team_name_text(team_row) {
+    text = "<a href='/team/" + team_row.id + "'>" + team_row.name + "</a>"
+    {% if team is not None %}
+      if(team_row.name == "{{ team.name }}" ) {
+        text = team_row.name
+      }
+    {% endif %}
+    return text;
+  }
   function blur_button_click(game_id) {
     var blur_elements = document.getElementsByClassName("blur-content" + game_id);
     var i;
@@ -105,7 +114,8 @@
           "bSortable": false,
           "createdCell": function (td, cellData, rowData, row, col) {
             $(td).width("30%").css("text-align", "right");
-            $(td).html("<a href='/team/" + rowData.home_team.id + "'>" + rowData.home_team.name + "</a>");
+            text = determine_team_name_text(rowData.home_team)
+            $(td).html(text);
           }
         },
         {
@@ -114,7 +124,8 @@
           "bSortable": false,
           "createdCell": function (td, cellData, rowData, row, col) {
             $(td).width("30%").css("text-align", "left");
-            $(td).html("<a href='/team/" + rowData.away_team.id + "'>" + rowData.away_team.name + "</a>");
+            text = determine_team_name_text(rowData.away_team)
+            $(td).html(text);
           }
         },
         {
@@ -344,7 +355,8 @@
           "bSortable": false,
           "createdCell": function (td, cellData, rowData, row, col) {
             $(td).width("30%").css("text-align", "right");
-            $(td).html("<a href='/team/" + rowData.home_team.id + "'>" + rowData.home_team.name + "</a>");
+            text = determine_team_name_text(rowData.home_team)
+            $(td).html(text);
           }
         },
         {
@@ -353,7 +365,8 @@
           "bSortable": false,
           "createdCell": function (td, cellData, rowData, row, col) {
             $(td).width("30%").css("text-align", "left");
-            $(td).html("<a href='/team/" + rowData.away_team.id + "'>" + rowData.away_team.name + "</a>");
+            text = determine_team_name_text(rowData.away_team)
+            $(td).html(text);
           }
         },
         {
