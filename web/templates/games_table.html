@@ -90,9 +90,9 @@
       ],
 
       {% if request.path == '/' %}
-      "iDisplayLength": 15,
+      "pageLength": 15,
       {% else %}
-      "iDisplayLength": 10,
+      "pageLength": 10,
       {% endif %}
 
       "fnDrawCallback": function() {
@@ -170,10 +170,22 @@
             for (let i in rowData.questions) {
               question = rowData.questions[i]
               if (question.answer == 'Yes'){
-                question_value_output = '<span class="glyphicon glyphicon-thumbs-up" id="question-answer-thumbs-up"></span>'
+                question_value_output = `
+                  <div id="question-answer-thumbs-up">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewbox="0 0 16 16">
+                      <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+                    </svg>
+                  </div>
+                `
               }
               else if (question.answer == 'No'){
-                question_value_output = '<span class="glyphicon glyphicon-thumbs-down" id="question-answer-thumbs-down"></span>'
+                question_value_output = `
+                  <div id="question-answer-thumbs-down">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-down-fill" viewbox="0 0 16 16">
+                      <path d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.378 1.378 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51.136.02.285.037.443.051.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.896 1.896 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2.094 2.094 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.162 3.162 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.823 4.823 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591z"/>
+                    </svg>
+                  </div>
+                `
               }
               else {
                 question_value_output = question.answer
@@ -206,19 +218,19 @@
               `
             }
             score_modifications_body += "</tbody>"
-
-
             var div_modal = `
-              <div class="modal fade" id="gameModal${ rowData.id }" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
+              <button type="button" class="btn btn-primary btn-sm" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#gameModal${ rowData.id }">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewbox="0 0 16 16">
+                  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                </svg>
+              </button>
+              <div class="modal fade" id="gameModal${ rowData.id }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
                   <div class="modal-content">
-                    <div class="modal-header" id="game-info">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <h3 class="modal-title">
+                    <div class="modal-body">
+                      <h5 class="modal-title">
                         <img src="${ rowData.home_team.logo }" alt="" id="team-logo-game-left" width="50px" height="50px" />${ rowData.home_team.name } - ${ rowData.away_team.name }<img src="${ rowData.away_team.logo }" alt="" id="team-logo-game-right" width="50px" height="50px" />
-                      </h3>
+                      </h5>
                       <div class="row">
                         <div id="game-modal-left">
                           <div class="blur-content blurred-content blur-content${ rowData.id }"><h2>${ rowData.home_team.score }</h2></div>
@@ -227,27 +239,25 @@
                           <div class="game-info last_updated_timestamp">${ formatted_start_time }</div>
                           <div class="game-info">${ rowData.stadium }, ${ rowData.city }</div>
                           <div class="game-info">Referee: ${ rowData.referee }</div>
-                          <div class="row">
-                            <div>
-                              <h4><span class="label label-${ severity_label } blur-content blurred-content blur-content${ rowData.id }">${ severity_text}</span></h4>
-                            </div>
-                            <div class="blur-content blurred-content blur-content${ rowData.id }">(${ rowData.interest_score } / 100)</div>
-                          </div>
                         </div>
                         <div id="game-modal-right">
                           <div class="blur-content blurred-content blur-content${ rowData.id }"><h2>${ rowData.away_team.score }</h2></div>
                         </div>
                       </div>
-                    </div>
-                    <div class="modal-body">
-                      <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#game-${ rowData.id }-questions">Questions</a></li>
-                        <li><a data-toggle="tab" href="#game-${ rowData.id }-score-modifications">Score Modifications</a></li>
-                        <li><a data-toggle="tab" href="#game-${ rowData.id }-highlights">Highlights</a></li>
+                      <hr>
+                      <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="questions-games-tab-${ rowData.id }" data-bs-toggle="tab" data-bs-target="#questions-${ rowData.id }" type="button" role="tab" aria-controls="questions-${ rowData.id }" aria-selected="true">Insights</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="ratings-games-tab-${ rowData.id }" data-bs-toggle="tab" data-bs-target="#ratings-${ rowData.id }" type="button" role="tab" aria-controls="ratings-${ rowData.id }" aria-selected="false">Ratings</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="highlights-games-tab-${ rowData.id }" data-bs-toggle="tab" data-bs-target="#highlights-${ rowData.id }" type="button" role="tab" aria-controls="highlights-${ rowData.id }" aria-selected="false">Highlights</button>
+                        </li>
                       </ul>
-
                       <div class="tab-content">
-                        <div id="game-${ rowData.id }-questions" class="tab-pane fade in active">
+                        <div class="tab-pane fade show active" id="questions-${ rowData.id }" role="tabpanel" aria-labelledby="questions-games-tab-${ rowData.id }">
                           <table class="table table-striped table-bordered table-compact" id="game-questions-table">
                             <thead>
                               <th>Question</th>
@@ -256,7 +266,11 @@
                             ${ questions_body }
                           </table>
                         </div>
-                        <div id="game-${ rowData.id }-score-modifications" class="tab-pane fade">
+                        <div class="tab-pane fade" id="ratings-${ rowData.id }" role="tabpanel" aria-labelledby="ratings-games-tab-${ rowData.id }">
+                          <h5>Overall Rating:
+                            <div class="blur-content blurred-content blur-content${ rowData.id }">${ rowData.interest_score } / 100
+                            </div>
+                          </h5>
                           <table class="table table-striped table-bordered table-compact" id="game-score-modifications-table">
                             <thead>
                               <th>Points</th>
@@ -266,26 +280,19 @@
                             ${ score_modifications_body }
                           </table>
                         </div>
-                        <div id="game-${ rowData.id }-highlights" class="tab-pane fade">
+                        <div class="tab-pane fade" id="highlights-${ rowData.id }" role="tabpanel" aria-labelledby="highlights-games-tab-${ rowData.id }">
                           <iframe width="450" height="350" src="${ rowData.highlights_url }" frameborder="0" allowfullscreen></iframe>
                         </div>
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button class="blur-button blur-button${ rowData.id } reveal btn btn-primary" id="blur-toggle-button" onclick="blur_button_click(${ rowData.id })">Reveal All
-                      </button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary blur-button blur-button${ rowData.id }" id="blur-toggle-button" onclick="blur_button_click(${ rowData.id })">Reveal All</button>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="info-icon">
-                <a href="#gameModal${ rowData.id }" data-toggle="modal">
-                  <span class="glyphicon glyphicon-info-sign"></span>
-                </a>
-              </div>
-            `;
-
+            `
             $(td).html(div_modal);
           }
         },
@@ -330,9 +337,9 @@
         { data: 'date_from_start_time'},
       ],
       {% if request.path == '/' %}
-      "iDisplayLength": 15,
+      "pageLength": 15,
       {% else %}
-      "iDisplayLength": 10,
+      "pageLength": 10,
       {% endif %}
       "fnDrawCallback": function() {
         $("#game-list-upcoming-header").remove();
@@ -388,19 +395,23 @@
   });
 </script>
 
-<ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#completed-games">Completed Games</a></li>
-  <li><a data-toggle="tab" href="#upcoming-games">Upcoming Games</a></li>
-</ul>
 
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="completed-games-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="true">Completed Games</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="upcoming-games-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button" role="tab" aria-controls="upcoming" aria-selected="false">Upcoming Games</button>
+  </li>
+</ul>
 <div class="tab-content">
-  <div id="completed-games" class="tab-pane fade in active">
+  <div class="tab-pane fade show active" id="completed" role="tabpanel" aria-labelledby="completed-games-tab">
     <table id="game-list-new" class="table table-striped table-bordered table-compact">
       <thead id="game-list-new-header"/>
       <thead/>
     </table>
   </div>
-  <div id="upcoming-games" class="tab-pane fade">
+  <div class="tab-pane fade" id="upcoming" role="tabpanel" aria-labelledby="upcoming-games-tab">
     <table id="game-list-upcoming" class="table table-striped table-bordered table-compact">
       <thead id="game-list-upcoming-header"/>
       <thead/>
