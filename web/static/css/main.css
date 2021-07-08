@@ -37,6 +37,7 @@
 
 #blur-toggle-button {
   float: left;
+  background-color: #428bca;
 }
 
 .table-name-header {
@@ -82,6 +83,8 @@
 
 #game-info {
   padding-bottom: 0px;
+  text-align:  center;
+  border-bottom:  0px;
 }
 
 #game-modal-left {
@@ -93,7 +96,6 @@
 
 #game-modal-middle {
   float: left;
-  padding: 10px;
   width: 50%;
 }
 
@@ -152,4 +154,56 @@
   font-size:  18px;
   margin-top:  0px;
   margin-bottom:  0px;
+}
+
+#team-names-navbar {
+  width:  25%;
+  padding-left: 50px;
+}
+
+body {
+  font-size:  15px;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #428bca;
+}
+
+.nav-link {
+  color: #428bca;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.game-info-btn {
+  background-color: #428bca;
+}
+
+#modal-title-game-info {
+  padding:  0px;
+}
+
+#game-info-modal-body {
+  padding-top:  0px;
+}
+
+#game-modal-title-hr {
+  margin-top: 0px;
+}
+
+#game-tab-content {
+  padding-top: 10px;
+}
+
+#overall-rating-num {
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+#overall-rating {
+  padding-left: 5px;
 }
