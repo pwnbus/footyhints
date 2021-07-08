@@ -230,7 +230,7 @@
             }
             score_modifications_body += "</tbody>"
             var div_modal = `
-              <button type="button" class="btn btn-primary btn-sm" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#gameModal${ rowData.id }">
+              <button type="button" class="btn btn-primary btn-sm game-info-btn" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#gameModal${ rowData.id }">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewbox="0 0 16 16">
                   <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
                 </svg>
@@ -238,10 +238,13 @@
               <div class="modal fade" id="gameModal${ rowData.id }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <div class="modal-body">
-                      <h5 class="modal-title">
+                    <div class="modal-header text-center" id="game-info">
+                      <button type="button" class="btn-close pull-right pull-top" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="game-info-modal-body">
+                      <h3 class="modal-title w-100" id="modal-title-game-info">
                         <img src="${ rowData.home_team.logo }" alt="" id="team-logo-game-left" width="50px" height="50px" />${ rowData.home_team.name } - ${ rowData.away_team.name }<img src="${ rowData.away_team.logo }" alt="" id="team-logo-game-right" width="50px" height="50px" />
-                      </h5>
+                      </h3>
                       <div class="row">
                         <div id="game-modal-left">
                           <div class="blur-content blurred-content blur-content${ rowData.id }"><h2>${ rowData.home_team.score }</h2></div>
@@ -255,7 +258,7 @@
                           <div class="blur-content blurred-content blur-content${ rowData.id }"><h2>${ rowData.away_team.score }</h2></div>
                         </div>
                       </div>
-                      <hr>
+                      <hr id="game-modal-title-hr">
                       <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item" role="presentation">
                           <button class="nav-link active" id="questions-games-tab-${ rowData.id }" data-bs-toggle="tab" data-bs-target="#questions-${ rowData.id }" type="button" role="tab" aria-controls="questions-${ rowData.id }" aria-selected="true">Insights</button>
@@ -267,7 +270,7 @@
                           <button class="nav-link" id="highlights-games-tab-${ rowData.id }" data-bs-toggle="tab" data-bs-target="#highlights-${ rowData.id }" type="button" role="tab" aria-controls="highlights-${ rowData.id }" aria-selected="false">Highlights</button>
                         </li>
                       </ul>
-                      <div class="tab-content">
+                      <div class="tab-content" id="game-tab-content">
                         <div class="tab-pane fade show active" id="questions-${ rowData.id }" role="tabpanel" aria-labelledby="questions-games-tab-${ rowData.id }">
                           <table class="table table-striped table-bordered table-compact" id="game-questions-table">
                             <thead>
@@ -278,10 +281,10 @@
                           </table>
                         </div>
                         <div class="tab-pane fade" id="ratings-${ rowData.id }" role="tabpanel" aria-labelledby="ratings-games-tab-${ rowData.id }">
-                          <h5>Overall Rating:
-                            <div class="blur-content blurred-content blur-content${ rowData.id }">${ rowData.interest_score } / 100
-                            </div>
-                          </h5>
+                          <div class="d-flex text-center" id="overall-rating">
+                            <div class="d-inline-block">Overall Rating: </div>
+                            <div class="d-inline-block blur-content blurred-content blur-content${ rowData.id }" id="overall-rating-num">${ rowData.interest_score } / 100</div>
+                          </div>
                           <table class="table table-striped table-bordered table-compact" id="game-score-modifications-table">
                             <thead>
                               <th>Points</th>
