@@ -1,0 +1,13 @@
+body {
+  font-size:  15px;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#main-container {
+  padding-top: 20px;
+}
+
+#team-names-navbar {
+  width:  25%;
+  padding-left: 50px;
+}

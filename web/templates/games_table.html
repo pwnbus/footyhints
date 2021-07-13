@@ -99,9 +99,9 @@
       ],
 
       {% if request.path == '/' %}
-      "pageLength": 15,
+      "pageLength": 13,
       {% else %}
-      "pageLength": 10,
+      "pageLength": 8,
       {% endif %}
 
       "fnDrawCallback": function() {
@@ -238,7 +238,7 @@
               <div class="modal fade" id="gameModal${ rowData.id }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <div class="modal-header text-center" id="game-info">
+                    <div class="modal-header text-center" id="game-modal-close">
                       <button type="button" class="btn-close pull-right pull-top" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="game-info-modal-body">
@@ -250,9 +250,9 @@
                           <div class="blur-content blurred-content blur-content${ rowData.id }"><h2>${ rowData.home_team.score }</h2></div>
                         </div>
                         <div id="game-modal-middle">
-                          <div class="game-info last_updated_timestamp">${ formatted_start_time }</div>
-                          <div class="game-info">${ rowData.stadium }, ${ rowData.city }</div>
-                          <div class="game-info">Referee: ${ rowData.referee }</div>
+                          <div class="game-info-attribute last_updated_timestamp">${ formatted_start_time }</div>
+                          <div class="game-info-attribute">${ rowData.stadium }, ${ rowData.city }</div>
+                          <div class="game-info-attribute">Referee: ${ rowData.referee }</div>
                         </div>
                         <div id="game-modal-right">
                           <div class="blur-content blurred-content blur-content${ rowData.id }"><h2>${ rowData.away_team.score }</h2></div>
@@ -351,9 +351,9 @@
         { data: 'date_from_start_time'},
       ],
       {% if request.path == '/' %}
-      "pageLength": 15,
+      "pageLength": 13,
       {% else %}
-      "pageLength": 10,
+      "pageLength": 8,
       {% endif %}
       "fnDrawCallback": function() {
         $("#game-list-upcoming-header").remove();
