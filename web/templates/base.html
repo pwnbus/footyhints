@@ -29,7 +29,25 @@
     {% endif %}
   </head>
   <body>
-    <div class="side-navbar side-navbar-scroll active-nav d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+    <script>
+      $(document).ready( function () {
+        var menu_btn = document.querySelector("#menu-btn");
+        var sidebar = document.querySelector("#sidebar");
+        var container = document.querySelector(".my-container");
+        menu_btn.addEventListener("click", () => {
+          sidebar.classList.toggle("active-nav");
+          container.classList.toggle("active-cont");
+        });
+      });
+      function hide_navbar() {
+        var menu_btn = document.querySelector("#menu-btn");
+        var sidebar = document.querySelector("#sidebar");
+        if(sidebar.classList.contains('active-nav')){
+          menu_btn.click();
+        }
+      }
+    </script>
+    <div class="side-navbar side-navbar-scroll d-flex justify-content-between flex-wrap flex-column" id="sidebar">
       <ul class="nav flex-column text-black w-100">
         <span class="nav-link h3 text-white my-2 bg-dark">
           Footyhints
@@ -55,7 +73,7 @@
       </ul>
     </div>
     <!-- Main Wrapper -->
-    <div class="p-1 my-container active-cont">
+    <div class="p-1 my-container">
       <!-- Top Nav -->
       <nav class="navbar top-navbar navbar-light bg-light px-5">
         <a class="btn border-0" id="menu-btn">
@@ -64,19 +82,11 @@
           </svg>
         </a>
       </nav>
-      {% block content %}
-      {% endblock %}
+      <div onclick="hide_navbar()">
+        {% block content %}
+        {% endblock %}
+      </div>
     </div>
     {% include 'footer.html' %}
-
-    <script>
-      var menu_btn = document.querySelector("#menu-btn");
-      var sidebar = document.querySelector("#sidebar");
-      var container = document.querySelector(".my-container");
-      menu_btn.addEventListener("click", () => {
-        sidebar.classList.toggle("active-nav");
-        container.classList.toggle("active-cont");
-      });
-    </script>
   </body>
 </html>
