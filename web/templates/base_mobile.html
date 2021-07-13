@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block additional-head %}
+  <link rel="stylesheet" href="{% static 'css/main_mobile.css'%}"/>
+{% endblock %}
+
+{% block complete_content %}
+<script>
+  $(document).ready( function () {
+    var menu_btn = document.querySelector("#menu-btn");
+    var sidebar = document.querySelector("#sidebar");
+    var container = document.querySelector(".mobile-main-container");
+    menu_btn.addEventListener("click", () => {
+      sidebar.classList.toggle("active-nav");
+      container.classList.toggle("active-cont");
+    });
+  });
+  function hide_navbar() {
+    var menu_btn = document.querySelector("#menu-btn");
+    var sidebar = document.querySelector("#sidebar");
+    if(sidebar.classList.contains('active-nav')){
+      menu_btn.click();
+    }
+  }
+</script>
+  <div class="side-navbar side-navbar-scroll d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+    <ul class="nav flex-column text-black w-100">
+      <span class="nav-link h3 text-white my-2 bg-dark">
+        Footyhints
+      </span>
+      <a href="/" class="nav-link list-group-item {% if request.get_full_path == '/' %}active{% endif %}">Home
+        <svg class="nav-image bi bi-code-square" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewbox="0 0 16 16">
+          <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+          <path d="M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z"/>
+        </svg>
+      </a>
+      <a href="/table" class="nav-link list-group-item {% if request.get_full_path == '/table' %}active{% endif %}">
+        Table
+        <svg class="nav-image bi bi-table" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewbox="0 0 16 16">
+          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+        </svg>
+      </a>
+      {% for team in teams %}
+        <a href="/team/{{ team.id }}" class="nav-link list-group-item team-nav-link {% if request.resolver_match.kwargs.team_id == team.id %}active{% endif %}">
+          {{ team.name }}
+          <img src="{{ team.logo }}" alt="" class="team-logo-navbar" width="25px" height="25px" />
+        </a>
+      {% endfor %}
+    </ul>
+  </div>
+  <!-- Main Wrapper -->
+  <div class="p-1 mobile-main-container">
+    <!-- Top Nav -->
+    <nav class="navbar top-navbar navbar-light bg-light px-5">
+      <a class="btn border-0" id="menu-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewbox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+        </svg>
+      </a>
+    </nav>
+    <div onclick="hide_navbar()">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
+  {% include 'footer.html' %}
+{% endblock %}

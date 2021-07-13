@@ -13,12 +13,15 @@ def load_defaults(request):
     version = 'v-dev'
     if 'FOOTYHINTS_VERSION' in os.environ:
         version = os.environ['FOOTYHINTS_VERSION']
+    base_template = 'base_generic.html'
+    if mobile_browser(request):
+        base_template = 'base_mobile.html'
     return {
         "teams": teams,
         "competition": competition,
         "version": version,
         "last_updated": competition.last_updated,
-        "mobile": mobile_browser(request)
+        "base_template": base_template,
     }
 
 

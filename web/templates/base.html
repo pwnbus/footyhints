@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}"/>
     <link rel="stylesheet" href="{% static 'css/dataTables.min.css'%}"/>
     <link rel="stylesheet" href="{% static 'css/main.css'%}" type="text/css"/>
-
     {% if GOOGLE_ANALYTICS_KEY != 'None' %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_KEY }}"></script>
@@ -27,36 +26,11 @@
       gtag('config', '{{ GOOGLE_ANALYTICS_KEY }}');
     </script>
     {% endif %}
+    {% block additional-head %}
+    {% endblock %}
   </head>
   <body>
-    <div class="container" id="main-container">
-      <div class="row justify-content-md-center">
-        <div class="col-sm-3" id="team-names-navbar">
-          <div class="card">
-            <div class="card-header">
-              <a href="/"><span>{{ competition.name }}</span></a>
-              <a href="/table">
-                <svg id="nav-competition-table" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-table" viewbox="0 0 16 16">
-                  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
-                </svg>
-              </a>
-            </div>
-            <ul class="list-group list-group-flush">
-              {% for team in teams %}
-                <a href="/team/{{ team.id }}" class="list-group-item list-group-item-action {% if request.resolver_match.kwargs.team_id == team.id %}active{% endif %}">
-                  {{ team.name }}
-                  <img src="{{ team.logo }}" alt="" class="team-logo-navbar" width="25px" height="25px" />
-                </a>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-7">
-          {% block content %}
-          {% endblock %}
-        </div>
-      </div>
-      {% include 'footer.html' %}
-    </div>
+    {% block complete_content %}
+    {% endblock %}
   </body>
 </html>
