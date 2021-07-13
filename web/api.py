@@ -12,6 +12,7 @@ def table_data(request):
     for team in teams:
         data.append(
             {
+                "id": team.id,
                 "name": team.name,
                 "logo": team.logo,
                 "place": team.place,

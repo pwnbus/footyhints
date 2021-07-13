@@ -411,13 +411,15 @@
   });
 </script>
 
-
 <ul class="nav nav-tabs" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="completed-games-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="true">Completed Games</button>
+    <button class="nav-link active" id="completed-games-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="true">Fixtures</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="upcoming-games-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button" role="tab" aria-controls="upcoming" aria-selected="false">Upcoming Games</button>
+    <button class="nav-link" id="upcoming-games-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button" role="tab" aria-controls="upcoming" aria-selected="false">Schedule</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="live-table-tab" data-bs-toggle="tab" data-bs-target="#live-table" type="button" role="tab" aria-controls="live-table" aria-selected="false">Table</button>
   </li>
 </ul>
 <div class="tab-content">
@@ -432,5 +434,8 @@
       <thead id="game-list-upcoming-header"/>
       <thead/>
     </table>
+  </div>
+  <div class="tab-pane fade" id="live-table" role="tabpanel" aria-labelledby="live-table-tab">
+    {% include 'live_table.html' %}
   </div>
 </div>

@@ -111,11 +111,15 @@ a {
 }
 
 .europa-league-row {
-  background-color: #B5D2F5;
+  background-color: #DBDCDC;
 }
 
 .relegation-row {
   background-color: #F5B5B5;
+}
+
+.highlighted-row {
+  background-color: #337AB7;
 }
 
 #question-answer-thumbs-up {
@@ -180,4 +184,16 @@ a:hover {
   color: #fff;
   background-color: #337ab7;
   border-color:  #337ab7;
+}
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
+
+}
+
+.page-link {
+  color: #337ab7;
 }
