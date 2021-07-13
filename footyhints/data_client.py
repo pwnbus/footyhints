@@ -19,10 +19,7 @@ class DataClient():
             'x-rapidapi-key': config.api_key,
         }
         logger.info("Querying for fixtures")
-        # Put in place specifically for Euro 2020
-        # todo remove me when competition is done
-        # fixtures_resp = requests.get('{0}/fixtures?league=39&season=2020'.format(self.API_URL), headers=headers)
-        fixtures_resp = requests.get('{0}/fixtures?league=4&season=2020'.format(self.API_URL), headers=headers)
+        fixtures_resp = requests.get('{0}/fixtures?league=39&season=2020'.format(self.API_URL), headers=headers)
         if not fixtures_resp.ok:
             raise Exception('{0}: {1}'.format(fixtures_resp.status_code, fixtures_resp.text))
         fixtures_data = json.loads(fixtures_resp.text)
@@ -44,11 +41,6 @@ class DataClient():
             finished_games = []
             upcoming_games = []
             for match in fixtures_data['response']:
-                # Put in place specifically for Euro 2020
-                # todo remove me when competition is done
-                if 'Qualifying Round' in match['league']['round'] or 'Qualifying Play-offs' in match['league']['round']:
-                    continue
-
                 if match['league']['name'] != competition_name:
                     continue
                 home_team_name = match['teams']['home']['name']
