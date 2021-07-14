@@ -1,7 +1,7 @@
 <script>
   function display_highlights_iframe(game_id, highlights_url) {
     div_id = `#highlights-${ game_id }`
-    iframe = `<iframe src="${highlights_url}" frameborder="0" scrolling="no" frameborder="0"></iframe>`
+    iframe = `<iframe class="highlights_url" src="${highlights_url}" frameborder="0" scrolling="no" allowfullscreen></iframe>`
     $(div_id).html(iframe);
   }
 
