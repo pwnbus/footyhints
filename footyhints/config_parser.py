@@ -23,11 +23,6 @@ class ConfigParser(object):
             self.cache_uri = self.parse_key('cache_uri')
         self.cache_expiration = self.parse_key('cache_expiration', int, 900)
 
-        try:
-            self.google_analytics_key = self.parse_key('google_analytics_key', default='None')
-        except KeyError:
-            self.google_analytics_key = None
-
         self.db_uri = self.parse_key('db_uri')
         self.secret_key = self.parse_key('secret_key')
         self.web_debug = self.parse_key('web_debug', bool)
