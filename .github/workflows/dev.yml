@@ -44,6 +44,7 @@ jobs:
           echo \"FOOTYHINTS_WEB_DEBUG=False\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_SECRET_KEY=${{ secrets.FOOTYHINTS_SECRET_KEY_DEV }}\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_GOOGLE_ANALYTICS_KEY=${{ secrets.FOOTYHINTS_GOOGLE_ANALYTICS_KEY_DEV }}\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_CACHE_ENABLED=${{ secrets.FOOTYHINTS_CACHE_ENABLED_DEV }}\" >> /footyhints/docker/footyhints.env
           echo \"MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD_DEV }}\" >> /footyhints/docker/footyhints.env
           echo \"MYSQL_DATABASE=footyhints\" >> /footyhints/docker/footyhints.env
           echo \"MYSQL_USER=${{ secrets.MYSQL_USER_DEV }}\" >> /footyhints/docker/footyhints.env
