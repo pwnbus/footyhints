@@ -14,7 +14,7 @@ services:
     #   - 3306:3306
     networks:
       - default
-    restart: on-failure
+    restart: always
     env_file: footyhints.env
   redis:
     image: redis:latest
@@ -27,7 +27,7 @@ services:
     #   - 6379:6379
     networks:
       - default
-    restart: on-failure
+    restart: always
   bootstrap:
     image: footyhints/footyhints_bootstrap:latest
     healthcheck:
@@ -52,7 +52,7 @@ services:
       - bootstrap
     networks:
       - default
-    restart: on-failure
+    restart: always
     env_file: footyhints.env
   nginx:
     image: footyhints/footyhints_nginx:latest
