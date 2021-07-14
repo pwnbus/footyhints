@@ -28,12 +28,11 @@ jobs:
     - name: Run setup and install commands
       run: |
         ssh -i ~/footyhints -o "StrictHostKeyChecking=no" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
-
           # Remove previous environment
           rm -rf /footyhints || true
 
           # Setup new environment
-          git clone https://github.com/pwnbus/footyhints /footyhints
+          git clone git@github.com:pwnbus/footyhints.git /footyhints
           cd /footyhints
           git checkout $VERSION
 
