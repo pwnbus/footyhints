@@ -1,5 +1,6 @@
 import os
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.views.decorators.cache import cache_page
 from web.models import Team, Competition
 from footyhints.config import config
@@ -46,3 +47,17 @@ def team(request, team_id):
 def table(request):
     context = load_defaults(request)
     return render(request, 'table.html', context)
+
+
+def info(request):
+    context = load_defaults(request)
+    info = {
+        "version": context['version'],
+        "base_template": context['base_template'],
+        "last_updated": context['last_updated'],
+        "mode": config.mode,
+        "cache_enabled": config.cache_enabled,
+        "cache_expiration": config.cache_expiration,
+        "web_debug": config.web_debug,
+    }
+    return JsonResponse(info)
