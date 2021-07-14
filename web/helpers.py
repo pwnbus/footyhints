@@ -99,15 +99,13 @@ MOBILE_UA_HINTS = [
 
 def mobile_browser(request):
     ''' Super simple device detection, returns True for mobile devices '''
-
     mobile_browser = False
-    ua = request.META['HTTP_USER_AGENT'].lower()[0:4]
-
-    if (ua in MOBILE_UAS):
-        mobile_browser = True
-    else:
-        for hint in MOBILE_UA_HINTS:
-            if request.META['HTTP_USER_AGENT'].find(hint) > 0:
-                mobile_browser = True
-
+    if 'HTTP_USER_AGENT' in request.META and request.META['HTTP_USER_AGENT'] is not None:
+        ua = request.META['HTTP_USER_AGENT'].lower()[0:4]
+        if (ua in MOBILE_UAS):
+            mobile_browser = True
+        else:
+            for hint in MOBILE_UA_HINTS:
+                if request.META['HTTP_USER_AGENT'].find(hint) > 0:
+                    mobile_browser = True
     return mobile_browser
