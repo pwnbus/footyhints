@@ -1,4 +1,10 @@
 <script>
+  function display_highlights_iframe(game_id, highlights_url) {
+    div_id = `#highlights-${ game_id }`
+    iframe = `<iframe src="${highlights_url}" frameborder="0" scrolling="no" frameborder="0"></iframe>`
+    $(div_id).html(iframe);
+  }
+
   function determine_team_name_text(team_row) {
     text = "<a href='/team/" + team_row.id + "'>" + team_row.name + "</a>"
     {% if team is not None %}
@@ -267,7 +273,7 @@
                           <button class="nav-link" id="ratings-games-tab-${ rowData.id }" data-bs-toggle="tab" data-bs-target="#ratings-${ rowData.id }" type="button" role="tab" aria-controls="ratings-${ rowData.id }" aria-selected="false">Ratings</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button class="nav-link" id="highlights-games-tab-${ rowData.id }" data-bs-toggle="tab" data-bs-target="#highlights-${ rowData.id }" type="button" role="tab" aria-controls="highlights-${ rowData.id }" aria-selected="false">Highlights</button>
+                          <button class="nav-link" id="highlights-games-tab-${ rowData.id }" data-bs-toggle="tab" data-bs-target="#highlights-${ rowData.id }" type="button" role="tab" aria-controls="highlights-${ rowData.id }" onclick="display_highlights_iframe(${ rowData.id },'${ rowData.highlights_url }')" aria-selected="false">Highlights</button>
                         </li>
                       </ul>
                       <div class="tab-content" id="game-tab-content">
@@ -295,7 +301,6 @@
                           </table>
                         </div>
                         <div class="tab-pane fade" id="highlights-${ rowData.id }" role="tabpanel" aria-labelledby="highlights-games-tab-${ rowData.id }">
-                          <iframe width="450" height="350" src="${ rowData.highlights_url }" frameborder="0" allowfullscreen></iframe>
                         </div>
                       </div>
                     </div>
