@@ -40,6 +40,10 @@ a {
   margin-bottom: 0px;
 }
 
+#version-footer {
+  padding-bottom: 20px;
+}
+
 #footer {
   margin-top: 10px;
 }
