@@ -59,10 +59,14 @@
       // Datatable done loading...
       $('.blurred-content').click(function() {
         if (this.classList.contains("blurred-content")){
-            this.classList.remove("blurred-content");
-            var mask_container = $(this).closest('.mask_character_length')
-            if (mask_container.length){
-              $(this).children('.mask_character_output').html($(this).children('.mask_character_original_value').html());
+            if (this.classList.contains("blurred-score")){
+              if (confirm("Are you sure you want to reveal the score?")) {
+                this.classList.remove("blurred-content");
+                var mask_container = $(this).closest('.mask_character_length')
+                if (mask_container.length){
+                  $(this).children('.mask_character_output').html($(this).children('.mask_character_original_value').html());
+                }
+              }
             }
         } else {
           this.classList.add("blurred-content");
@@ -253,7 +257,7 @@
                       </h3>
                       <div class="row">
                         <div id="game-modal-left">
-                          <div class="blur-content blurred-content blur-content${ rowData.id }"><h2>${ rowData.home_team.score }</h2></div>
+                          <div class="blur-content blurred-content blur-content${ rowData.id } blurred-score"><h2>${ rowData.home_team.score }</h2></div>
                         </div>
                         <div id="game-modal-middle">
                           <div class="game-info-attribute last_updated_timestamp">${ formatted_start_time }</div>
@@ -261,7 +265,7 @@
                           <div class="game-info-attribute">Referee: ${ rowData.referee }</div>
                         </div>
                         <div id="game-modal-right">
-                          <div class="blur-content blurred-content blur-content${ rowData.id }"><h2>${ rowData.away_team.score }</h2></div>
+                          <div class="blur-content blurred-content blur-content${ rowData.id } blurred-score"><h2>${ rowData.away_team.score }</h2></div>
                         </div>
                       </div>
                       <hr id="game-modal-title-hr">
