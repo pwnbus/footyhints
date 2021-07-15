@@ -55,8 +55,7 @@
   }
 
   $(document).ready( function () {
-    $('#game-list-new').on( 'init.dt', function () {
-      // Datatable done loading...
+    $('#game-list-new').on('draw.dt', function () {
       $('.blurred-content').click(function() {
         if (this.classList.contains("blurred-content")){
           var unblur_score = true
@@ -77,7 +76,6 @@
           $(this).find('.mask_character_output').html('BLANK');
         }
       })
-
       $('.mask_character_length').each(function(){
         if (this.classList.contains("blurred-content")){
           $(this).find('.mask_character_output').html('BLANK');
