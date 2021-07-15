@@ -12,8 +12,8 @@ from footyhints.logger import set_logger_debug
 
 if __name__ == '__main__':
     parser = optparse.OptionParser()
-    parser.add_option('--external', action="store_true", default=False)
-    parser.add_option('-v', '--verbosity', action="store_true", default=False)
+    parser.add_option('--external', help="listen on external 0.0.0.0:8000", action="store_true", default=False)
+    parser.add_option('-v', '--verbosity', help="increase logger verbosity", action="store_true", default=False)
     options, arguments = parser.parse_args()
 
     footyhints_path = os.path.join(os.path.dirname(__file__), "../")
