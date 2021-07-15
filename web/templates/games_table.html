@@ -59,15 +59,19 @@
       // Datatable done loading...
       $('.blurred-content').click(function() {
         if (this.classList.contains("blurred-content")){
-            if (this.classList.contains("blurred-score")){
-              if (confirm("Are you sure you want to reveal the score?")) {
-                this.classList.remove("blurred-content");
-                var mask_container = $(this).closest('.mask_character_length')
-                if (mask_container.length){
-                  $(this).children('.mask_character_output').html($(this).children('.mask_character_original_value').html());
-                }
-              }
+          var unblur_score = true
+          if (this.classList.contains("blurred-score")){
+            if (!confirm("Are you sure you want to reveal the score?")) {
+              unblur_score = false
             }
+          }
+          if(unblur_score) {
+            this.classList.remove("blurred-content");
+            var mask_container = $(this).closest('.mask_character_length')
+            if (mask_container.length){
+              $(this).children('.mask_character_output').html($(this).children('.mask_character_original_value').html());
+            }
+          }
         } else {
           this.classList.add("blurred-content");
           $(this).find('.mask_character_output').html('BLANK');
