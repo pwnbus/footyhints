@@ -3,18 +3,29 @@
 import os
 import sys
 import django
+import optparse
 
 from django.core.management import call_command
 from footyhints.config import config
+from footyhints.logger import set_logger_debug
 
 
 if __name__ == '__main__':
+    parser = optparse.OptionParser()
+    parser.add_option('--external', action="store_true", default=False)
+    parser.add_option('-v', '--verbosity', action="store_true", default=False)
+    options, arguments = parser.parse_args()
+
     footyhints_path = os.path.join(os.path.dirname(__file__), "../")
     sys.path.insert(0, footyhints_path)
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'footyhints.settings')
     django.setup()
     listen_host = "127.0.0.1:8000"
-    if not config.web_debug:
+    if not config.web_debug or options.external:
         listen_host = "0.0.0.0:8000"
+
+    if options.verbosity:
+        set_logger_debug()
+
     call_command("runserver", listen_host)
