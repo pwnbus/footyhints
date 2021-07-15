@@ -151,7 +151,11 @@ a:hover {
 }
 
 .game-info-btn {
-  background-color: #428bca;
+  color: #428bca;
+}
+
+.game-info-btn:hover {
+  cursor: pointer;
 }
 
 #modal-title-game-info {
