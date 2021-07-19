@@ -11,8 +11,8 @@ from footyhints.logger import logger, set_logger_debug
 
 if __name__ == '__main__':
     parser = optparse.OptionParser()
-    parser.add_option('--update', action="store_true", default=False)
-    parser.add_option('-v', '--verbosity', action="store_true", default=False)
+    parser.add_option('-v', '--verbosity', help="increase logger verbosity", action="store_true", default=False)
+    parser.add_option('--update', help="update database (instead of deleting it before each run)", action="store_true", default=False)
     options, arguments = parser.parse_args()
 
     footyhints_path = os.path.join(os.path.dirname(__file__), "../")
