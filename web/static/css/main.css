@@ -209,3 +209,7 @@ a:hover {
 .question-description-game-modal {
   text-align: left;
 }
+
+#table-name {
+  white-space: nowrap;
+}

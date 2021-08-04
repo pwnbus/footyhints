@@ -40,8 +40,10 @@
           "bSortable": false,
           "render": function ( data, type, row, meta ) {
             row_html = `
-              <img src="${ row.logo }" alt="" id="team-logo" width="15px" height="15px" />
-              <a href="/team/${ row.id }">${ row.name }</a>
+              <div id="table-name">
+                <img src="${ row.logo }" alt="" id="team-logo" width="15px" height="15px" />
+                <a href="/team/${ row.id }">${ row.name }</a>
+              </div>
               `
             return row_html
           }
