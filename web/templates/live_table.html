@@ -39,7 +39,11 @@
           "targets": 1,
           "bSortable": false,
           "render": function ( data, type, row, meta ) {
-            return '<img src="' + row.logo + '" alt="" id="team-logo" width="15px" height="15px" />' + row.name;
+            row_html = `
+              <img src="${ row.logo }" alt="" id="team-logo" width="15px" height="15px" />
+              <a href="/team/${ row.id }">${ row.name }</a>
+              `
+            return row_html
           }
         },
         {
