@@ -5,7 +5,9 @@ from django.views.decorators.cache import cache_page
 from web.models import Team, Competition
 from footyhints.config import config
 
-from .helpers import mobile_browser
+
+def mobile_browser(request):
+    return request.user_agent.is_mobile
 
 
 def load_defaults(request):
