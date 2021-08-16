@@ -32,6 +32,8 @@ COPY --chown=footyhints:footyhints manage.py /opt/footyhints/envs/footyhints/man
 COPY --chown=footyhints:footyhints footyhints /opt/footyhints/envs/footyhints/footyhints
 COPY --chown=footyhints:footyhints web /opt/footyhints/envs/footyhints/web
 
-RUN pip install -e /opt/footyhints/envs/footyhints
+RUN \
+  pip install --upgrade pip && \
+  pip install -e /opt/footyhints/envs/footyhints
 
 WORKDIR /opt/footyhints/envs/footyhints
