@@ -67,11 +67,14 @@ class Team(models.Model):
         return "/" + self.logo_image.name.replace("web/", "")
 
     def __lt__(self, other):
-        if self.points == other.points:
-            # Go to goal difference as tie breaker
-            return self.goal_difference < other.goal_difference
-        else:
+        # Points is primary
+        if self.points != other.points:
             return self.points < other.points
+        # Goal difference next
+        if self.goal_difference != other.goal_difference:
+            return self.goal_difference < other.goal_difference
+        # Goals scored next
+        return self.goals_for < other.goals_for
 
     def generate_places():
         # Assign place to all teams based on current results
