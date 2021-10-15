@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*.*.*'
+  # Allow for manual run via github
+  workflow_dispatch:
 
 jobs:
   deploy-prod:
