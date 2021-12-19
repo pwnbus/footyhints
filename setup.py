@@ -18,7 +18,7 @@ config = {
         'python-dateutil',
         'pyyaml',
         'youtube-search-python',
-        'django===3.2.5',
+        'django===3.2.10',
         'django-redis===5.0.0',
         'django-user-agents',
         'dj-database-url===0.5.0',
