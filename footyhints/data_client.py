@@ -19,7 +19,7 @@ class DataClient():
             'x-rapidapi-key': config.api_key,
         }
         logger.info("Querying for fixtures")
-        fixtures_resp = requests.get('{0}/fixtures?league=39&season=2021'.format(self.API_URL), headers=headers)
+        fixtures_resp = requests.get('{0}/fixtures?league=39&season=2022'.format(self.API_URL), headers=headers)
         if not fixtures_resp.ok:
             raise Exception('{0}: {1}'.format(fixtures_resp.status_code, fixtures_resp.text))
         fixtures_data = json.loads(fixtures_resp.text)
