@@ -23,6 +23,8 @@ config = {
         'django-user-agents',
         'dj-database-url===0.5.0',
         'pillow',
+        # Required for django 4x
+        'tzdata',
     ],
     'packages': ['web', 'footyhints'],
     'scripts': [],
