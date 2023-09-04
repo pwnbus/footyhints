@@ -1,6 +1,7 @@
 import requests
 import json
 from dateutil.parser import parse
+from datetime import datetime
 
 from footyhints.config import config
 from footyhints.logger import logger
@@ -13,13 +14,24 @@ class DataClient():
     def __init__(self):
         logger.debug("Using football.api-sports.io data client")
 
+    def __determine_season_year(self):
+        current_date = datetime.now()
+        year = current_date.year
+        month = current_date.month
+        # If it's January - June we gotta change year
+        if month >= 1 and \
+           month <= 6:
+            year = year - 1
+        return year
+
     def get_results(self):
+        current_season = self.__determine_season_year()
         headers = {
             'x-rapidapi-host': 'v3.football.api-sports.io',
             'x-rapidapi-key': config.api_key,
         }
         logger.info("Querying for fixtures")
-        fixtures_resp = requests.get('{0}/fixtures?league=39&season=2022'.format(self.API_URL), headers=headers)
+        fixtures_resp = requests.get('{0}/fixtures?league={1}&season={2}'.format(self.API_URL, config.league_id, current_season), headers=headers)
         if not fixtures_resp.ok:
             raise Exception('{0}: {1}'.format(fixtures_resp.status_code, fixtures_resp.text))
         fixtures_data = json.loads(fixtures_resp.text)

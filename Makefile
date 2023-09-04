@@ -14,6 +14,9 @@ all:
 	@echo 'Available make targets:'
 	@grep '^[^#[:space:]^\.PHONY.*].*:' Makefile
 
+.PHONY: lint
+lint: ## Run the flake8 linter over the entire codebase
+	flake8 --config .flake8 ./
 
 run: ## Run the full docker stack
 	FOOTYHINTS_VERSION=$(VERSION) docker-compose -f docker/docker-compose.yml -p $(NAME) up -d
