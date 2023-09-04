@@ -4,8 +4,8 @@ from tests.footyhints.unit_test import UnitTest
 
 
 class TestSimilarPoints(UnitTest):
-    def setup(self):
-        super().setup()
+    def setup_method(self):
+        super().setup_method()
 
     def test_over_max_score(self):
         self.create_previous_game(winner="Draw")

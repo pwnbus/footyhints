@@ -4,8 +4,8 @@ from tests.footyhints.unit_test import UnitTest
 
 
 class TestAttributeModel(UnitTest):
-    def setup(self):
-        super().setup()
+    def setup_method(self):
+        super().setup_method()
         self.attribute = Attribute(
             name='Test Name',
             value='100',

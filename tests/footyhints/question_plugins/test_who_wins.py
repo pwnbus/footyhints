@@ -4,8 +4,8 @@ from tests.footyhints.unit_test import UnitTest
 
 
 class TestWhoWins(UnitTest):
-    def setup(self):
-        super().setup()
+    def setup_method(self):
+        super().setup_method()
         self.plugin = WhoWins()
 
     def test_draw(self):

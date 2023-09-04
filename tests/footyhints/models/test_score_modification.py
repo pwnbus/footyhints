@@ -4,8 +4,8 @@ from tests.footyhints.unit_test import UnitTest
 
 
 class TestScoreModificationModel(UnitTest):
-    def setup(self):
-        super().setup()
+    def setup_method(self):
+        super().setup_method()
         self.score_modification = ScoreModification(
             value=100,
             game=self.game,

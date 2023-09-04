@@ -10,7 +10,7 @@ class NoEnvironment():
         if keyname in os.environ:
             del os.environ[keyname]
 
-    def setup(self):
+    def setup_method(self):
         self.old_environ = copy.deepcopy(os.environ)
         self.delete_env_key("FOOTYHINTS_MODE")
         self.delete_env_key("FOOTYHINTS_API_KEY")
@@ -20,13 +20,13 @@ class NoEnvironment():
         self.delete_env_key("FOOTYHINTS_CACHE_URI")
         self.delete_env_key("FOOTYHINTS_CACHE_EXPIRATION")
 
-    def teardown(self):
+    def teardown_method(self):
         os.environ = self.old_environ
 
 
 class TestSample1Config(NoEnvironment):
-    def setup(self):
-        super().setup()
+    def setup_method(self):
+        super().setup_method()
         self.config = ConfigParser(location="../tests/footyhints/example_configs/config1.yml")
 
     def test_mode(self):
@@ -46,8 +46,8 @@ class TestSample1Config(NoEnvironment):
 
 
 class TestSample2Config(NoEnvironment):
-    def setup(self):
-        super().setup()
+    def setup_method(self):
+        super().setup_method()
         self.config = ConfigParser(location="../tests/footyhints/example_configs/config2.yml")
 
     def test_mode(self):
@@ -80,7 +80,7 @@ class TestNonexistentConfig(NoEnvironment):
 
 
 class TestSampleEnvironmentConfig():
-    def setup(self):
+    def setup_method(self):
         os.environ["FOOTYHINTS_MODE"] = "production"
         os.environ["FOOTYHINTS_API_KEY"] = "12345678"
         os.environ["FOOTYHINTS_WEB_DEBUG"] = "False"
