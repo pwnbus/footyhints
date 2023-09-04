@@ -33,7 +33,7 @@ class ConfigParser(object):
         elif objtype == int:
             return int(value)
         elif objtype == bool:
-            if type(value) == bool:
+            if isinstance(value, bool):
                 return value
             else:
                 return bool(value == 'True')
