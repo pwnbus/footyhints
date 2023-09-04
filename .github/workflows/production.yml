@@ -60,6 +60,13 @@ jobs:
           echo \"FOOTYHINTS_LEAGUE_ID=${{ vars.LEAGUE_ID }}\" >> /footyhints/docker/footyhints.env
         "
 
+    - name: Stop running processes on remote host
+      run: |
+        ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
+          cd /footyhints
+          make stop
+        "
+
     - name: Run containers build on remote host
       run: |
         ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
