@@ -6,8 +6,8 @@ from tests.footyhints.unit_test import UnitTest
 
 
 class GameTest(UnitTest):
-    def setup(self):
-        super().setup()
+    def setup_method(self):
+        super().setup_method()
 
 
 class TestGameModelInit(UnitTest):
@@ -60,8 +60,8 @@ class TestGameSetScore(GameTest):
 
 
 class TestGameEquals(GameTest):
-    def setup(self):
-        super().setup()
+    def setup_method(self):
+        super().setup_method()
         self.tmp_team1 = Team(name='Team #1')
         self.tmp_team1.save()
         self.tmp_team2 = Team(name='Team #2')

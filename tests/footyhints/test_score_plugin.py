@@ -6,8 +6,8 @@ from tests.footyhints.unit_test import UnitTest
 
 
 class TestScorePlugin(UnitTest):
-    def setup(self):
-        super().setup()
+    def setup_method(self):
+        super().setup_method()
         self.score_plugin = ScorePlugin()
 
     def test_score(self):

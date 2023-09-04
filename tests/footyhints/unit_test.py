@@ -6,7 +6,7 @@ pytestmark = pytest.mark.django_db
 
 @pytest.mark.django_db
 class UnitTest(object):
-    def setup(self):
+    def setup_method(self):
         self.competition = Competition(name="English Premier League")
         self.competition.save()
         self.home_team = Team(name="Team #1")

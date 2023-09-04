@@ -4,8 +4,8 @@ from tests.footyhints.unit_test import UnitTest
 
 
 class TestQuestionModel(UnitTest):
-    def setup(self):
-        super().setup()
+    def setup_method(self):
+        super().setup_method()
         self.question = Question(
             description='Test Question',
             position=10,
