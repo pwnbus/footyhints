@@ -1,7 +1,9 @@
 name: Tests
 on:
-  push:
+  pull_request:
     branches: '*'
+  push:
+    branches: 'master'
   # Run every night
   schedule:
     - cron: '0 0 * * *'
