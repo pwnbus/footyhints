@@ -19,7 +19,8 @@ class DataClient():
         year = current_date.year
         month = current_date.month
         # If it's January - June we gotta change year
-        if month >= 1 and month <= 6:
+        if month >= 1 and \
+           month <= 6:
             year = year - 1
         return year
 
