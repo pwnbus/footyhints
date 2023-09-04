@@ -19,7 +19,7 @@ class DataClient():
         year = current_date.year
         month = current_date.month
         # If it's January - June we gotta change year
-        if month >=1 and month <= 6:
+        if month >= 1 and month <= 6:
             year = year - 1
         return year
 
@@ -30,7 +30,7 @@ class DataClient():
             'x-rapidapi-key': config.api_key,
         }
         logger.info("Querying for fixtures")
-        fixtures_resp = requests.get('{0}/fixtures?league=39&season={1}'.format(self.API_URL, current_season), headers=headers)
+        fixtures_resp = requests.get('{0}/fixtures?league={1}&season={2}'.format(self.API_URL, config.league_id, current_season), headers=headers)
         if not fixtures_resp.ok:
             raise Exception('{0}: {1}'.format(fixtures_resp.status_code, fixtures_resp.text))
         fixtures_data = json.loads(fixtures_resp.text)

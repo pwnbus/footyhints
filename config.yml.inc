@@ -14,3 +14,6 @@ cache_enabled: False
 # cache_expiration: 900
 
 secret_key: 1234567890
+
+# Can be obtained by visiting https://v3.football.api-sports.io/leagues
+league_id: 123
