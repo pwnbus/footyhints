@@ -13,7 +13,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Pull all tags
         run: git fetch --tags -f
@@ -28,7 +28,7 @@ jobs:
         id: release-description
         run: |
           DESCRIPTION=$(echo Changelog: https://github.com/pwnbus/footyhints/compare/$PREVIOUS_TAG...$RELEASE_VERSION)
-          echo "::set-output name=RELEASE_DESCRIPTION::$DESCRIPTION"
+          echo "RELEASE_DESCRIPTION=$DESCRIPTION" >> $GITHUB_OUTPUT
 
       - name: Create Release
         id: create_release
