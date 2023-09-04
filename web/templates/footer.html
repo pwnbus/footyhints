@@ -1,6 +1,20 @@
+<script>
+  $(document).ready( function () {
+    var current_date = new Date("{{ last_updated }}");
+    var locale = window.navigator.userLanguage || window.navigator.language;
+    var locale_date = current_date.toLocaleString(locale, {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    });
+    $('.last_sync_timestamp').text(locale_date);
+  });
+</script>
 <footer class="text-muted text-center text-small" id="footer">
   <div id="last-sync-footer">
-    Updated at <span class="last_sync_timestamp">{{ last_updated|date:"M j - g:i:s A" }}</span>
+    Updated <span class="last_sync_timestamp"></span>
   </div>
   <div id="version-footer">
     <a href="/info" class="text-muted">{{ version }}</a> | <a href="https://github.com/pwnbus/footyhints/issues/new">Report Bug</a>

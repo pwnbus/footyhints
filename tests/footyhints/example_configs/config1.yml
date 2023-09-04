@@ -1,6 +1,8 @@
 mode: development
 web_debug: True
 
+league_id: 123
+
 db_uri: "sqlite:///:memory:"
 
 secret_key: 123457890
