@@ -3,5 +3,6 @@ exclude =
   .flake8
   .git
   *__init__.py
+# E501 = # line too long
 ignore =
-  E501  # ignore line length
+  E501
