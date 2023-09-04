@@ -27,9 +27,15 @@ jobs:
         echo -e "${{ secrets.FOOTYHINTS_SSH_KEY }}" >> ~/footyhints
         chmod 600 ~/footyhints
 
-    - name: Run setup and install commands
+    - name: Purge old builds on remote host
       run: |
-        ssh -i ~/footyhints -o "StrictHostKeyChecking=no" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
+        ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
+          docker system prune -f
+        "
+
+    - name: Run repo setup on remote host
+      run: |
+        ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
           # Remove previous environment
           rm -rf /footyhints || true
 
@@ -52,11 +58,39 @@ jobs:
           echo \"FOOTYHINTS_DB_URI=mysql://${{ secrets.MYSQL_USER_PROD }}:${{ secrets.MYSQL_PASSWORD_PROD }}@mysql/footyhints\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_VERSION=$VERSION\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_LEAGUE_ID=${{ vars.LEAGUE_ID }}\" >> /footyhints/docker/footyhints.env
+        "
 
-          # Build and run
-          make build clean run
+    - name: Stop running processes on remote host
+      run: |
+        ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
+          cd /footyhints
+          make stop
+        "
 
-          # Cleanup
+    - name: Run containers build on remote host
+      run: |
+        ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
+          cd /footyhints
+          make build
+        "
+
+    - name: Run containers pre-clean on remote host
+      run: |
+        ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
+          cd /footyhints
+          make clean
+        "
+
+    - name: Run containers deploy on remote host
+      run: |
+        ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
+          cd /footyhints
+          make run
+        "
+
+    - name: Run cleanup on remote host
+      run: |
+        ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" root@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
           rm -rf /footyhints
         "
 
