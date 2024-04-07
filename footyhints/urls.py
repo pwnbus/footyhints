@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import path
 
 from web.views import index, team, table, info
@@ -6,7 +5,6 @@ from web.api import table_data, completed_games, teams_completed_games, upcoming
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', index),
     path('team/<int:team_id>/', team),
     path('table', table),
