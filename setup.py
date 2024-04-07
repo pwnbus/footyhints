@@ -16,7 +16,7 @@ config = {
         'dj-database-url===2.1.0',
         'django-redis===5.3.0',
         'django-user-agents',
-        'django===4.2.5',
+        'django===5.0.4',
         'mysqlclient===2.1.1',
         'pillow',
         'python-dateutil',
