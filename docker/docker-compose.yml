@@ -65,8 +65,10 @@ services:
       - web
     volumes:
       - web_static:/web_static
+      - live_ssl:/etc/nginx/ssl/live/
     ports:
       - 80:80
+      - 443:443
     networks:
       - default
     restart: always
@@ -90,6 +92,7 @@ services:
 volumes:
   mysql:
   web_static:
+  live_ssl:
 
 networks:
   default:
