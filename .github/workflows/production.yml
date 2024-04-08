@@ -47,10 +47,11 @@ jobs:
           # Overwrite specific environment vars
           echo \"\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_MODE=production\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_URL=${{ vars.FOOTYHINTS_URL }}\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_WEB_DEBUG=False\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_API_KEY=${{ secrets.FOOTYHINTS_API_KEY }}\" >> /footyhints/docker/footyhints.env
           echo \"FOOTYHINTS_SECRET_KEY=${{ secrets.FOOTYHINTS_SECRET_KEY_PROD }}\" >> /footyhints/docker/footyhints.env
-          echo \"FOOTYHINTS_CACHE_ENABLED=${{ secrets.FOOTYHINTS_CACHE_ENABLED_PROD }}\" >> /footyhints/docker/footyhints.env
+          echo \"FOOTYHINTS_CACHE_ENABLED=${{ vars.FOOTYHINTS_CACHE_ENABLED_PROD }}\" >> /footyhints/docker/footyhints.env
           echo \"MYSQL_RANDOM_ROOT_PASSWORD=true\" >> /footyhints/docker/footyhints.env
           echo \"MYSQL_DATABASE=footyhints\" >> /footyhints/docker/footyhints.env
           echo \"MYSQL_USER=${{ secrets.MYSQL_USER_PROD }}\" >> /footyhints/docker/footyhints.env
@@ -71,7 +72,7 @@ jobs:
       run: |
         ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" ${{ secrets.FOOTYHINTS_SSH_USER_PROD }}@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
           cd /footyhints
-          make build
+          make build-prod
         "
 
     - name: Run containers pre-clean on remote host
@@ -85,7 +86,7 @@ jobs:
       run: |
         ssh -i ~/footyhints -o "StrictHostKeyChecking=accept-new" ${{ secrets.FOOTYHINTS_SSH_USER_PROD }}@${{ secrets.FOOTYHINTS_SSH_HOST_PROD }} "
           cd /footyhints
-          make run
+          make run-prod
         "
 
     - name: Run cleanup on remote host
