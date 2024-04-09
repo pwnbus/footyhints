@@ -64,7 +64,7 @@ services:
     depends_on:
       - web
     volumes:
-      - web_static:/web_static
+      - web_static:/web_static:ro
     ports:
       - 80:80
     networks:

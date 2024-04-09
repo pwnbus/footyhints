@@ -18,12 +18,19 @@ all:
 lint: ## Run the flake8 linter over the entire codebase
 	flake8 --config .flake8 ./
 
+run-prod: ## Run the full docker stack with certbot
+	FOOTYHINTS_VERSION=$(VERSION) docker-compose -f docker/docker-compose.yml -f docker/docker-compose-letsencrypt.yml -p $(NAME) up -d
+
 run: ## Run the full docker stack
 	FOOTYHINTS_VERSION=$(VERSION) docker-compose -f docker/docker-compose.yml -p $(NAME) up -d
 
 build: ## Build the full docker stack
 	docker build -f docker/base/Dockerfile -t footyhints/footyhints_base:latest .
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose-build.yml -p $(NAME) build --parallel
+
+build-prod: ## Build the full docker stack with certbot
+	docker build -f docker/base/Dockerfile -t footyhints/footyhints_base:latest .
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose-build.yml -f docker/docker-compose-letsencrypt.yml -p $(NAME) build --parallel
 
 stop: ## Stop the full docker stack
 	docker-compose -f docker/docker-compose.yml -p $(NAME) stop

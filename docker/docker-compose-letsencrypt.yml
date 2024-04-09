@@ -1,0 +1,26 @@
+---
+version: '3.7'
+services:
+  nginx:
+    image: footyhints/footyhints_letsencrypt:latest
+    build:
+      context: ../
+      dockerfile: ./docker/letsencrypt/Dockerfile
+      cache_from:
+        - footyhints/footyhints_letsencrypt:latest
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://localhost"]
+      interval: 30s
+      timeout: 3s
+      retries: 10
+    depends_on:
+      - web
+    volumes:
+      - web_static:/web_static:ro
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - default
+    restart: always
+    env_file: footyhints.env
