@@ -9,7 +9,7 @@ services:
       cache_from:
         - footyhints/footyhints_letsencrypt:latest
     healthcheck:
-      test: ["CMD", "curl", "--insecure", "-f", "https://localhost"]
+      test: ["CMD", "curl", "-f", "https://localhost"]
       interval: 30s
       timeout: 3s
       retries: 10
@@ -23,3 +23,4 @@ services:
     networks:
       - default
     restart: always
+    env_file: footyhints.env

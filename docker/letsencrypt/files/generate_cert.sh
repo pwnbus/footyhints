@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e
 
 echo "Removing placeholder certs"
 rm -rf /etc/nginx/certs/live/default
