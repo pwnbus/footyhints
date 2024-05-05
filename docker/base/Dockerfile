@@ -4,15 +4,15 @@ RUN \
   apt-get update --fix-missing && \
   apt-get upgrade -y && \
   apt-get install -y --fix-missing \
-    python3 \
+    python3-full \
     python3-pip \
+    python3-virtualenv \
     libssl-dev \
     iputils-ping \
     libmysqlclient-dev \
     curl && \
   apt-get clean all && \
   rm -rf /var/lib/apt/lists/* && \
-  pip3 install virtualenv && \
   useradd --create-home --shell /bin/bash --home-dir /opt/footyhints footyhints && \
   mkdir -p /opt/footyhints/envs/footyhints && \
   chown -R footyhints:footyhints /opt/footyhints/envs
