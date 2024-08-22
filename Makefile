@@ -19,28 +19,28 @@ lint: ## Run the flake8 linter over the entire codebase
 	flake8 --config .flake8 ./
 
 run-prod: ## Run the full docker stack with certbot
-	FOOTYHINTS_VERSION=$(VERSION) docker-compose -f docker/docker-compose.yml -f docker/docker-compose-letsencrypt.yml -p $(NAME) up -d
+	FOOTYHINTS_VERSION=$(VERSION) docker compose -f docker/docker-compose.yml -f docker/docker-compose-letsencrypt.yml -p $(NAME) up -d
 
 run: ## Run the full docker stack
-	FOOTYHINTS_VERSION=$(VERSION) docker-compose -f docker/docker-compose.yml -p $(NAME) up -d
+	FOOTYHINTS_VERSION=$(VERSION) docker compose -f docker/docker-compose.yml -p $(NAME) up -d
 
 build: ## Build the full docker stack
 	docker build -f docker/base/Dockerfile -t footyhints/footyhints_base:latest .
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose-build.yml -p $(NAME) build --parallel
+	docker compose -f docker/docker-compose.yml -f docker/docker-compose-build.yml -p $(NAME) build --parallel
 
 build-prod: ## Build the full docker stack with certbot
 	docker build -f docker/base/Dockerfile -t footyhints/footyhints_base:latest .
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose-build.yml -f docker/docker-compose-letsencrypt.yml -p $(NAME) build --parallel
+	docker compose -f docker/docker-compose.yml -f docker/docker-compose-build.yml -f docker/docker-compose-letsencrypt.yml -p $(NAME) build --parallel
 
 stop: ## Stop the full docker stack
-	docker-compose -f docker/docker-compose.yml -p $(NAME) stop
+	docker compose -f docker/docker-compose.yml -p $(NAME) stop
 
-rebuild: build stop run ## Rebuild, stop and run
+rebuild: build stop run ## Rebuild environment
 
 .PHONY: clean
 clean: ## Cleanup all docker volumes and shutdown all related services
-	-docker-compose -f docker/docker-compose.yml -p $(NAME) down -v --remove-orphans
-	-docker-compose -f docker/docker-compose-tests.yml -p test-$(NAME) down -v --remove-orphans
+	-docker compose -f docker/docker-compose.yml -p $(NAME) down -v --remove-orphans
+	-docker compose -f docker/docker-compose-tests.yml -p test-$(NAME) down -v --remove-orphans
 
 .PHONY: tests
 tests: build-tests run-tests  ## Run all tests (getting/building images as needed)
@@ -51,16 +51,16 @@ test: tests
 .PHONY: build-tests
 build-tests:  ## Build end-to-end test environment only
 	docker build -f docker/base/Dockerfile -t footyhints/footyhints_base:latest .
-	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) $(NO_CACHE) build
+	docker compose -f docker/docker-compose-tests.yml -p $(NAME) $(NO_CACHE) build
 
 .PHONY: run-tests-resources-external
 run-tests-resources-external: ## Just spin up external resources for tests and have them listen externally
-	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) run -p 3306:3306 -d mysql
-	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) run -p 6379:6379 -d redis
+	docker compose -f docker/docker-compose-tests.yml -p $(NAME) run -p 3306:3306 -d mysql
+	docker compose -f docker/docker-compose-tests.yml -p $(NAME) run -p 6379:6379 -d redis
 
 .PHONY: run-tests-resources
 run-tests-resources:  ## Just run the external resources required for tests
-	docker-compose -f docker/docker-compose-tests.yml -p $(NAME) up -d
+	docker compose -f docker/docker-compose-tests.yml -p $(NAME) up -d
 
 .PHONY: run-tests
 run-tests: run-tests-resources ## Run testing suite
